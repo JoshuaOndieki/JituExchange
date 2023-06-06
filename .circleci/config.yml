@@ -12,7 +12,7 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout:
-          path: ~/JituExchange/backend
+          path: ~/JituExchange
       - node/install-packages:
           pkg-manager: npm
       - run: npm run build
@@ -44,7 +44,7 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout:
-          path: ~/JituExchange/frontend
+          path: ~/JituExchange
       - attach_workspace:
           at: .
       - node/install-packages:
