@@ -24,7 +24,7 @@ jobs:
             - .
 
   test-backend:
-    # working_directory: ~/JituExchange/backend
+    working_directory: ~/JituExchange/backend
     docker:
       - image: cimg/node:18.16
     steps:
