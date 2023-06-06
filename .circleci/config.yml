@@ -17,9 +17,9 @@ jobs:
           pkg-manager: npm
       - run: npm run build
       - persist_to_workspace:
-          root: .
+          root: JituExchange
           paths:
-            - ./backend
+            - backend/
 
   test-backend:
     working_directory: ~/JituExchange/backend
@@ -51,9 +51,9 @@ jobs:
           pkg-manager: npm
       - run: npm install
       - persist_to_workspace:
-          root: .
+          root: JituExchange
           paths:
-            - ./frontend
+            - backend/
   test-frontend:
     working_directory: ~/JituExchange/frontend
     docker:
