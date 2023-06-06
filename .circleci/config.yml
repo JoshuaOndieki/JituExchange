@@ -28,8 +28,7 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout:
-          path: ~/JituExchange
+      - checkout
       - attach_workspace:
           at: .
       - node/install-packages:
@@ -69,8 +68,7 @@ jobs:
             google-chrome --version
             chromedriver --version
           name: Check install
-      - checkout:
-          path: ~/JituExchange
+      - checkout
       - attach_workspace:
           at: .
       - node/install-packages:
@@ -84,17 +82,13 @@ jobs:
 
 # Orchestrate our job run sequence
 workflows:
-  build_and_test_backend:
+  backend_frontend:
     jobs:
-      # - build-backend
-      # - test-backend:
-      #     requires:
-      #       - build-backend
-      - test-backend
-  build_and_test_frontend:
-    jobs:
-      # - build-frontend
-      # - test-frontend:
-      #     requires:
-      #       - build-frontend
-      - test-frontend
+      - build-backend
+      - test-backend:
+          requires:
+            - build-backend
+      - build-frontend
+      - test-frontend:
+          requires:
+            - build-frontend
