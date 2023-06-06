@@ -11,8 +11,7 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout:
-          path: ~/JituExchange/backend
+      - checkout
       - node/install-packages:
           pkg-manager: npm
       - run: npm run build
@@ -26,8 +25,7 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout:
-          path: ~/JituExchange/backend
+      - checkout
       - attach_workspace:
           at: .
       - node/install-packages:
@@ -44,8 +42,7 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout:
-          path: ~/JituExchange/frontend
+      - checkout
       - attach_workspace:
           at: .
       - node/install-packages:
@@ -67,8 +64,7 @@ jobs:
             google-chrome --version
             chromedriver --version
           name: Check install
-      - checkout:
-          path: ~/JituExchange/frontend
+      - checkout
       - attach_workspace:
           at: .
       - node/install-packages:
