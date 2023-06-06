@@ -1,0 +1,92 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.1.0
+  codecov: codecov/codecov@3.2.4
+  browser-tools: circleci/browser-tools@1.4.1
+
+# Define the jobs we want to run for this project
+jobs:
+  build-backend:
+    working_directory: ~/backend
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  test-backend:
+    working_directory: ~/backend
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - node/install-packages:
+          pkg-manager: npm
+      - run: npm test
+      - store_artifacts:
+          path: backend/coverage/clover.xml
+          destination: ./clover-backend.xml
+      - codecov/upload:
+          file: ./backend/coverage/clover.xml
+
+  build-frontend:
+    working_directory: ~/frontend
+    docker:
+      - image: cimg/node:18.16
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - node/install-packages:
+          pkg-manager: npm
+      - run: npm install
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  test-frontend:
+    working_directory: ~/frontend
+    docker:
+      - image: cimg/node:18.16-browsers
+    steps:
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
+      - run:
+          command: |
+            google-chrome --version
+            chromedriver --version
+          name: Check install
+      - checkout
+      - attach_workspace:
+          at: .
+      - node/install-packages:
+          pkg-manager: npm
+      - run: npm test
+      - store_artifacts:
+          path: frontend/coverage/clover.xml
+          destination: ./clover-frontend.xml
+      - codecov/upload:
+          file: ./frontend/coverage/clover.xml
+
+# Orchestrate our job run sequence
+workflows:
+  build_and_test_backend:
+    jobs:
+      - build-backend
+      - test-backend:
+          requires:
+            - build-backend
+  build_and_test_frontend:
+    jobs:
+      - build-frontend
+      - test-frontend:
+          requires:
+            - build-frontend
