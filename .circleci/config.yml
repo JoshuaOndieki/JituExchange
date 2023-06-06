@@ -13,6 +13,8 @@ jobs:
     steps:
       - checkout:
           path: ~/JituExchange
+      - attach_workspace:
+          at: .
       - node/install-packages:
           pkg-manager: npm
       - run: npm run build
