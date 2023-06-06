@@ -12,14 +12,14 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout:
-          path: ~/JituExchange/backend
+          path: ~/JituExchange
       - node/install-packages:
           pkg-manager: npm
       - run: npm run build
       - persist_to_workspace:
           root: .
           paths:
-            - .
+            - ./backend
 
   test-backend:
     working_directory: ~/JituExchange/backend
@@ -53,7 +53,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - .
+            - ./frontend
   test-frontend:
     working_directory: ~/JituExchange/frontend
     docker:
