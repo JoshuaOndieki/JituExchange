@@ -6,22 +6,22 @@ orbs:
 
 # Define the jobs we want to run for this project
 jobs:
-  build-backend:
-    working_directory: ~/JituExchange/backend
-    docker:
-      - image: cimg/node:18.16
-    steps:
-      - checkout:
-          path: ~/JituExchange
-      - attach_workspace:
-          at: .
-      - node/install-packages:
-          pkg-manager: npm
-      - run: npm run build
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
+  # build-backend:
+  #   working_directory: ~/JituExchange/backend
+  #   docker:
+  #     - image: cimg/node:18.16
+  #   steps:
+  #     - checkout:
+  #         path: ~/JituExchange
+  #     - attach_workspace:
+  #         at: .
+  #     - node/install-packages:
+  #         pkg-manager: npm
+  #     - run: npm run build
+  #     - persist_to_workspace:
+  #         root: .
+  #         paths:
+  #           - .
 
   test-backend:
     working_directory: ~/JituExchange/backend
@@ -84,10 +84,10 @@ jobs:
 workflows:
   build_and_test_backend:
     jobs:
-      - build-backend
-      - test-backend:
-          requires:
-            - build-backend
+      # - build-backend
+      - test-backend
+          # requires:
+          #   - build-backend
   build_and_test_frontend:
     jobs:
       - build-frontend
