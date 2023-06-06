@@ -28,7 +28,8 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout
+      - checkout:
+          path: ~/JituExchange
       - attach_workspace:
           at: .
       - node/install-packages:
@@ -68,7 +69,8 @@ jobs:
             google-chrome --version
             chromedriver --version
           name: Check install
-      - checkout
+      - checkout:
+          path: ~/JituExchange
       - attach_workspace:
           at: .
       - node/install-packages:
