@@ -7,11 +7,12 @@ orbs:
 # Define the jobs we want to run for this project
 jobs:
   build-backend:
-    working_directory: ~/backend
+    working_directory: ~/JituExchange/backend
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout
+      - checkout:
+          path: ~/JituExchange
       - node/install-packages:
           pkg-manager: npm
       - run: npm run build
@@ -21,11 +22,12 @@ jobs:
             - .
 
   test-backend:
-    working_directory: ~/backend
+    working_directory: ~/JituExchange/backend
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout
+      - checkout:
+          path: ~/JituExchange
       - attach_workspace:
           at: .
       - node/install-packages:
@@ -38,11 +40,12 @@ jobs:
           file: ./backend/coverage/clover.xml
 
   build-frontend:
-    working_directory: ~/frontend
+    working_directory: ~/JituExchange/frontend
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout
+      - checkout:
+          path: ~/JituExchange
       - attach_workspace:
           at: .
       - node/install-packages:
@@ -53,7 +56,7 @@ jobs:
           paths:
             - .
   test-frontend:
-    working_directory: ~/frontend
+    working_directory: ~/JituExchange/frontend
     docker:
       - image: cimg/node:18.16-browsers
     steps:
@@ -64,7 +67,8 @@ jobs:
             google-chrome --version
             chromedriver --version
           name: Check install
-      - checkout
+      - checkout:
+          path: ~/JituExchange
       - attach_workspace:
           at: .
       - node/install-packages:
