@@ -11,7 +11,8 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout
+      - checkout:
+          path: ~/JituExchange/backend
       - node/install-packages:
           pkg-manager: npm
       - run: npm run build
@@ -42,7 +43,8 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout
+      - checkout:
+          path: ~/JituExchange/frontend
       - attach_workspace:
           at: .
       - node/install-packages:
