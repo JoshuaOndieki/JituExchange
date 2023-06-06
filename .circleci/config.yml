@@ -55,7 +55,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - frontend/
+            - .
   test-frontend:
     working_directory: ~/JituExchange/frontend
     docker:
@@ -84,13 +84,15 @@ jobs:
 workflows:
   build_and_test_backend:
     jobs:
-      - build-backend
-      - test-backend:
-          requires:
-            - build-backend
+      # - build-backend
+      # - test-backend:
+      #     requires:
+      #       - build-backend
+      - test-backend
   build_and_test_frontend:
     jobs:
-      - build-frontend
-      - test-frontend:
-          requires:
-            - build-frontend
+      # - build-frontend
+      # - test-frontend:
+      #     requires:
+      #       - build-frontend
+      - test-frontend
