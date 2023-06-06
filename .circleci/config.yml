@@ -12,7 +12,7 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout:
-          path: ~/JituExchange
+          path: ~/JituExchange/backend
       - node/install-packages:
           pkg-manager: npm
       - run: npm run build
@@ -27,7 +27,7 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout:
-          path: ~/JituExchange
+          path: ~/JituExchange/backend
       - attach_workspace:
           at: .
       - node/install-packages:
@@ -45,7 +45,7 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout:
-          path: ~/JituExchange
+          path: ~/JituExchange/frontend
       - attach_workspace:
           at: .
       - node/install-packages:
@@ -68,7 +68,7 @@ jobs:
             chromedriver --version
           name: Check install
       - checkout:
-          path: ~/JituExchange
+          path: ~/JituExchange/frontend
       - attach_workspace:
           at: .
       - node/install-packages:
