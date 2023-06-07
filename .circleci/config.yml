@@ -28,8 +28,6 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout:
-          path: ~/JituExchange
       # - attach_workspace:
       #     at: .
       - node/install-packages:
@@ -48,8 +46,6 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout:
-          path: ~/JituExchange
       - attach_workspace:
           at: .
       - node/install-packages:
