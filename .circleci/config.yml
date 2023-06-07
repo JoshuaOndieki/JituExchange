@@ -48,10 +48,10 @@ jobs:
           command: npm test
           working_directory: ~/JituExchange/backend
       - store_artifacts:
-          path: backend/coverage/clover.xml
+          path: coverage/clover.xml
           destination: ./clover-backend.xml
       - codecov/upload:
-          file: ./backend/coverage/clover.xml
+          file: ./coverage/clover.xml
 
   build-frontend:
     working_directory: ~/JituExchange/frontend
@@ -89,10 +89,10 @@ jobs:
           command: npm test
           working_directory: ~/JituExchange/frontend
       - store_artifacts:
-          path: frontend/coverage/clover.xml
+          path: coverage/clover.xml
           destination: ./clover-frontend.xml
       - codecov/upload:
-          file: ./frontend/coverage/clover.xml
+          file: ./coverage/clover.xml
 
 # Orchestrate our job run sequence
 workflows:
