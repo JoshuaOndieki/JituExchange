@@ -68,8 +68,7 @@ jobs:
             google-chrome --version
             chromedriver --version
           name: Check install
-      - checkout:
-          path: ~/JituFrontend
+      - checkout
       # - attach_workspace:
       #     at: .
       - node/install-packages:
