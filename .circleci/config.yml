@@ -69,7 +69,7 @@ jobs:
             chromedriver --version
           name: Check install
       - checkout:
-          path: ~/JituFrontend/frontend
+          path: ~/JituFrontend
       # - attach_workspace:
       #     at: .
       - node/install-packages:
