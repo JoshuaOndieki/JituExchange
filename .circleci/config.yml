@@ -68,7 +68,8 @@ jobs:
             google-chrome --version
             chromedriver --version
           name: Check install
-      - checkout
+      - checkout:
+          path: ~/JituExchange
       # - attach_workspace:
       #     at: .
       - run:
