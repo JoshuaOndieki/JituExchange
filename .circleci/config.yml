@@ -99,18 +99,24 @@ jobs:
 
 # Orchestrate our job run sequence
 workflows:
-  clone:
+  test:
     jobs:
       - clone
-  build_and_test_backend:
-    jobs:
-      # - build-backend
       - test-backend:
           requires:
             - clone
-  build_and_test_frontend:
-    jobs:
-      # - build-frontend
       - test-frontend:
           requires:
             - clone
+  # build_and_test_backend:
+    # jobs:
+      # - build-backend
+      # - test-backend:
+      #     requires:
+      #       - build-backend
+  # build_and_test_frontend:
+    # jobs:
+      # - build-frontend
+      # - test-frontend:
+      #     requires:
+      #       - build-frontend
