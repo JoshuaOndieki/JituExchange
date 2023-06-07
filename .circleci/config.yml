@@ -75,9 +75,9 @@ jobs:
       - checkout
       # - attach_workspace:
       #     at: .
-      - node/install-packages:
+      - run:
+          command: npm install
           working_directory: ~/JituExchange/frontend
-          pkg-manager: npm
       - run:
           command: npm test
           working_directory: ~/JituExchange/frontend
