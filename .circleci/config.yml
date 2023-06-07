@@ -10,8 +10,7 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout:
-          path: ~/JituExchange
+      - checkout
       - attach_workspace:
           at: .
       - persist_to_workspace:
