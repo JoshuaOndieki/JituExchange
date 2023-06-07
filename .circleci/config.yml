@@ -40,7 +40,7 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - attach_workspace:
-          at: .
+          at: ~/JituExchange
       # - checkout:
       #     path: ~/JituBackend
       - node/install-packages:
@@ -82,7 +82,7 @@ jobs:
       # - checkout:
       #     path: ~/JituExchange
       - attach_workspace:
-          at: .
+          at: ~/JituExchange
       - run:
           command: npm install
           working_directory: ~/JituExchange/frontend
