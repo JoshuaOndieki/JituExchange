@@ -57,7 +57,7 @@ jobs:
           paths:
             - .
   test-frontend:
-    working_directory: ~/JituFrontend/frontend
+    working_directory: ~/JituExchange/frontend
     docker:
       - image: cimg/node:18.16-browsers
     steps:
@@ -75,7 +75,7 @@ jobs:
           pkg-manager: npm
       - run:
           command: npm test
-          working_directory: ~/JituFrontend/frontend
+          working_directory: ~/JituExchange/frontend
       - store_artifacts:
           path: frontend/coverage/clover.xml
           destination: ./clover-frontend.xml
