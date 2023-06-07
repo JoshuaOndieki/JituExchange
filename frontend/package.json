@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test:run": "ng test --no-watch --no-progress --browsers ChromeHeadless --code-coverage",
-    "test:coverage": "istanbul report --dir coverage --include coverage/**/*.json --report cobertura",
+    "test:coverage": "istanbul report --dir coverage --include coverage/**/*.json --report clover",
     "test": "concurrently npm:test:*"
   },
   "private": true,
