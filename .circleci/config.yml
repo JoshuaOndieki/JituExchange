@@ -10,8 +10,7 @@ jobs:
     docker:
       - image: cimg/node:18.16
     steps:
-      - checkout:
-          path: ~/JituExchange
+      - checkout
       - persist_to_workspace:
           root: .
           paths:
@@ -40,7 +39,7 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - attach_workspace:
-          at: ~/JituExchange
+          at: ~/JituExchange/backend
       # - checkout:
       #     path: ~/JituBackend
       - node/install-packages:
@@ -82,7 +81,7 @@ jobs:
       # - checkout:
       #     path: ~/JituExchange
       - attach_workspace:
-          at: ~/JituExchange
+          at: ~/JituExchange/frontend
       - run:
           command: npm install
           working_directory: ~/JituExchange/frontend
