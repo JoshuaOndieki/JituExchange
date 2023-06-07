@@ -30,6 +30,8 @@ jobs:
     steps:
       # - attach_workspace:
       #     at: .
+      - checkout:
+          path: ~/JituExchange/BackendCopy
       - node/install-packages:
           pkg-manager: npm
       - run:
@@ -67,7 +69,7 @@ jobs:
             chromedriver --version
           name: Check install
       - checkout:
-          path: ~/JituExchange
+          path: ~/JituExchange/FrontendCopy
       # - attach_workspace:
       #     at: .
       - node/install-packages:
