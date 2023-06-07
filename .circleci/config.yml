@@ -89,10 +89,10 @@ jobs:
           command: npm test
           working_directory: ~/JituExchange/frontend
       - store_artifacts:
-          path: coverage/clover.xml
-          destination: ./clover-frontend.xml
+          path: coverage/cobertura-coverage.xml
+          destination: ./cobertura-coverage-frontend.xml
       - codecov/upload:
-          file: ./coverage/clover.xml
+          file: ./coverage/cobertura-coverage.xml
 
 # Orchestrate our job run sequence
 workflows:
