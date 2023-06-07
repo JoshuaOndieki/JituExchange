@@ -24,19 +24,19 @@ jobs:
             - backend/
 
   test-backend:
-    working_directory: ~/JituExchange/backend
+    working_directory: ~/JituBackend/backend
     docker:
       - image: cimg/node:18.16
     steps:
       # - attach_workspace:
       #     at: .
       - checkout:
-          path: ~/JituExchange/backend
+          path: ~/JituBackend
       - node/install-packages:
           pkg-manager: npm
       - run:
           command: npm test
-          working_directory: ~/JituExchange/backend
+          working_directory: ~/JituBackend/backend
       - store_artifacts:
           path: backend/coverage/clover.xml
           destination: ./clover-backend.xml
@@ -57,7 +57,7 @@ jobs:
           paths:
             - .
   test-frontend:
-    working_directory: ~/JituExchange/frontend
+    working_directory: ~/JituFrontend/frontend
     docker:
       - image: cimg/node:18.16-browsers
     steps:
@@ -69,14 +69,14 @@ jobs:
             chromedriver --version
           name: Check install
       - checkout:
-          path: ~/JituExchange/frontend
+          path: ~/JituFrontend/frontend
       # - attach_workspace:
       #     at: .
       - node/install-packages:
           pkg-manager: npm
       - run:
           command: npm test
-          working_directory: ~/JituExchange/frontend
+          working_directory: ~/JituFrontend/frontend
       - store_artifacts:
           path: frontend/coverage/clover.xml
           destination: ./clover-frontend.xml
