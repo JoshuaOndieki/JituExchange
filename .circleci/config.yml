@@ -33,7 +33,10 @@ jobs:
       #     at: .
       - node/install-packages:
           pkg-manager: npm
-      - run: npm test
+          working_directory: ~/JituExchange/frontend
+      - run:
+          command: npm test
+          working_directory: ~/JituExchange/frontend
       - store_artifacts:
           path: backend/coverage/clover.xml
           destination: ./clover-backend.xml
@@ -72,8 +75,11 @@ jobs:
       # - attach_workspace:
       #     at: .
       - node/install-packages:
+          working_directory: ~/JituExchange/frontend
           pkg-manager: npm
-      - run: npm test
+      - run:
+          command: npm test
+          working_directory: ~/JituExchange/frontend
       - store_artifacts:
           path: frontend/coverage/clover.xml
           destination: ./clover-frontend.xml
