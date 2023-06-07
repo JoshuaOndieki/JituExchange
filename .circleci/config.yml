@@ -29,7 +29,7 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout:
-          path: ~/JituExchange
+          path: ~/JituExchangeBackend
       # - attach_workspace:
       #     at: .
       - node/install-packages:
@@ -70,7 +70,7 @@ jobs:
             chromedriver --version
           name: Check install
       - checkout:
-          path: ~/JituExchange
+          path: ~/JituExchangeFrontend
       # - attach_workspace:
       #     at: .
       - node/install-packages:
