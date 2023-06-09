@@ -1,0 +1,9 @@
+h1 {
+    font-size: xxx-large;
+    color: var(--theme-red-color);
+}
+
+a {
+    color: var(--app-blue);
+    cursor: pointer;
+}

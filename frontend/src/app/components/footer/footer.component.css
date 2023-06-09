@@ -1,0 +1,25 @@
+#f-company-info, #f-general-links, #f-contact-us {
+    flex-grow: 1;
+}
+
+#f-company-info>div, #f-general-links>div, #f-personal-links>div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+a {
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    display: block;
+    display: flex;
+    width: max-content;
+    gap: 0.5rem;
+}
+
+
+header {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
