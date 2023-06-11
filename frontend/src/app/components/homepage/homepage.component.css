@@ -1,0 +1,51 @@
+#main-text {
+    color: white;
+    font-size: x-large;
+    width: max(50%, 80svw);
+    text-align: center;
+}
+
+#hero-section {
+    width: 90svw;
+    background-color: var(--darker-grey);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5svh;
+    border-radius: 0.5rem;
+    justify-content: center;
+    min-height: 50svh;
+}
+
+#sign-up-in-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+#signup-container, #signin-container {
+    width: min(400px, 70svw);
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+#signup-container {
+    background-color: var(--light-blue);
+}
+
+#signin-container {
+    background-color: var(--very-light-red);
+}
+
+#hero-signup-btn, #hero-signin-btn {
+    width: max-content;
+    padding: 1rem 2rem;
+    align-self: center;
+    background-color: var(--theme-red-color);
+    color: white;
+    cursor: pointer;
+}
