@@ -19,13 +19,18 @@
     --darker-grey: #474D53;
     --darkest-grey: #232629;
     --app-blue: #0A95FF;
+    --app-light-blue: #CDE9FE;
     --light-blue: #E1ECF4;
     --dark-blue: #6A86C2;
     --very-light-red: #FEE3CE;
+    --border-grey: #BABFC4;
 
     --gold: #FFCC01;
     --silver: #B4B8BC;
     --bronze: #D1A684;
+
+    --light-green: #23D18B;
+    --light-red: #F9685E;
 }
 
 * {

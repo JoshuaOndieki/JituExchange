@@ -45,3 +45,14 @@ export interface Itag {
     description:string
     addedDate:string
 }
+
+export interface IpasswordStrengthErrors {
+    upperCase?:string
+    lowerCase?:string
+    numeric?:string
+    special?:string
+    minLength?: {
+        received:number
+        expected:number
+    }
+}
