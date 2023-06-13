@@ -17,20 +17,20 @@ export class HeaderComponent implements OnInit {
     currentNavigation!: 'home' | 'questions' | 'tags' | 'users'
 
     constructor() {
-        this.user =
-        {
-            firstname:"string",
-            lastname:"string",
-            id:"string",
-            email:"string",
-            username:"string",
-            location:"string",
-            joinedDate:"string",
-            website: "string",
-            github:"string",
-            avatar:"string",
-            role: 'admin'
-        }        
+        // this.user =
+        // {
+        //     firstname:"string",
+        //     lastname:"string",
+        //     id:"string",
+        //     email:"string",
+        //     username:"string",
+        //     location:"string",
+        //     joinedDate:"string",
+        //     website: "string",
+        //     github:"string",
+        //     avatar:"string",
+        //     role: 'admin'
+        // }        
     }
 
     ngOnInit(): void {

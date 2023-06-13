@@ -1,0 +1,50 @@
+<form id="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <h1>Sign Up</h1>
+    <div id="inputs">
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="username.valid" [class.invalid]="username.invalid && (username.dirty || username.touched)">
+                <input type="text" placeholder="Username" formControlName="username">
+                <label for="">username</label>
+            </div>
+            <div *ngIf="username.errors" class="errors">
+                <div *ngIf="username.hasError('minlength')">
+                    Username should be at least {{username.errors['minlength'].requiredLength}} characters long.
+                </div>
+                <div *ngIf="username.hasError('spaces')">
+                    No spaces
+                </div>
+            </div>
+        </div>
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="email.valid" [class.invalid]="email.invalid && (email.dirty || email.touched)">
+                <input type="email" placeholder="Email" formControlName="email">
+                <label for="">email</label>            
+            </div>
+        </div>
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="password.valid" [class.invalid]="password.invalid && (password.dirty || password.touched)">
+                <input type="password" placeholder="Password" formControlName="password">
+                <label for="">password</label>            
+            </div>
+            <div *ngIf="password.errors && password.invalid && (password.dirty || password.touched)" class="errors">
+                <div *ngIf="password.hasError('passwordStrength')">
+                    <div *ngFor="let error of (password.errors['passwordStrength'] | passwordStrengthErrorsKeys)">
+                        {{error}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="confirmPassword.valid" [class.invalid]="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+                <input type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+                <label for="">confirm</label>            
+            </div>
+            <div *ngIf="confirmPassword.errors" class="errors">
+                <div *ngIf="confirmPassword.hasError('mismatch')">
+                    Password mismatch
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="submit" [class.valid]="signupForm.valid" value="sign up" [disabled]="signupForm.invalid">
+</form>
