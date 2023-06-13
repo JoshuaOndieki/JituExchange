@@ -1,4 +1,4 @@
-:host {
+/* :host {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,4 +90,4 @@ input[type=submit].valid {
 
 .errors {
     color: red;
-}
+} */

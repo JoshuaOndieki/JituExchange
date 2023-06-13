@@ -1,4 +1,4 @@
-:host {
+/* :host {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,19 +45,12 @@
     padding: 1rem;
 }
 
-/* #signup-form.ng-invalid {
-    border: 4px solid var(--light-red);
-} */
-
 input[type=submit] {
     padding: 0.5rem 2rem;
     cursor: pointer;
-    /* border: 4px solid var(--app-light-blue); */
     border: none;
-    /* background-color: var(--lighter-grey); */
     font-weight: bold;
     font-size: large;
-    
 }
 
 input[type=submit]:hover {
@@ -97,4 +90,4 @@ input[type=submit].valid {
 
 .errors {
     color: red;
-}
+} */

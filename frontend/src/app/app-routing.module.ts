@@ -11,10 +11,15 @@ const routes: Routes = [
     loadComponent:()=> import('./components/main/main.component').then(c => c.MainComponent),
     children: [
       {path: '', loadComponent:()=> import('./components/home/home.component').then(c => c.HomeComponent)},
-      {path: 'questions', loadComponent:()=> import('./components/questions/questions.component').then(c => c.QuestionsComponent)},
+      {
+        path: 'questions',
+        loadComponent:()=> import('./components/questions/questions.component').then(c => c.QuestionsComponent),
+        children: [
+          {path: 'ask', loadComponent:()=> import('./components/ask/ask.component').then(c => c.AskComponent)}
+        ]
+      },
       {path: 'users', loadComponent:()=> import('./components/users/users.component').then(c => c.UsersComponent)},
-      {path: 'tags', loadComponent:()=> import('./components/tags/tags.component').then(c => c.TagsComponent)},
-      {path: 'ask', loadComponent:()=> import('./components/ask/ask.component').then(c => c.AskComponent)}
+      {path: 'tags', loadComponent:()=> import('./components/tags/tags.component').then(c => c.TagsComponent)}
     ]
   },
   {path: '**', loadComponent:()=> import('./components/not-found/not-found.component').then(c => c.NotFoundComponent)}
