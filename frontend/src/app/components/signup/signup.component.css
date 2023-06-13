@@ -64,6 +64,12 @@ input[type=submit]:hover {
     opacity: 0.6;
 }
 
+input[type=submit]:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+    background-color: var(--app-blue);
+    color: white;
+}
 
 label {
     display: none;
