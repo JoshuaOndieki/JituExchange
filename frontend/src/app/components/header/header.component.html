@@ -1,12 +1,13 @@
 <!-- <div id="logo-menu-container"> -->
 <ion-icon id="menu-icon" name="menu-outline" size="large" (click)="toggleMenu()"></ion-icon>
 <div id="menu" [class.active]="isMenuOpen">
-    <nav id="menu-nav">
+    <!-- <nav id="menu-nav">
         <div class="nav-item" routerLink="" id="home-nav" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</div>
         <div class="nav-item" routerLink="/questions" routerLinkActive="active">Questions</div>
         <div class="nav-item" routerLink="/tags" routerLinkActive="active">Tags</div>
         <div class="nav-item" routerLink="/users" routerLinkActive="active">Users</div>
-    </nav>
+    </nav> -->
+    <app-navigation id="menu-nav"></app-navigation>
     <div class="hover-underline" class="signout-btn">sign out</div>
 </div>
 <div routerLink="" class="logo"><span>Jitu</span>Exchange</div>

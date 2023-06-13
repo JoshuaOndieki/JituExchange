@@ -1,0 +1,32 @@
+:host {
+    display: flex;
+    width: min(95svw, 1100px);
+    gap: 1rem;
+}
+
+app-home, app-questions, app-tags, app-users, app-question {
+    flex: 1;
+    /* width: 90svw; */
+    /* flex-grow: 1; */
+    /* display: inline-flex; */
+}
+
+app-navigation {
+    /* position: sticky; */
+    border-right: 1px solid var(--lighter-grey);
+    /* display: inline-flex;
+    flex-direction: column; */
+    /* gap: 2rem; */
+    width: max(150px, 10svw);
+    /* width: 10svw; */
+    padding-top: 2rem;
+    /* height: 400px; */
+    /* top: 0; */
+    /* flex-shrink: 1; */
+}
+
+@media (max-width: 666px) {
+    app-navigation {
+        display: none;
+    }
+}

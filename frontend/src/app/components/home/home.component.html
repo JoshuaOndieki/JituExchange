@@ -1,0 +1,16 @@
+<header>
+    <h1>
+        Top Questions
+    </h1>
+    <a [routerLink]="['/ask']" class="ask-btn">Ask Question</a>
+</header>
+
+<nav class="nav-filters">
+    <div class="nav-filter" (click)="onFilter('all-time')" [class.active]="filter === 'all-time'">All Time</div>
+    <div class="nav-filter" (click)="onFilter('this-week')" [class.active]="filter === 'this-week'">This Week</div>
+    <div class="nav-filter" (click)="onFilter('this-month')" [class.active]="filter === 'this-month'">This Month</div>
+</nav>
+
+<main>
+    <app-question *ngFor="let question of questions" [question]="question"></app-question>
+</main>

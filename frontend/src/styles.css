@@ -22,6 +22,7 @@
     --app-light-blue: #CDE9FE;
     --light-blue: #E1ECF4;
     --dark-blue: #6A86C2;
+    --app-text-blue: #46A2D9;
     --very-light-red: #FEE3CE;
     --border-grey: #BABFC4;
 
@@ -123,4 +124,33 @@ app-homepage {
 
 button {
     border: none;
+}
+
+.ask-btn {
+    background-color: var(--app-blue);
+    padding: 0.5rem 3rem;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+
+.ask-btn:hover {
+    opacity: 0.7;
+}
+
+.nav-filters {
+    border: 1px solid var(--border-grey);
+    display: flex;
+    flex-wrap: wrap;
+    width: max-content;
+    align-self: flex-end;
+}
+
+.nav-filter {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.nav-filter.active, .nav-filter:hover {
+    background-color: var(--lighter-grey);
 }

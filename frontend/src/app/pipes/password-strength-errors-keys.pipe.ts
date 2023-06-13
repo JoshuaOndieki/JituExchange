@@ -8,10 +8,10 @@ import { IpasswordStrengthErrors } from '../interfaces';
 export class PasswordStrengthErrorsKeysPipe implements PipeTransform {
 
   transform(value:any, ...args: any[]): any {
-    let keys = []
+    let keys = []    
     for (const key in value) {
       if (typeof value[key] === 'object') {
-        try {
+        try {          
           keys.push(`Your password has ${value[key]['received']} characters; it should be at least ${value[key]['expected']}`)
         } catch (error) {
           console.log(error);
@@ -19,7 +19,7 @@ export class PasswordStrengthErrorsKeysPipe implements PipeTransform {
         continue
       }
       keys.push(value[key])
-    }    
+    }        
     return keys
   }
 

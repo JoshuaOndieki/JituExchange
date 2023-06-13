@@ -1,0 +1,93 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+#inputs {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 0.5rem;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-wrapper {
+    border-bottom: 2px solid var(--border-grey);
+    padding: 5px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#inputs input {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1rem;
+}
+
+#signin-form {
+    border: 4px solid var(--app-light-blue);
+    border-radius: 5px;
+    width: min(90svw, 400px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+input[type=submit] {
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    font-size: large;
+}
+
+input[type=submit]:hover {
+    opacity: 0.6;
+}
+
+input[type=submit]:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+    background-color: var(--app-blue);
+    color: white;
+}
+
+label {
+    display: none;
+    font-size: small;
+}
+
+input:not(:placeholder-shown) + label {
+    display: block;
+}
+
+input[type=submit].valid {
+    background-color: var(--app-blue);
+    color: white;
+}
+
+
+.input-wrapper.valid {
+    color: var(--light-green);
+}
+
+.input-wrapper.invalid {
+    border-bottom: 2px solid var(--light-red);
+    color: var(--light-red);
+}
+
+.errors {
+    color: red;
+}

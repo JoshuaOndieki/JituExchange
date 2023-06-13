@@ -11,8 +11,8 @@ export default function passwordStrengthValidator (minLength=6):ValidatorFn {
     const hasNumeric = /[0-9]/.test(value)
     const hasSpecial = /[^a-zA-Z0-9]/.test(value)
 
-    const passwordValid = hasUpperCase && hasLowerCase && hasNumeric && hasSpecial
-
+    const passwordValid = hasUpperCase && hasLowerCase && hasNumeric && hasSpecial && value.length >= minLength
+    
     value.length >= minLength ? '' : errors.minLength = {
         received:value.length,
         expected:minLength
