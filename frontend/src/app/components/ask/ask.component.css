@@ -1,0 +1,58 @@
+:host {
+    justify-content: flex-start;
+    flex: 1;
+    padding: 1rem 0;
+}
+
+#ask-form {
+    width: min(90svw, 600px, 100%);
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+input[type=submit] {
+    align-self: flex-end;
+}
+
+#new-tags {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 2rem;
+    align-items: center;
+    gap: 1rem;
+}
+
+#tags-label {
+    font-size: large;
+    font-weight: bold;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    background-color: var(--app-blue);
+    border-radius: 5px;
+    color: white;
+    /* flex-shrink: 1;
+    display: flex;
+    align-items: center; */
+    height: 2rem;
+    line-height: 2rem;
+}
+
+.tag-name {
+    padding: 0.5rem;
+    /* font-size: 1rem; */
+}
+
+.tag ion-icon {
+    background-color: salmon;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+}
+
+.tag ion-icon:hover {
+    opacity: 0.6;
+}

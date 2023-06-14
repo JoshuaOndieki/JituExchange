@@ -1,1 +1,288 @@
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+    font-family: Rubik;
+    src: url(./assets/fonts/Rubik/Rubik-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: RobotoMono;
+    src: url(./assets/fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf);
+}
+
+:root {
+    --theme-red-color: #BF1E2E;
+    --main-bg-color:#F8F9F9;
+    --app-grey: #525960;
+    --light-grey: #8d9196;
+    --lighter-grey: #D6D9DC;
+    --darker-grey: #474D53;
+    --darkest-grey: #232629;
+    --app-blue: #0A95FF;
+    --app-light-blue: #CDE9FE;
+    --light-blue: #E1ECF4;
+    --dark-blue: #6A86C2;
+    --app-text-blue: #46A2D9;
+    --very-light-red: #FEE3CE;
+    /* --border-grey: #BABFC4; */
+    --border-grey: #D9D9D9;
+
+    --gold: #FFCC01;
+    --silver: #B4B8BC;
+    --bronze: #D1A684;
+
+    --light-green: #23D18B;
+    --light-red: #F9685E;
+}
+
+* {
+    font-family: Rubik;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+app-root {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100svh;
+    width: 100%;
+    align-items: center;
+    background-color: var(--main-bg-color);
+}
+
+app-root>:nth-child(3) {
+    flex: 1;
+}
+
+app-header, app-footer, app-not-found {
+    width: 100%;
+}
+
+app-not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background: url(assets/images/broken-bender.jpg) no-repeat right/contain; */
+}
+
+app-header {
+    display: flex;
+    align-items: center;
+    border-top: 3px solid var(--theme-red-color);
+    border-bottom: 1px solid var(--lighter-grey);
+    background-color: white;
+    padding: 0.5rem;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+}
+
+app-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-around;
+    background-color: var(--darkest-grey);
+    color: white;
+    padding: 1rem;
+    margin-top: 5svh;
+}
+
+.logo {
+    font-size: 1rem;
+    color: var(--light-grey);
+    font-family: RobotoMono;
+    width: max-content;
+    cursor: pointer;
+}
+
+.logo>span {
+    font-size: 1.5rem;
+    color: var(--theme-red-color);
+    font-weight: bold;
+}
+
+.hover-underline:hover, app-footer a:hover {
+    text-decoration: underline!important;
+    text-decoration-color: var(--app-blue)!important;
+    text-decoration-thickness: 3px!important;
+    text-underline-position: under!important;
+}
+
+app-homepage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+button {
+    border: none;
+}
+
+.ask-btn {
+    background-color: var(--app-blue);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+
+.ask-btn:hover {
+    opacity: 0.7;
+}
+
+.nav-filters {
+    border: 1px solid var(--border-grey);
+    display: flex;
+    flex-wrap: wrap;
+    width: max-content;
+    align-self: flex-end;
+}
+
+.nav-filter {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.nav-filter.active, .nav-filter:hover {
+    background-color: var(--lighter-grey);
+}
+
+
+
+app-signup, app-signin, app-ask {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 0.5rem;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-wrapper {
+    border-bottom: 2px solid var(--border-grey);
+    padding: 5px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.inputs input, .inputs textarea {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1rem;
+    flex-grow: 1;
+}
+
+#signin-form, #signup-form, #ask-form {
+    border: 4px solid var(--app-light-blue);
+    border-radius: 5px;
+    width: min(90svw, 400px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+input[type=submit] {
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    font-size: large;
+}
+
+input[type=submit]:hover {
+    opacity: 0.6;
+}
+
+input[type=submit]:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+    background-color: var(--app-blue);
+    color: white;
+}
+
+label {
+    display: none;
+    font-size: small;
+}
+
+input:not(:placeholder-shown) + label, textarea:not(:placeholder-shown) + label {
+    display: block;
+}
+
+input[type=submit].valid {
+    background-color: var(--app-blue);
+    color: white;
+}
+
+
+.input-wrapper.valid {
+    color: var(--light-green);
+}
+
+.input-wrapper.invalid {
+    border-bottom: 2px solid var(--light-red);
+    color: var(--light-red);
+}
+
+.errors {
+    color: red;
+}
+
+textarea {
+    height: 100%;
+    flex-grow: 1;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--border-grey);
+    width: 95%;
+}
+
+.gold-badges {
+    color: var(--gold);
+}
+
+.silver-badges {
+    color: var(--silver);
+}
+
+.bronze-badges {
+    color: var(--bronze);
+}
+
+.gold-badges, .silver-badges, .bronze-badges {
+    display: flex;
+}
+
+.badges {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}

@@ -1,0 +1,66 @@
+:host {
+    display: flex;
+    gap: 1rem;
+    border-top: 1px solid var(--border-grey);
+    padding: 0.5rem;
+}
+
+.q-meta, .q-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.q-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.q-ask-info {
+    align-self: flex-end;
+    font-size: small;
+}
+
+.q-meta, .q-ask-info {
+    color: grey;
+}
+
+.q-summary, .q-asker {
+    color: var(--app-blue);
+    cursor: pointer;
+}
+
+.q-summary:hover, .q-asker:hover {
+    opacity: 0.7;
+}
+
+.q-asker-meta {
+    color: black;
+}
+
+.q-tags {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.q-tag {
+    background-color: var(--light-blue);
+    padding: 5px;
+    color: var(--app-text-blue);
+    border-radius: 5px;
+}
+
+.delete-btn {
+    color: salmon;
+    cursor: pointer;
+}
+
+.edit-btn {
+    color: var(--app-blue);
+    cursor: pointer;
+}
+
+.actions {
+    font-size: 1rem;
+}

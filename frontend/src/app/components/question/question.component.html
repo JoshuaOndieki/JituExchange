@@ -1,0 +1,19 @@
+<div class="q-meta">
+    <div>0 votes</div>
+    <div>0 answers</div>
+    <div>0 views</div>
+</div>
+
+<div class="q-info">
+    <div class="q-summary" [routerLink]="['/questions', 'q', question.id]">{{question.summary}}</div>
+    <div class="q-tags"><span class="q-tag">tag</span> <span class="q-tag">tag</span> <span class="q-tag">tag</span></div>
+    <div class="q-ask-info">
+        <span class="q-asker">{{question.askedBy}} </span>
+        <span class="q-asker-meta">420</span>
+        <span>asked {{question.askedDate}}</span>
+        <span class="actions">
+            <span *ngIf="question.askedBy === user.id" class="edit-btn"> edit </span>
+            <span *ngIf="user.role === 'admin'" class="delete-btn"> delete </span>
+        </span>
+    </div>
+</div>

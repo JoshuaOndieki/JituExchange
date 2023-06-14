@@ -1,0 +1,31 @@
+<ion-icon id="menu-icon" name="menu-outline" size="large" (click)="toggleMenu()"></ion-icon>
+<div id="menu" [class.active]="isMenuOpen">
+    <app-navigation id="menu-nav"></app-navigation>
+    <div class="hover-underline" class="signout-btn">sign out</div>
+</div>
+<div routerLink="" class="logo"><span>Jitu</span>Exchange</div>
+<ion-icon name="search-outline" id="search-icon" size="large"></ion-icon>
+<form id="search">
+    <ion-icon name="search-outline"></ion-icon>
+    <input id="search-query" type="search" placeholder="search questions">
+</form>
+
+<div id="auth-header">
+    <ng-container *ngIf="user else noUser">
+        <div id="avatar-card">
+            <ion-icon id="avatar" name="person-circle-outline" size="large"></ion-icon>
+            <div class="gold-badges badge">·<span>7</span></div>
+            <div class="silver-badges badge">·<span>7</span></div>
+            <div class="bronze-badges badge">·<span>7</span></div>
+        </div>
+        <ion-icon name="notifications" id="notifications-icon"></ion-icon>
+        <div class="hover-underline" class="signout-btn" id="signout-btn">sign out</div>
+    </ng-container>
+          
+    <ng-template #noUser>
+        <a id="signin-btn" routerLink="/signin">Sign In</a>
+        <a id="signup-btn" routerLink="/signup">Sign Up</a>
+    </ng-template>
+</div>
+
+

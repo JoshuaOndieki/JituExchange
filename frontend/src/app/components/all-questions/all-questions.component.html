@@ -1,0 +1,21 @@
+<header>
+    <h1>
+        Top Questions
+    </h1>
+    <a [routerLink]="['/questions', 'ask']" class="ask-btn">Ask Question</a>
+</header>
+
+<form id="search-form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <div class="inputs">
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="query.valid" [class.invalid]="query.invalid && (query.dirty || query.touched)">
+                <input type="search" placeholder="search questions" formControlName="id">
+                <label for="">search query</label>
+            </div>
+        </div>
+    </div>
+</form>
+
+<main>
+    <app-question *ngFor="let question of questions" [question]="question"></app-question>
+</main>

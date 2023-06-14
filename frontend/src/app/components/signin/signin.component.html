@@ -1,0 +1,19 @@
+<form id="signin-form" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+    <h1>Sign In</h1>
+    <div class="inputs">
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="id.valid" [class.invalid]="id.invalid && (id.dirty || id.touched)">
+                <input type="text" placeholder="username or email" formControlName="id">
+                <label for="">user</label>
+            </div>
+        </div>
+        
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="password.valid" [class.invalid]="password.invalid && (password.dirty || password.touched)">
+                <input type="password" placeholder="Password" formControlName="password">
+                <label for="">password</label>            
+            </div>
+        </div>
+    </div>
+    <input type="submit" [class.valid]="signinForm.valid" value="sign in" [disabled]="signinForm.invalid">
+</form>

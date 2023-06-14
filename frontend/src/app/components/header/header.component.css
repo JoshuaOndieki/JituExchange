@@ -1,0 +1,192 @@
+/* #logo-menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+} */
+
+#search {
+    align-items: center;
+    border: 1px solid var(--lighter-grey);
+    border-radius: 5px;
+    display: flex;
+    flex: 1;
+    max-width: 600px;
+    padding: 0.5rem;
+}
+
+#search-query {
+    border: none;
+    /* min-width: max(max-content, 50svw); */
+    flex: 1;
+    outline: none;
+}
+
+#auth-header {
+    display: flex;
+    gap: 1rem;
+}
+
+#signup-btn {
+    background-color: var(--app-blue);
+    color: white;
+    padding: 0.5rem 2rem;
+}
+
+#signin-btn {
+    background-color: var(--light-blue);
+    color: var(--dark-blue);
+    padding: 0.5rem 1rem;
+}
+
+#signup-btn, #signin-btn {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#auth-header {
+    align-items: center;
+    display: flex;
+}
+
+#avatar-card {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+}
+
+#avatar {
+    color: var(--theme-red-color);
+}
+
+#avatar-card:hover {
+    background-color: var(--main-bg-color);
+}
+
+
+#notifications-icon {
+    font-size: 1.5rem;
+}
+
+.signout-btn {
+    cursor: pointer;
+    margin-left: 2rem;
+    text-decoration: underline;
+    text-underline-position: under;
+    width: max-content;
+}
+
+#search-icon {
+    display: none;
+}
+
+#menu-icon {
+    display: none;
+}
+
+#menu {
+    background-color: white;
+    border: 1px solid var(--lighter-grey);
+    border-left: none;
+    display: none;
+    flex-direction: column;
+    gap: 2rem;
+    height: max-content;
+    left: 0;
+    position: absolute;
+    top: 100%;
+    width: 50%;
+    padding: 1rem;
+    padding-right: 0;
+}
+
+#menu.active {
+    display: flex;
+}
+
+/* .nav-item {
+    cursor: pointer;
+    display: block;
+    padding: 0.5rem 1rem;
+}
+
+.nav-item:hover {
+    background-color: var(--lighter-grey);
+}
+
+.nav-item.active {
+    border-right: 4px solid var(--theme-red-color);
+    background-color: var(--lighter-grey);
+}
+
+#home-nav {
+    margin-bottom: 1rem;
+} */
+
+
+@media (max-width: 666px) {
+    #search {
+        display: none;
+    }
+    /* #search {
+        order: 1
+    } */
+
+    #search-icon {
+        display: block;
+    }
+
+    #menu-icon {
+        display: block;
+    }
+}
+
+@media (max-width: 500px) {
+    /* #logo-menu-container {
+        flex-direction: column;
+    } */
+
+    /* #menu-icon {
+        font-size: 1rem;
+    } */
+
+    .badge {
+        display: none!important;
+    }
+
+    #signout-btn {
+        display: none;
+    }
+
+    #menu-icon {
+        display: block;
+    }
+
+    #auth-header {
+        gap: 0.5rem;
+    }
+
+    #auth-header a {
+        font-size: small;
+    }
+
+    #signup-btn {
+        padding: 0.5rem 0.5rem;
+    }
+    
+    #signin-btn {
+        padding: 0.5rem 5px;
+    }
+
+
+
+    /* :host {
+        gap:0.5rem;
+        padding: 0.5rem 2px;
+    } */
+
+    /* #search-icon {
+        font-size: 1rem;
+    } */
+}

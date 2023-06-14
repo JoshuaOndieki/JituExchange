@@ -1,0 +1,34 @@
+<h1>Ask a Question</h1>
+
+<form [formGroup]="askForm" (ngSubmit)="onSubmit()" id="ask-form">
+    <div class="inputs">
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="summary.valid" [class.invalid]="summary.invalid && (summary.dirty || summary.touched)">
+                <input type="text" placeholder="Question Summary" formControlName="summary">
+                <label for="">summary</label>
+            </div>
+        </div>
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="details.valid" [class.invalid]="details.invalid && (details.dirty || details.touched)">
+                <textarea rows="7" oninput="this.style.height; this.style.height = this.scrollHeight + 'px'" wrap="soft" type="textarea" placeholder="Question Details" formControlName="details"></textarea>
+                <label for="">details</label>
+            </div>
+        </div>
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="tagInput.valid" [class.invalid]="tagInput.invalid && (tagInput.dirty || tagInput.touched)">
+                <input type="text" placeholder="Question tag (optional)" formControlName="tagInput" (keyup)="addTag($event)">
+                <label for="">press space to add a tag</label>
+            </div>
+            <div *ngIf="tagInput.errors && tagInput.invalid && (tagInput.dirty || tagInput.touched)" class="errors">
+                <div *ngIf="tagInput.errors">
+                    A tag can only contain letters, hyphens, and numbers.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="tags.value.length" id="new-tags">
+        <div id="tags-label">Tags</div>
+        <div *ngFor="let tag of tags.value; index as i" class="tag"><div class="tag-name">{{tag}}</div> <ion-icon name="remove-outline" size="large" (click)="removeTag(i)"></ion-icon></div>
+    </div>
+    <input type="submit" value="Post Your Question" [class.valid]="askForm.valid" [disabled]="askForm.invalid">
+</form>
