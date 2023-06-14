@@ -11,7 +11,7 @@
 </form>
 
 <div id="auth-header">
-    <ng-container *ngIf="user else noUser">
+    <ng-container *ngIf="authSvc.authUser else noUser">
         <div id="avatar-card">
             <ion-icon id="avatar" name="person-circle-outline" size="large"></ion-icon>
             <div class="gold-badges badge">·<span>7</span></div>
@@ -19,7 +19,7 @@
             <div class="bronze-badges badge">·<span>7</span></div>
         </div>
         <ion-icon name="notifications" id="notifications-icon"></ion-icon>
-        <div class="hover-underline" class="signout-btn" id="signout-btn">sign out</div>
+        <div class="hover-underline" class="signout-btn" id="signout-btn" (click)="signOut()">sign out</div>
     </ng-container>
           
     <ng-template #noUser>
