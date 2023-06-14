@@ -1,0 +1,166 @@
+header {    
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+#q-summary {
+    font-size: 1.5rem;
+    font-weight: bold;
+    max-width: 650px;
+}
+
+header a {
+    display: block;
+}
+
+:host {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+#q-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+#q-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#q-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: min(500px, 80svw);
+}
+
+#related-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.related-question {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+}
+
+.related-answers-count {
+    background-color: var(--lighter-grey);
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    width: 3rem;
+}
+
+.related-answers-count.has-answers {
+    background-color: var(--light-green);
+    color: white;
+}
+
+.related-link {
+    color: var(--app-blue);
+    cursor: pointer;
+}
+
+.related-link:hover {
+    opacity: 0.7;
+}
+
+.header {
+    font-size: large;
+    margin: 0.5rem;
+    font-weight: bold;
+}
+
+#new-answer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#new-answer-form .header {
+    font-size: large;
+    font-weight: bold;
+}
+
+#new-answer-form input[type=submit] {
+    align-self: flex-end;
+}
+
+.main-info {
+    display: flex;
+    gap: 1rem;
+}
+
+.votes {
+    text-align: center;
+}
+
+.tags {
+    display: flex;
+    gap: 1rem;
+}
+
+.tag {
+    background-color: var(--light-blue);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+.more-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ask-info {
+    align-self: flex-end;
+    background-color: var(--lighter-blue);
+    font-size: small;
+}
+
+.asker {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+}
+
+.asked-date {
+    color: grey;
+}
+
+.asker-id {
+    color: var(--app-blue);
+}
+
+.comments {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.commenter {
+    color: var(--app-blue);
+}
+
+.comment-date {
+    color: grey;
+}

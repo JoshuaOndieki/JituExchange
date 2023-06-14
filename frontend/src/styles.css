@@ -24,7 +24,8 @@
     --dark-blue: #6A86C2;
     --app-text-blue: #46A2D9;
     --very-light-red: #FEE3CE;
-    --border-grey: #BABFC4;
+    /* --border-grey: #BABFC4; */
+    --border-grey: #D9D9D9;
 
     --gold: #FFCC01;
     --silver: #B4B8BC;
@@ -128,7 +129,7 @@ button {
 
 .ask-btn {
     background-color: var(--app-blue);
-    padding: 0.5rem 3rem;
+    padding: 0.5rem 1rem;
     cursor: pointer;
     color: white;
     text-decoration: none;
@@ -165,7 +166,7 @@ app-signup, app-signin, app-ask {
     padding: 1rem;
 }
 
-#inputs {
+.inputs {
     display: flex;
     flex-direction: column;
     width: 90%;
@@ -186,7 +187,7 @@ app-signup, app-signin, app-ask {
     justify-content: space-between;
 }
 
-#inputs input, #inputs textarea {
+.inputs input, .inputs textarea {
     border: none;
     outline: none;
     background: none;
@@ -255,4 +256,33 @@ input[type=submit].valid {
 textarea {
     height: 100%;
     flex-grow: 1;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--border-grey);
+    width: 95%;
+}
+
+.gold-badges {
+    color: var(--gold);
+}
+
+.silver-badges {
+    color: var(--silver);
+}
+
+.bronze-badges {
+    color: var(--bronze);
+}
+
+.gold-badges, .silver-badges, .bronze-badges {
+    display: flex;
+}
+
+.badges {
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }

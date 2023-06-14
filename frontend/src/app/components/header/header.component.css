@@ -60,25 +60,10 @@
     color: var(--theme-red-color);
 }
 
-#gold-badges, #silver-badges, #bronze-badges {
-    display: flex;
-}
-
 #avatar-card:hover {
     background-color: var(--main-bg-color);
 }
 
-#gold-badges {
-    color: var(--gold);
-}
-
-#silver-badges {
-    color: var(--silver);
-}
-
-#bronze-badges {
-    color: var(--bronze);
-}
 
 #notifications-icon {
     font-size: 1.5rem;

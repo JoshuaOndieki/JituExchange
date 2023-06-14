@@ -3,7 +3,9 @@ header {
     justify-content: space-between;
     padding: 1rem;    
     align-items: center;
+    gap: 0.5rem;
 }
+
 
 :host {
     flex-direction: column;

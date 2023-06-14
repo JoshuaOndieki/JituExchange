@@ -28,6 +28,11 @@
 
 .q-summary, .q-asker {
     color: var(--app-blue);
+    cursor: pointer;
+}
+
+.q-summary:hover, .q-asker:hover {
+    opacity: 0.7;
 }
 
 .q-asker-meta {

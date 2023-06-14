@@ -15,7 +15,8 @@ const routes: Routes = [
         path: 'questions',
         loadComponent:()=> import('./components/questions/questions.component').then(c => c.QuestionsComponent),
         children: [
-          {path: 'ask', loadComponent:()=> import('./components/ask/ask.component').then(c => c.AskComponent)}
+          {path: 'ask', loadComponent:()=> import('./components/ask/ask.component').then(c => c.AskComponent)},
+          {path: 'q/:id', loadComponent:()=> import('./components/question-info/question-info.component').then(c => c.QuestionInfoComponent)}
         ]
       },
       {path: 'users', loadComponent:()=> import('./components/users/users.component').then(c => c.UsersComponent)},

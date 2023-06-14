@@ -1,0 +1,160 @@
+<ng-container *ngIf="question">
+    <header>
+        <div id="q-header">
+            <div id="q-summary">
+                {{question.summary}}
+            </div>
+            <div id="q-meta">
+                <div><span class="grey">Asked</span> 1 hour ago</div>
+                <div><span class="grey">Viewed</span> 2k times</div>
+            </div>
+        </div>
+        <a [routerLink]="['/questions', 'ask']" class="ask-btn">Ask Question</a>
+    </header>
+    <hr>
+    <main>
+        <div id="q-info">
+            <section class="main-info">
+                <div class="voting">
+                    <ion-icon name="caret-up-circle-outline" size="large"></ion-icon>
+                    <div class="votes">69</div>
+                    <ion-icon name="caret-down-circle-outline" size="large"></ion-icon>
+                </div>
+                <div class="more-details">
+                    <div class="details">
+                        <ng-container *ngFor="let line of question.details.split('\n')">{{line}}<br></ng-container>
+                    </div>
+                    <div class="tags">
+                        <div class="tag">angular</div>
+                        <div class="tag">mssql</div>
+                        <div class="tag">expressjs</div>
+                    </div>
+                    <div class="ask-info">
+                        <div class="asked-date">{{question.askedDate}}</div>
+                        <div class="asker">
+                            <ion-icon class="avatar" name="person-circle-outline" size="large"></ion-icon>
+                            <div>
+                                <div class="asker-id">{{question.askedBy}}</div>
+                                <div class="badges">
+                                    <div>420</div>
+                                    <div class="gold-badges badge">·<span>7</span></div>
+                                    <div class="silver-badges badge">·<span>7</span></div>
+                                    <div class="bronze-badges badge">·<span>7</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="comments">
+                        <div class="comment">
+                            <span class="comment-detail">I think you need to read these first: Angular Getting Started, Nodejs and Expressjs, and databases</span>
+                            <span> - </span>
+                            <span class="commenter">Some User </span>
+                            <span class="comment-date"> June 6, 2023 at 3:08 pm</span>
+                        </div>
+                        <div class="comment">
+                            <span class="comment-detail">I think you need to read these first: Angular Getting Started, Nodejs and Expressjs, and databases</span>
+                            <span> - </span>
+                            <span class="commenter">Some User </span>
+                            <span class="comment-date"> June 6, 2023 at 3:08 pm</span>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <hr>
+            <section>
+                <div class="header">Answers</div>
+                <div class="main-info">
+                    <div class="voting">
+                        <ion-icon name="caret-up-circle-outline" size="large"></ion-icon>
+                        <div class="votes">69</div>
+                        <ion-icon name="caret-down-circle-outline" size="large"></ion-icon>
+                    </div>
+                    <div class="more-details">
+                        <div class="details">
+                            <ng-container *ngFor="let line of question.details.split('\n')">{{line}}<br></ng-container>
+                        </div>
+                        <div class="ask-info">
+                            <div class="asked-date">{{question.askedDate}}</div>
+                            <div class="asker">
+                                <ion-icon class="avatar" name="person-circle-outline" size="large"></ion-icon>
+                                <div>
+                                    <div class="asker-id">{{question.askedBy}}</div>
+                                    <div class="badges">
+                                        <div>420</div>
+                                        <div class="gold-badges badge">·<span>7</span></div>
+                                        <div class="silver-badges badge">·<span>7</span></div>
+                                        <div class="bronze-badges badge">·<span>7</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="comments">
+                            <div class="comment">
+                                <span class="comment-detail">I think you need to read these first: Angular Getting Started, Nodejs and Expressjs, and databases</span>
+                                <span> - </span>
+                                <span class="commenter">Some User </span>
+                                <span class="comment-date"> June 6, 2023 at 3:08 pm</span>
+                            </div>
+                            <div class="comment">
+                                <span class="comment-detail">I think you need to read these first: Angular Getting Started, Nodejs and Expressjs, and databases</span>
+                                <span> - </span>
+                                <span class="commenter">Some User </span>
+                                <span class="comment-date"> June 6, 2023 at 3:08 pm</span>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </section>
+            <hr>
+            <section>
+                <form #newAnswerForm="ngForm" (ngSubmit)="postAnswer(newAnswerForm)" id="new-answer-form">
+                    <div class="header">Your Answer</div>
+                    <div class="inputs">
+                        <div class="input">
+                            <div class="input-wrapper" [class.valid]="newAnswerForm.valid" [class.invalid]="newAnswerForm.invalid && (newAnswerForm.dirty || newAnswerForm.touched)">
+                                <textarea rows="7" oninput="this.style.height; this.style.height = this.scrollHeight + 'px'" wrap="soft" type="textarea" placeholder="Write your answer here..." [(ngModel)]="newAnswerData.newAnswer" name="newAnswer" required></textarea>
+                                <label for="">answer</label>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="Post Answer" [class.valid]="newAnswerForm.valid" [disabled]="newAnswerForm.invalid">
+                </form>
+            </section>
+        </div>
+        <div id="related-questions">
+            <div class="header">Related Questions</div>
+            <div class="related-question">
+                <div class="related-answers-count has-answers">5</div>
+                <div class="related-link">link to related question</div>
+            </div>
+            <div class="related-question">
+                <div class="related-answers-count has-answers">36</div>
+                <div class="related-link">link to related question</div>
+            </div>
+            <div class="related-question">
+                <div class="related-answers-count">0</div>
+                <div class="related-link">link to related question</div>
+            </div>
+            <div class="related-question">
+                <div class="related-answers-count has-answers">1</div>
+                <div class="related-link">link to related question</div>
+            </div>
+            <div class="related-question">
+                <div class="related-answers-count has-answers">5</div>
+                <div class="related-link">link to related question</div>
+            </div>
+            <div class="related-question">
+                <div class="related-answers-count has-answers">25</div>
+                <div class="related-link">link to related question</div>
+            </div>
+            <div class="related-question">
+                <div class="related-answers-count">0</div>
+                <div class="related-link">link to related question</div>
+            </div>
+        </div>
+    </main>
+</ng-container>

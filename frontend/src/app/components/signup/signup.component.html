@@ -1,6 +1,6 @@
 <form id="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <h1>Sign Up</h1>
-    <div id="inputs">
+    <div class="inputs">
         <div class="input">
             <div class="input-wrapper" [class.valid]="username.valid" [class.invalid]="username.invalid && (username.dirty || username.touched)">
                 <input type="text" placeholder="Username" formControlName="username">

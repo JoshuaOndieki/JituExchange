@@ -1,7 +1,7 @@
 :host {
     display: flex;
     width: min(95svw, 1100px);
-    gap: 1rem;
+    /* gap: 1rem; */
 }
 
 app-home, app-questions, app-tags, app-users, app-question {
