@@ -1,7 +1,7 @@
 <ion-icon id="menu-icon" name="menu-outline" size="large" (click)="toggleMenu()"></ion-icon>
 <div id="menu" [class.active]="isMenuOpen">
     <app-navigation id="menu-nav"></app-navigation>
-    <div class="hover-underline" class="signout-btn">sign out</div>
+    <div class="hover-underline" class="signout-btn" (click)="signOut()">sign out</div>
 </div>
 <div routerLink="" class="logo"><span>Jitu</span>Exchange</div>
 <ion-icon name="search-outline" id="search-icon" size="large"></ion-icon>

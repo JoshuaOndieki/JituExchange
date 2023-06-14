@@ -1,1 +1,31 @@
-<p>users works!</p>
+<header>
+    <h1>
+        All Users
+    </h1>
+</header>
+
+<form id="search-form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <div class="inputs">
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="query.valid" [class.invalid]="query.invalid && (query.dirty || query.touched)">
+                <input type="search" placeholder="search users" formControlName="id">
+                <label for="">search query</label>
+            </div>
+        </div>
+    </div>
+</form>
+
+<main>
+    <div *ngFor="let i of [].constructor(20); let j = index" class="user-card">
+        <ion-icon class="user-avatar" name="person-circle-outline"></ion-icon>
+        <div class="user-info-actions">
+            <div class="user-display-name">Joshua Ondieki (420)</div>
+            <div class="user-membership">Member for 6 years, 4 months</div>
+            <div class="user-location">Nyeri, Kenya</div>
+            <div class="user-actions">
+                <div class="user-delete-btn">Delete</div>
+                <div class="user-edit-btn">Edit</div>
+            </div>
+        </div>
+    </div>
+</main>
