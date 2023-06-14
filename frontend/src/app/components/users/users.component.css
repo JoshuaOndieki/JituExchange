@@ -23,6 +23,7 @@ main {
     display: flex;
     gap: 1rem;
     align-items: center;
+    flex: 0.3;
 }
 
 .user-avatar {
@@ -55,4 +56,11 @@ main {
 
 .user-display-name {
     color: var(--app-blue);
+    font-size: large;
+}
+
+.user-location {
+    display: flex;
+    align-items: center;
+    color: grey;
 }

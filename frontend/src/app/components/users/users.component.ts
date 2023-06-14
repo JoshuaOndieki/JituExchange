@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { IonicModule } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -17,7 +18,7 @@ export class UsersComponent {
   users!:Iuser[]
   searchForm!:FormGroup
 
-  constructor(private userSvc:UserService, private fb:FormBuilder, private router:Router) {
+  constructor(private userSvc:UserService, private fb:FormBuilder, private router:Router, public authSvc:AuthService) {
   }
 
   ngOnInit(): void {

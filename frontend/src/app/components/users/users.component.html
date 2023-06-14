@@ -16,15 +16,15 @@
 </form>
 
 <main>
-    <div *ngFor="let i of [].constructor(20); let j = index" class="user-card">
+    <div *ngFor="let user of users" class="user-card">
         <ion-icon class="user-avatar" name="person-circle-outline"></ion-icon>
         <div class="user-info-actions">
-            <div class="user-display-name">Joshua Ondieki (420)</div>
+            <div class="user-display-name" [routerLink]="['/users', user.username]">{{user.username}} <span style="color:black; font-size: 0.8rem;">(420)</span></div>
             <div class="user-membership">Member for 6 years, 4 months</div>
-            <div class="user-location">Nyeri, Kenya</div>
+            <div class="user-location"><ion-icon name="location-outline"></ion-icon> {{user.location}}</div>
             <div class="user-actions">
-                <div class="user-delete-btn">Delete</div>
-                <div class="user-edit-btn">Edit</div>
+                <div class="user-delete-btn" *ngIf="authSvc.authUser?.role === 'admin' || user.username === authSvc.authUser?.username">Delete</div>
+                <div class="user-edit-btn" *ngIf="user.username === authSvc.authUser?.username">Edit</div>
             </div>
         </div>
     </div>
