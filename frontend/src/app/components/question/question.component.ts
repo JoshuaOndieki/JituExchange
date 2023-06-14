@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Iquestion } from 'src/app/interfaces';
+import { Iquestion, Iuser } from 'src/app/interfaces';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -12,4 +12,22 @@ import { RouterModule } from '@angular/router';
 })
 export class QuestionComponent {
   @Input() question!:Iquestion
+  user!:Iuser
+
+  constructor() {
+    this.user =
+        {
+            firstname:"string",
+            lastname:"string",
+            id:"JoshuaOndieki",
+            email:"string",
+            username:"string",
+            location:"string",
+            joinedDate:"string",
+            website: "string",
+            github:"string",
+            avatar:"string",
+            role: 'admin'
+        }    
+  }
 }

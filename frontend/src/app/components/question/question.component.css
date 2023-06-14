@@ -50,3 +50,17 @@
     color: var(--app-text-blue);
     border-radius: 5px;
 }
+
+.delete-btn {
+    color: salmon;
+    cursor: pointer;
+}
+
+.edit-btn {
+    color: var(--app-blue);
+    cursor: pointer;
+}
+
+.actions {
+    font-size: 1rem;
+}
