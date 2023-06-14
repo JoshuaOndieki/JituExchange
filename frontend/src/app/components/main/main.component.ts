@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavigationComponent } from '../navigation/navigation.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -10,6 +11,10 @@ import { NavigationComponent } from '../navigation/navigation.component';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent {
+export class MainComponent implements OnInit{
+    constructor(private authSvc:AuthService, private router:Router) {}
 
+    ngOnInit(): void {
+      this.authSvc.authUser ? '' : this.router.navigate(['welcome'])
+    }
 }

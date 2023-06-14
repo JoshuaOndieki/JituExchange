@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Iquestion, Iuser } from 'src/app/interfaces';
 import { RouterModule } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-question',
@@ -12,22 +13,8 @@ import { RouterModule } from '@angular/router';
 })
 export class QuestionComponent {
   @Input() question!:Iquestion
-  user!:Iuser
+  // user!:Iuser
 
-  constructor() {
-    this.user =
-        {
-            firstname:"string",
-            lastname:"string",
-            id:"JoshuaOndieki",
-            email:"string",
-            username:"string",
-            location:"string",
-            joinedDate:"string",
-            website: "string",
-            github:"string",
-            avatar:"string",
-            role: 'admin'
-        }    
-  }
+  constructor(public authSvc:AuthService) {
+}
 }

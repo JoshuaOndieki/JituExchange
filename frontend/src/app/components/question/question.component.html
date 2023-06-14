@@ -12,8 +12,8 @@
         <span class="q-asker-meta">420</span>
         <span>asked {{question.askedDate}}</span>
         <span class="actions">
-            <span *ngIf="question.askedBy === user.id" class="edit-btn"> edit </span>
-            <span *ngIf="user.role === 'admin'" class="delete-btn"> delete </span>
+            <span *ngIf="question.askedBy === authSvc.authUser?.username" class="edit-btn"> edit </span>
+            <span *ngIf="authSvc.authUser?.role === 'admin' || question.askedBy === authSvc.authUser?.username" class="delete-btn"> delete </span>
         </span>
     </div>
 </div>

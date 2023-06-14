@@ -16,13 +16,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class AllQuestionsComponent implements OnInit {
   questions!:Iquestion[]
   searchForm!:FormGroup
-  
+
   constructor(private questionSvc:QuestionService, private fb:FormBuilder, private router:Router) {
   }
 
   ngOnInit(): void {
-    const question = this.questionSvc.allQuestions[0]
-    this.questions = new Array(10).fill(question)
+    this.questions = this.questionSvc.allQuestions
+    // this.questions = new Array(10).fill(question)
 
     this.searchForm = this.fb.group({
       query: [''],

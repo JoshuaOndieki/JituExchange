@@ -1,9 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Iuser } from 'src/app/interfaces';
 import { NavigationComponent } from '../navigation/navigation.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-header',
@@ -13,29 +14,15 @@ import { NavigationComponent } from '../navigation/navigation.component';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-    user!:Iuser
+    // user!:Iuser | null
     isMenuOpen: boolean = false
     currentNavigation!: 'home' | 'questions' | 'tags' | 'users'
 
-    constructor() {
-        this.user =
-        {
-            firstname:"string",
-            lastname:"string",
-            id:"string",
-            email:"string",
-            username:"string",
-            location:"string",
-            joinedDate:"string",
-            website: "string",
-            github:"string",
-            avatar:"string",
-            role: 'admin'
-        }        
+    constructor(public authSvc:AuthService) {
+          
     }
 
     ngOnInit(): void {
-        
         
     }
 
@@ -51,5 +38,9 @@ export class HeaderComponent implements OnInit {
       if ( menuElement && menuIcon && !menuElement.contains(event.target as Node) && !menuIcon.contains(event.target as Node)) {
         this.isMenuOpen = false
       }
+    }
+
+    signOut() {
+        this.authSvc.signOut()
     }
 }
