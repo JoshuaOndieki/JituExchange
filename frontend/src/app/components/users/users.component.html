@@ -1,1 +1,31 @@
-<p>users works!</p>
+<header>
+    <h1>
+        All Users
+    </h1>
+</header>
+
+<form id="search-form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <div class="inputs">
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="query.valid" [class.invalid]="query.invalid && (query.dirty || query.touched)">
+                <input type="search" placeholder="search users" formControlName="id">
+                <label for="">search query</label>
+            </div>
+        </div>
+    </div>
+</form>
+
+<main>
+    <div *ngFor="let user of users" class="user-card">
+        <ion-icon class="user-avatar" name="person-circle-outline"></ion-icon>
+        <div class="user-info-actions">
+            <div class="user-display-name" [routerLink]="['/users', user.username]">{{user.username}} <span style="color:black; font-size: 0.8rem;">(420)</span></div>
+            <div class="user-membership">Member for 6 years, 4 months</div>
+            <div class="user-location"><ion-icon name="location-outline"></ion-icon> {{user.location}}</div>
+            <div class="user-actions">
+                <div class="user-delete-btn" *ngIf="authSvc.authUser?.role === 'admin' || user.username === authSvc.authUser?.username">Delete</div>
+                <div class="user-edit-btn" *ngIf="user.username === authSvc.authUser?.username">Edit</div>
+            </div>
+        </div>
+    </div>
+</main>
