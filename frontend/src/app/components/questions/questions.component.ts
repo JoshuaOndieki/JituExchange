@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { AskComponent } from '../ask/ask.component';
 
 @Component({
   selector: 'app-questions',

@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IpasswordStrengthErrors } from '../interfaces';
 
 @Pipe({
   name: 'passwordStrengthErrorsKeys',
