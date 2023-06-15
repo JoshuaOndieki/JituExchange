@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import passwordMatchValidator from 'src/app/validators/confirm.password.validator';
 import passwordStrengthValidator from 'src/app/validators/password.strength.validator';
 import { PasswordStrengthErrorsKeysPipe } from 'src/app/pipes/password-strength-errors-keys.pipe';

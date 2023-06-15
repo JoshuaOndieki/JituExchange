@@ -1,8 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { Iuser } from 'src/app/interfaces';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -14,7 +13,6 @@ import { AuthService } from 'src/app/services/auth.service';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-    // user!:Iuser | null
     isMenuOpen: boolean = false
     currentNavigation!: 'home' | 'questions' | 'tags' | 'users'
 

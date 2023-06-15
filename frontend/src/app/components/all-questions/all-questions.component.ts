@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuestionComponent } from '../question/question.component';
 import { QuestionService } from 'src/app/services/question.service';
-import { Iquestion, Iuser } from 'src/app/interfaces';
+import { Iquestion } from 'src/app/interfaces';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
