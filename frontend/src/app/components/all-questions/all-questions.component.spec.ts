@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AllQuestionsComponent } from './all-questions.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 describe('AllQuestionsComponent', () => {
   let component: AllQuestionsComponent;

@@ -10,7 +10,6 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app/app-routing.module';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 
 bootstrapApplication(AppComponent, {

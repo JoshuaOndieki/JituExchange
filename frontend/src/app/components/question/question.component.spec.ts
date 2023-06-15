@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionComponent } from './question.component';
-import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 describe('QuestionComponent', () => {
