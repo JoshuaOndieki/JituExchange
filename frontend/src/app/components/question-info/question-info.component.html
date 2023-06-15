@@ -58,6 +58,16 @@
                             <span class="commenter">Some User </span>
                             <span class="comment-date"> June 6, 2023 at 3:08 pm</span>
                         </div>
+                        <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="addComment('id here')">
+                            <div class="inputs">
+                                <div class="input">
+                                    <div class="input-wrapper" [class.valid]="comment.valid" [class.invalid]="comment.invalid && (comment.dirty || comment.touched)">
+                                        <input type="text" placeholder="add comment..." formControlName="comment">
+                                        <label for="">press enter to comment</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -104,6 +114,16 @@
                                 <span class="commenter">Some User </span>
                                 <span class="comment-date"> June 6, 2023 at 3:08 pm</span>
                             </div>
+                            <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="addComment('id here')">
+                                <div class="inputs">
+                                    <div class="input">
+                                        <div class="input-wrapper" [class.valid]="comment.valid" [class.invalid]="comment.invalid && (comment.dirty || comment.touched)">
+                                            <input type="text" placeholder="add comment..." formControlName="comment">
+                                            <label for="">press enter to comment</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
     

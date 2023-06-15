@@ -24,7 +24,7 @@ export interface Iquestion {
 export interface Ianswer {
     id:string
     details:string
-    askedDate:string
+    answeredDate:string
     editedDate:string | null
     answeredBy:string
     answerFor:string

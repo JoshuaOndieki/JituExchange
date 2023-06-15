@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { QuestionService } from 'src/app/services/question.service';
 import { Iquestion } from 'src/app/interfaces';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, NgForm, FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-question-info',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, IonicModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, IonicModule, FormsModule],
   templateUrl: './question-info.component.html',
   styleUrls: ['./question-info.component.css']
 })
@@ -20,10 +20,16 @@ export class QuestionInfoComponent implements OnInit{
     newAnswer: ''
   }
 
-  constructor(private route:ActivatedRoute, private questionSvc:QuestionService) {}
+  commentForm!:FormGroup
+
+  constructor(private route:ActivatedRoute, private questionSvc:QuestionService, private fb:FormBuilder) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => this.question = this.questionSvc.allQuestions.find(q => q.id === params['id']))
+
+    this.commentForm = this.fb.group({
+      comment: [''],
+    })
   }
 
   // get newAnswer() {
@@ -34,4 +40,16 @@ export class QuestionInfoComponent implements OnInit{
     console.log(form, this.newAnswerData);
     
   }
+
+  get comment() {
+    return this.commentForm.controls['comment']
+  }
+
+  addComment(id:string) {
+    console.log(this.commentForm);
+    
+  }
+  
 }
+
+  
