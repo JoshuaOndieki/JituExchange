@@ -1,15 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionInfoComponent } from './question-info.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('QuestionInfoComponent', () => {
   let component: QuestionInfoComponent;
   let fixture: ComponentFixture<QuestionInfoComponent>;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [QuestionInfoComponent]
+      imports: [QuestionInfoComponent],
+      providers: [{ provide: ActivatedRoute, useValue: {
+        params: of({
+          id: 'a1b3ew'
+        })
+      } }]
     });
+    // const router = TestBed.inject(Router);
+    // await router.navigate(['/questions', 'q', 'a1b3ew'])
     fixture = TestBed.createComponent(QuestionInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

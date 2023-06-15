@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AskComponent } from './ask.component';
+import { ActivatedRoute } from '@angular/router';
 
 describe('AskComponent', () => {
   let component: AskComponent;
@@ -8,7 +9,8 @@ describe('AskComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AskComponent]
+      imports: [AskComponent],
+      providers: [{ provide: ActivatedRoute, useValue: {} }]
     });
     fixture = TestBed.createComponent(AskComponent);
     component = fixture.componentInstance;
