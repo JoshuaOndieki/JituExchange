@@ -7,3 +7,26 @@ A lite Version of Stack Overflow
 ## Design - Figma
 
 [Link to **Jitu**Exchange Figma designs](https://www.figma.com/file/q9AedsAJNIKBq2WE1FV1G9/JituExchange?type=design&t=qZMzWbc3PWJVdNlX-1)
+
+## Frontend - Angular
+
+[Link to **Jitu**Exchange Angular Frontend](https://jituexchange.vercel.app)
+Locally, run `npm run dev`
+
+## Backend - Expressjs
+
+Run `npm run build && npm start`
+For development, `npm run dev`
+
+## Database - MSSQL
+
+To setup database, run the script > `bash database/setup.sh`
+
+## Env
+
+```env
+DB_USER
+DB_PWD
+DB_NAME
+DB_SERVER
+```
