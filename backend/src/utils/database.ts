@@ -18,7 +18,6 @@ import { sqlConfig } from '../config';
       }
       return DatabaseHelper.instance;
     }
-
     
     private static addInputsToRequest(request:mssql.Request, data:{[x:string]:string|number|null}={}){
         const keys = Object.keys(data)
@@ -29,8 +28,8 @@ import { sqlConfig } from '../config';
     }
     
     async exec (storedProcedure:string, data:{[x:string]:string|number|null}={}){
-        let  request :mssql.Request= await (await this.pool).request()
-        request= DatabaseHelper.addInputsToRequest(request,data)
+        let  request: mssql.Request = await (await this.pool).request()
+        request = DatabaseHelper.addInputsToRequest(request, data)
         return await request.execute(storedProcedure)
     }
 
