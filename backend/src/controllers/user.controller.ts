@@ -18,7 +18,7 @@ export const getUsers = async (req:Request, res:Response) => {
 export const signup = async (req:Request, res:Response) => {
     try {
         const id = uid()
-        const password = await bcrypt.hash(req.body.password, 10)
+        const password = bcrypt.hashSync(req.body.password, 10)
         await db.exec('addUser', {id, ...req.body, password})
         return res.status(201).json({message: "sign up successful."})
     } catch (error:any) {
