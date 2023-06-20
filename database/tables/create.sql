@@ -15,65 +15,66 @@ CREATE TABLE users (
 );
 
 CREATE TABLE questions(
-    id VARCHAR(255) NOT NULL PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     summary VARCHAR(255) NOT NULL,
     details TEXT NOT NULL,
     askedBy VARCHAR(255) FOREIGN KEY REFERENCES users(id),
-    askedDate datetimeoffset NOT NULL DEFAULT SWITCHOFFSET(GETDATE(), dbo.GetLocalTimeZoneOffset()),
+    askedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET(),
     editedDate datetimeoffset NULL
 );
 
 CREATE TABLE questionComments(
-    id VARCHAR(255) NOT NULL PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     commentFor VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES questions(id),
     details VARCHAR(255) NOT NULL,
     commentBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id),
     editedDate datetimeoffset NULL,
-    commentedDate datetimeoffset NOT NULL DEFAULT SWITCHOFFSET(GETDATE(), dbo.GetLocalTimeZoneOffset())
+    commentedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET()
 );
 
 CREATE TABLE answers(
-    id VARCHAR(255) NOT NULL PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     details NVARCHAR(255) NOT NULL,
-    answeredDate datetimeoffset NOT NULL DEFAULT SWITCHOFFSET(GETDATE(), dbo.GetLocalTimeZoneOffset()),
+    answeredDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET(),
     editedDate datetimeoffset NULL,
     answeredBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id),
     answerFor VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES questions(id)
 );
 
 CREATE TABLE answerComments(
-    id VARCHAR(255) NOT NULL PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     commentFor VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES answers(id),
     details VARCHAR(255) NOT NULL,
     commentBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id),
     editedDate datetimeoffset NULL,
-    commentedDate datetimeoffset NOT NULL DEFAULT SWITCHOFFSET(GETDATE(), dbo.GetLocalTimeZoneOffset())
+    commentedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET()
 );
 
 CREATE TABLE tags(
-    id VARCHAR(255) NOT NULL,
+    id VARCHAR(255) PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
     addedBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id),
-    addedDate datetimeoffset NOT NULL DEFAULT SWITCHOFFSET(GETDATE(), dbo.GetLocalTimeZoneOffset()),
+    addedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET(),
     description VARCHAR(255) NULL
 );
 
 CREATE TABLE questionTags(
-    id VARCHAR(255) NOT NULL PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     tagName VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES tags(name),
     questionID VARCHAR(255) FOREIGN KEY REFERENCES questions(id)
 );
 
 CREATE TABLE badges(
-    id VARCHAR(255) NOT NULL PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     description VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL UNIQUE
+    name VARCHAR(255) NOT NULL UNIQUE,
+    addedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET()
 );
 
 CREATE TABLE userBadges(
-    id VARCHAR(255) NOT NULL PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     userID VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id),
     badgeID VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES badges(id),
-    earnedDate datetimeoffset NOT NULL DEFAULT SWITCHOFFSET(GETDATE(), dbo.GetLocalTimeZoneOffset())
+    earnedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET()
 );
