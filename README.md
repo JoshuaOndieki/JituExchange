@@ -21,6 +21,7 @@ For development, `npm run dev`
 ## Database - MSSQL
 
 To setup database, run the script > `bash database/setup.sh`
+Use the `patch` command to only execute stored procedures e.g `bash database/setup.sh patch`
 
 ## Env
 
