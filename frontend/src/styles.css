@@ -286,3 +286,40 @@ hr {
     gap: 5px;
     align-items: center;
 }
+
+
+#messages {
+    position: fixed;
+    z-index: 999;
+    top: 5svh;
+    left: 5svw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    width: min(400px, 60svw);
+}
+
+app-toast-message {
+    color: white;
+    padding: 0.2rem 0.5rem;
+    font-size: large;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0.9;
+    border-radius: 2px;
+    justify-content: space-between;
+}
+
+.error {
+    background-color: var(--light-red);
+}
+
+.success {
+    background-color: var(--light-green);
+}
+
+.info {
+    background-color: gray;
+}

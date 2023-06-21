@@ -6,6 +6,8 @@ import passwordStrengthValidator from 'src/app/validators/password.strength.vali
 import { PasswordStrengthErrorsKeysPipe } from 'src/app/pipes/password-strength-errors-keys.pipe';
 import noSpacesValidator from 'src/app/validators/no.spaces.validator';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +18,7 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
     signupForm!:FormGroup
-    constructor(private fb:FormBuilder, private router:Router) {
+    constructor(private fb:FormBuilder, private router:Router, private userSvc:UserService, private toastSvc:ToastService) {
     }
 
     ngOnInit(): void {
@@ -49,7 +51,28 @@ export class SignupComponent implements OnInit {
       }
 
     onSubmit() {        
-        this.signupForm.valid ? this.router.navigate(['/signin']) : ''
+        if (this.signupForm.valid) {
+            this.userSvc.signup({username:this.username.value, email:this.email.value, password:this.password.value}).subscribe(
+                (res) => {
+                    console.log(res);
+                    
+                    this.toastSvc.displayMessage({
+                        message: res.message,
+                        type: 'success',
+                        displayed: false
+                    })
+                    this.router.navigate(['/signin'])
+                },
+                (error) => {
+                    console.log(error)
+                    this.toastSvc.displayMessage({
+                        message: error.error.message || 'An error occured',
+                        type: 'error',
+                        displayed: false
+                    })
+                }
+            )
+        }
         
     }
 }

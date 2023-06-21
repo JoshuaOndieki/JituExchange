@@ -12,6 +12,12 @@ export interface Iuser {
     role: 'admin' | 'user'
 }
 
+export interface InewUserData {
+    email:string
+    username:string
+    password:string
+} 
+
 export interface Iquestion {
     id:string
     summary:string
@@ -55,4 +61,18 @@ export interface IpasswordStrengthErrors {
         received:number
         expected:number
     }
+}
+
+export interface ItoastMessage {
+    message:string
+    type: 'success' | 'error' | 'info'
+    displayed:Boolean
+}
+
+export interface Istate {
+    user: IuserState
+}
+
+export interface IuserState {
+    authUser: Iuser
 }

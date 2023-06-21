@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-signin',
@@ -13,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SigninComponent {
   signinForm!:FormGroup
-  constructor(private fb:FormBuilder, private router:Router, private authSvc:AuthService) {
+  constructor(private fb:FormBuilder, private router:Router, private authSvc:AuthService, private userSvc:UserService, private toastSvc:ToastService) {
   }
 
   ngOnInit(): void {
@@ -36,39 +38,26 @@ export class SigninComponent {
   }
 
   onSubmit() {
-    this.signinForm.valid? this.authSvc.signIn(
-      {
-          firstname:"string",
-          lastname:"string",
-          id:"string",
-          email:"string",
-          username:this.id.value,
-          location:"string",
-          joinedDate:"string",
-          website: "string",
-          github:"string",
-          avatar:"string",
-          role: 'user'
-      }      ) : ''
-
+    if (this.signinForm.valid) {
+      this.userSvc.signin({identifier:this.id.value, password:this.password.value}).subscribe(
+        (res) => {
+          this.toastSvc.displayMessage({
+            message: res.message,
+            type: 'success',
+            displayed:false
+          })
+          
+          this.authSvc.signIn(res.token)
+        },
+        (error) => {
+          this.toastSvc.displayMessage({
+            message: error.error.message || 'An error occured',
+            type: 'error',
+            displayed: false
+          })
+        }
+      )
+    }
     // this.signinForm.valid ? this.router.navigate(['']) : ''
-        
-  }
-
-  signAdmin() {
-    this.authSvc.signIn(
-      {
-          firstname:"string",
-          lastname:"string",
-          id:"string",
-          email:"string",
-          username:"admin",
-          location:"string",
-          joinedDate:"string",
-          website: "string",
-          github:"string",
-          avatar:"string",
-          role: 'admin'
-      }      )
   }
 }
