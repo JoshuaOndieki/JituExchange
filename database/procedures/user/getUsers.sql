@@ -1,19 +1,3 @@
--- CREATE OR ALTER PROCEDURE getUsers(
---     @offset INT,
---     @limit INT,
---     @sortBy VARCHAR(100),
---     @order VARCHAR(50)
--- )
--- AS
--- BEGIN
---     SELECT *
---     FROM users
---     WHERE isDeleted=0
---     ORDER BY @sortBy @order
---     OFFSET @offset ROWS
---     FETCH NEXT @limit ROWS ONLY;
--- END
-
 CREATE OR ALTER PROCEDURE getUsers(
     @offset INT,
     @limit INT,

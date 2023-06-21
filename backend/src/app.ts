@@ -2,6 +2,7 @@ import express, {Request, Response, json} from 'express'
 import cors from 'cors'
 import DatabaseHelper from './utils/database'
 import userRouter from './routers/user.router'
+import questionRouter from './routers/question.router'
 
 
 const app = express()
@@ -21,6 +22,7 @@ app.get('/', (req:Request, res:Response)=> {
 // })
 
 app.use('/users', userRouter)
+app.use('/questions', questionRouter)
 
 
 export default app

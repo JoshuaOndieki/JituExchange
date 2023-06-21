@@ -18,9 +18,10 @@ CREATE TABLE questions(
     id VARCHAR(255) PRIMARY KEY,
     summary VARCHAR(255) NOT NULL,
     details TEXT NOT NULL,
-    askedBy VARCHAR(255) FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
+    askedBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
     askedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET(),
-    editedDate datetimeoffset NULL
+    editedDate datetimeoffset NULL,
+    views INT DEFAULT 0
 );
 
 CREATE TABLE questionComments(
