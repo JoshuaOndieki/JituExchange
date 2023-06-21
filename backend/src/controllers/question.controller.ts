@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { Response } from "express"
 import { serverError } from "../helpers/server.helper"
 import DatabaseHelper from "../utils/database"
 import { v4 as uid } from 'uuid'
@@ -90,10 +90,15 @@ export const getQuestion = async (req:IreqInfo, res:Response) => {
         let qAnswers = (await db.exec('getQuestionAnswers', {questionID:id})).recordset
         question.answers = qAnswers
         // get comments for every answer
-        qAnswers.forEach(async (answer) => {
+        // qAnswers.forEach(async (answer) => {
+            
+        // });
+
+        for (let index = 0; index < qAnswers.length; index++) {
+            const answer = qAnswers[index];
             let aComments = (await db.exec('getAnswerComments', {answerID:answer.id})).recordset
             answer.comments = aComments
-        });
+        }
     
         return res.status(200).json(question)
     } catch (error:any) {

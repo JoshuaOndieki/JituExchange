@@ -11,4 +11,5 @@ BEGIN
     (SELECT COUNT(*) FROM answers WHERE answerFor = q.id) AS answersCount
     FROM questions q
     LEFT JOIN users u ON q.askedBy = u.id
+    WHERE q.id=@id
 END

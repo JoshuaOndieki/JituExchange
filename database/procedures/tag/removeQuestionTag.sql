@@ -1,5 +1,5 @@
 CREATE OR ALTER PROCEDURE removeQuestionTag(
-    @id
+    @id VARCHAR(255)
 )
 AS
 BEGIN
