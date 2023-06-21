@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToastMessageComponent } from './toast-message.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ToastMessageComponent', () => {
   let component: ToastMessageComponent;
@@ -8,10 +9,15 @@ describe('ToastMessageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ToastMessageComponent]
+      imports: [ToastMessageComponent, HttpClientModule]
     });
     fixture = TestBed.createComponent(ToastMessageComponent);
     component = fixture.componentInstance;
+    component.toastMessage = {
+      message: 'Test message',
+      type: 'info',
+      displayed: false
+    }
     fixture.detectChanges();
   });
 

@@ -14,6 +14,6 @@ import { UserService } from './app/services/user.service';
 
 
 bootstrapApplication(AppComponent, {
-    providers: [importProvidersFrom(BrowserModule, HttpClientModule, AppRoutingModule, StoreModule.forRoot({}, {}), StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }), IonicModule.forRoot(), UserService)]
+    providers: [importProvidersFrom(BrowserModule, HttpClientModule, AppRoutingModule, StoreModule.forRoot({}, {}), StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }), IonicModule.forRoot())]
 })
   .catch(err => console.error(err));
