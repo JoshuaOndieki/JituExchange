@@ -8,7 +8,8 @@ const db = DatabaseHelper.getInstance()
 
 export const vote = async (req:IreqInfo, res:Response) => {
     try {
-        const {target, voter, voteFor, positive} = req.body
+        const {target, voteFor, positive} = req.body
+        const voter = req.info?.id as string
         const existingVote = await (await db.exec('getVote', {voter, voteFor, target})).recordset[0]
         const vote_type = positive ? 'upvote' : 'downvote'
         if (existingVote && existingVote.positive === Boolean(positive)) {
