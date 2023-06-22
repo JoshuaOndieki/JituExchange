@@ -3,5 +3,7 @@ CREATE OR ALTER PROCEDURE getQuestionComments(
 )
 AS
 BEGIN
-    SELECT * FROM questionComments WHERE commentFor=@questionID
+    SELECT qc.*, u.username FROM questionComments qc
+    LEFT JOIN users u ON qc.commentBy=u.id
+    WHERE commentFor=@questionID
 END

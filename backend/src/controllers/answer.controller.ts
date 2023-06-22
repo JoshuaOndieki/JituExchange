@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { Response } from "express"
 import { serverError } from "../helpers/server.helper"
 import DatabaseHelper from "../utils/database"
 import { v4 as uid } from 'uuid'

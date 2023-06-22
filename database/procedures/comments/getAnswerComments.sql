@@ -3,5 +3,7 @@ CREATE OR ALTER PROCEDURE getAnswerComments(
 )
 AS
 BEGIN
-    SELECT * FROM answerComments WHERE commentFor=@answerID
+    SELECT ac.*, u.username FROM answerComments ac
+    LEFT JOIN users u ON ac.commentBy=u.id
+    WHERE commentFor=@answerID
 END

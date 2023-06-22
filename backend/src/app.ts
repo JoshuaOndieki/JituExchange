@@ -3,6 +3,7 @@ import cors from 'cors'
 import userRouter from './routers/user.router'
 import questionRouter from './routers/question.router'
 import answerRouter from './routers/answer.router'
+import commentRouter from './routers/comment.router'
 
 
 const app = express()
@@ -24,6 +25,6 @@ app.get('/', (req:Request, res:Response)=> {
 app.use('/users', userRouter)
 app.use('/questions', questionRouter)
 app.use('/answers', answerRouter)
-
+app.use('/comments', commentRouter)
 
 export default app
