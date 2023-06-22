@@ -7,12 +7,23 @@ import { IreqInfo } from "../types"
 const db = DatabaseHelper.getInstance()
 
 export const vote = async (req:IreqInfo, res:Response) => {
-    const {target, voter, voteFor, positive} = req.body
-    const existingVote = await (await db.exec('getVote', {voter, voteFor, target})).recordset[0]
-    if (existingVote && existingVote.positive === Boolean(positive)) {
-        return res.status(200).json({message: ""})
+    try {
+        const {target, voter, voteFor, positive} = req.body
+        const existingVote = await (await db.exec('getVote', {voter, voteFor, target})).recordset[0]
+        const vote_type = positive ? 'upvote' : 'downvote'
+        if (existingVote && existingVote.positive === Boolean(positive)) {
+            return res.status(409).json({message: `already ${vote_type}d`})
+        }
+        if (existingVote && existingVote.positive !== Boolean(positive)) {
+            await db.exec('removeVote', {id:existingVote.id, target})
+        }
+
+        const id = uid()
+        await db.exec('vote', {id, target, voter, voteFor, positive})
+        return res.status(201).json({message: `${target} ${vote_type}d`})
+    } catch (error:any) {
+        return serverError(error, res)
     }
-    const id = uid()
 }
 
 export const removeVote = async (req:IreqInfo, res:Response) => {

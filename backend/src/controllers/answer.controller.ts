@@ -62,3 +62,21 @@ export const deleteAnswer = async (req:IreqInfo, res:Response) => {
         return serverError(error, res)
     }
 }
+
+export const acceptAnswer = async (req:IreqInfo, res:Response) => {
+    try {
+        const id = req.params.id as string
+        let answer = (await db.exec('getAnswer', {id})).recordset[0]
+        if (!answer) {
+            return res.status(404).json({message: `answer not found. ID ${id}`})
+        }
+        const question = await (await db.exec('getQuestion', {id:answer.answerFor})).recordset[0]
+        if (req.info?.id !== question.askedBy) {
+            return res.status(403).json({message: "Forbidden"})
+        }
+        await db.exec('acceptAnswer', {id, questionID:question.id})
+        return res.status(200).json({message: "Answer accepted"})
+    } catch (error:any) {
+        return serverError(error, res)
+    }
+}

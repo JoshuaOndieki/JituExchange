@@ -39,7 +39,8 @@ CREATE TABLE answers(
     answeredDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET(),
     editedDate datetimeoffset NULL,
     answeredBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id),
-    answerFor VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES questions(id) ON DELETE CASCADE
+    answerFor VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES questions(id) ON DELETE CASCADE,
+    accepted BIT DEFAULT 0
 );
 
 CREATE TABLE answerComments(
