@@ -1,7 +1,10 @@
 import express, {Request, Response, json} from 'express'
 import cors from 'cors'
-import DatabaseHelper from './utils/database'
 import userRouter from './routers/user.router'
+import questionRouter from './routers/question.router'
+import answerRouter from './routers/answer.router'
+import commentRouter from './routers/comment.router'
+import voteRouter from './routers/vote.router'
 
 
 const app = express()
@@ -21,6 +24,9 @@ app.get('/', (req:Request, res:Response)=> {
 // })
 
 app.use('/users', userRouter)
-
+app.use('/questions', questionRouter)
+app.use('/answers', answerRouter)
+app.use('/comments', commentRouter)
+app.use('/votes', voteRouter)
 
 export default app
