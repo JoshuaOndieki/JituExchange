@@ -35,7 +35,7 @@ CREATE TABLE questionComments(
 
 CREATE TABLE answers(
     id VARCHAR(255) PRIMARY KEY,
-    details NVARCHAR(255) NOT NULL,
+    details TEXT NOT NULL,
     answeredDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET(),
     editedDate datetimeoffset NULL,
     answeredBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id),
@@ -114,5 +114,6 @@ CREATE TABLE acceptedAnswerEmails(
     id INT IDENTITY(1,1) PRIMARY KEY,
     targetUser VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
     targetEmail VARCHAR(255) NOT NULL,
+    answerID VARCHAR(255) NOT NULL,
     sentDate datetimeoffset NULL
 );

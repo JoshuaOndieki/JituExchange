@@ -1,24 +1,22 @@
 import ejs from "ejs"
 import NodeMail from "../utils/nodemailer"
 import path from 'path'
-import { ImailData } from "../types"
+import { IacceptedAnswerEmailData, IresetEmailData, IwelcomeEmailData } from "../types"
 
-const sendMail = async (data:ImailData) => {
+const sendMail = async (data:IwelcomeEmailData | IresetEmailData | IacceptedAnswerEmailData) => {
     try {
-        let templateName = data.type === 'welcomeEmails' ? 'welcome' : ''
-        let subject = data.type === 'welcomeEmails' ? 'Welcome to the JituExchange Community ✨' : ''
-        
-        await ejs.renderFile(path.resolve(__dirname, '../../templates/' + templateName +'.template.ejs'), {...data}, async (err, emailHTML)=>{
+        await ejs.renderFile(path.resolve(__dirname, '../../templates/' + data.template +'.template.ejs'), {...data}, async (err, emailHTML)=>{
             if (err) {
                 console.error(err)
                 return false
             }
             const mailer = NodeMail.getInstance()
-            await mailer.send(data.email, subject, emailHTML)
+            await mailer.send(data.targetEmail, data.subject, emailHTML)
             return true
         })
         return true
-    } catch (error) {        
+    } catch (error) {
+        console.error(error)       
         return false
     }
 }
