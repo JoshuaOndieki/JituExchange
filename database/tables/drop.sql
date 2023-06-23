@@ -7,3 +7,6 @@ DROP TABLE IF EXISTS answers;
 DROP TABLE IF EXISTS questionComments;
 DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS welcomeEmails;
+DROP TABLE IF EXISTS passwordResetEmails;
+DROP TABLE IF EXISTS acceptedAnswerEmails;

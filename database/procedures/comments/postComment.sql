@@ -1,6 +1,6 @@
 CREATE OR ALTER PROCEDURE postComment(
     @id VARCHAR(255),
-    @details TEXT,
+    @details NVARCHAR(500),
     @commentFor VARCHAR(255),
     @commentBy VARCHAR(255),
     @target VARCHAR(10)

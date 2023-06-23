@@ -17,7 +17,7 @@ CREATE TABLE users (
 CREATE TABLE questions(
     id VARCHAR(255) PRIMARY KEY,
     summary VARCHAR(255) NOT NULL,
-    details TEXT NOT NULL,
+    details NVARCHAR(MAX) NOT NULL,
     askedBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
     askedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET(),
     editedDate datetimeoffset NULL,
@@ -35,7 +35,7 @@ CREATE TABLE questionComments(
 
 CREATE TABLE answers(
     id VARCHAR(255) PRIMARY KEY,
-    details TEXT NOT NULL,
+    details NVARCHAR(MAX) NOT NULL,
     answeredDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET(),
     editedDate datetimeoffset NULL,
     answeredBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id),

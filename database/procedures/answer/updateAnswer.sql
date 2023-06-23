@@ -1,6 +1,6 @@
 CREATE OR ALTER PROCEDURE updateAnswer(
     @id VARCHAR(255),
-    @details TEXT
+    @details NVARCHAR(MAX)
 )
 AS
 BEGIN

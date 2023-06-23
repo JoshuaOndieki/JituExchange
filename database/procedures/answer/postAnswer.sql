@@ -1,6 +1,6 @@
 CREATE OR ALTER PROCEDURE postAnswer(
     @id VARCHAR(255),
-    @details TEXT,
+    @details NVARCHAR(MAX),
     @answerFor VARCHAR(255),
     @answeredBy VARCHAR(255)
 )
