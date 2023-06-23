@@ -1,5 +1,5 @@
 import request from 'supertest'
-import app from '../src/app'
+import app from '../app'
 
 describe('Test Auth endpoints', ()=>{
     let efjuer_token:string
