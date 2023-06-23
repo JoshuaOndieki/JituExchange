@@ -95,3 +95,24 @@ CREATE TABLE userBadges(
     badgeID VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES badges(id) ON DELETE CASCADE,
     earnedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET()
 );
+
+CREATE TABLE welcomeEmails(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    targetUser VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
+    targetEmail VARCHAR(255) NOT NULL,
+    sentDate datetimeoffset NULL
+);
+
+CREATE TABLE passwordResetEmails(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    targetUser VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
+    targetEmail VARCHAR(255) NOT NULL,
+    sentDate datetimeoffset NULL
+);
+
+CREATE TABLE acceptedAnswerEmails(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    targetUser VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
+    targetEmail VARCHAR(255) NOT NULL,
+    sentDate datetimeoffset NULL
+);

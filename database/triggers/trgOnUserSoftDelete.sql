@@ -1,4 +1,4 @@
-CREATE TRIGGER deleteUserRelatedRecords
+CREATE TRIGGER trgOnUserSoftDelete
 ON users
 AFTER UPDATE
 AS
