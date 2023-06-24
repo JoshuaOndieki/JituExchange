@@ -4,6 +4,27 @@ orbs:
   codecov: codecov/codecov@3.2.4
   browser-tools: circleci/browser-tools@1.4.1
 
+executors:
+  windows-executor:
+    docker:
+      - image: mcr.microsoft.com/windows/servercore:ltsc2019
+
+    environment:
+      ACCEPT_EULA: "Y" # Accept the End-User License Agreement for MSSQL tools
+      PATH: "C:\\mssql-tools\\bin;C:\\windows\\system32;C:\\windows"
+
+    steps:
+      - setup_remote_docker: # Required to run Docker commands within the Windows Executor
+          version: 20.10.7
+
+      - run:
+          name: Install MSSQL tools
+          command: |
+            curl -o mssql-tools.zip -L https://aka.ms/azcmagent/windows/mssql-tools.zip
+            Expand-Archive -Path mssql-tools.zip -DestinationPath C:\\mssql-tools
+            Remove-Item -Path mssql-tools.zip
+
+
 # Define the jobs we want to run for this project
 jobs:
   clone:
@@ -17,16 +38,17 @@ jobs:
             - .
   database:
     working_directory: ~/JituExchange/database
-    docker:
-      - image: cimg/base:2023.06
+    executors: windows-executor
+    # docker:
+      # - image: cimg/base:2023.06
       # - image: mcr.microsoft.com/mssql-tools
     steps:
       - checkout:
           path: ~/JituExchange
       - attach_workspace:
           at: .
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y mssql-server
+      # - run: sudo apt-get update
+      # - run: sudo apt-get install -y mssql-server
       - run:
           name: setup test database
           command: bash setup.sh -t
