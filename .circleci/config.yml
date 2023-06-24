@@ -18,6 +18,7 @@ jobs:
   database:
     working_directory: ~/JituExchange/database
     docker:
+      - image: cimg/node:18.16
       - image: mcr.microsoft.com/mssql-tools
     steps:
       - checkout:
