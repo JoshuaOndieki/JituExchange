@@ -38,7 +38,7 @@ jobs:
             - .
   database:
     working_directory: ~/JituExchange/database
-    executors: windows-executor
+    executor: windows-executor
     # docker:
       # - image: cimg/base:2023.06
       # - image: mcr.microsoft.com/mssql-tools
