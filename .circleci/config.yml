@@ -113,8 +113,8 @@ workflows:
     jobs:
       - clone
       - database:
-        requires:
-          - clone
+          requires:
+            - clone
       - test-backend:
           requires:
             - database
