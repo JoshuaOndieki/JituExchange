@@ -1,10 +1,11 @@
 import request from 'supertest'
 import app from '../app'
 
+
 describe('Test Auth endpoints', ()=>{
     let efjuer_token:string
 
-    it('should sign up a user', ()=>{
+    it('should sign up a user', async ()=>{
         return request(app).post('/users')
             .send({
                 "username": "efjuer",
@@ -20,7 +21,7 @@ describe('Test Auth endpoints', ()=>{
             })
     })
 
-    it('should sign in an existing user with email', ()=> {
+    it('should sign in an existing user with email', async ()=> {
         return request(app).post('/users/signin')
             .send({
                 "identifier": "jhdvcrtd@example.com",
@@ -32,7 +33,7 @@ describe('Test Auth endpoints', ()=>{
             })
     })
 
-    it('should fetch user with username', ()=> {
+    it('should fetch user with username', async ()=> {
         return request(app).get('/users/u/efjuer')
         .set("token", efjuer_token)
         .expect(200)

@@ -6,9 +6,8 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 export const sqlConfig = {
     user: process.env.DB_USER as string,
     password: process.env.DB_PWD as string,
-    database: process.env.DB_NAME as string,
+    database: process.env.DB_NAME || 'development',
     server: process.env.DB_SERVER as string,
-    port: process.env.DB_PORT ? +process.env.DB_PORT : 1433,
     pool: {
         max: 10,
         min: 0,

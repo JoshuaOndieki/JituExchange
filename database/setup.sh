@@ -24,6 +24,37 @@ load_env() {
 
 load_env ".env"
 
+while getopts ":dpt-" opt; do
+  case $opt in
+    d )
+      ENV="dev"
+      ;;
+    p )
+      ENV="prod"
+      ;;
+    t )
+      ENV="test"
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+if [ "$ENV" == "prod" ]; then
+  initFile="./init.prod.sql"
+  DB_NAME=${DB_NAME:-production}
+elif [ "$ENV" == "test" ]; then
+  initFile="./init.test.sql"
+  DB_NAME=${DB_NAME:-testing}
+else
+  initFile="./init.dev.sql"
+  DB_NAME=${DB_NAME:-development}
+fi
+
 # Enable nullglob option to expand patterns to empty string if no matches found
 shopt -s nullglob
 
@@ -32,7 +63,7 @@ if [ "$1" == "patch" ]; then
         sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -d "$DB_NAME" -i "$file"; \
     done
 else
-    sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -i ./init.sql && \
+    # sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -i "$initFile" && \
     sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -d "$DB_NAME" -i ./tables/drop.sql && \
     for file in ./functions/*.sql; do \
         sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -d "$DB_NAME" -i "$file"; \
