@@ -5,15 +5,6 @@ orbs:
   browser-tools: circleci/browser-tools@1.4.1
   windows: circleci/windows@5.0.0
 
-executors:
-  windows-executor:
-    environment:
-      ACCEPT_EULA: "Y" # Accept the End-User License Agreement for MSSQL tools
-    docker:
-      - image: mcr.microsoft.com/windows/servercore:ltsc2019
-
-
-# Define the jobs we want to run for this project
 jobs:
   clone:
     docker:
@@ -29,20 +20,13 @@ jobs:
     executor:
       name: windows/default
       shell: powershell.exe
-    # docker:
-      # - image: cimg/base:2023.06
-      # - image: mcr.microsoft.com/mssql-tools
     environment:
       ACCEPT_EULA: "Y" # Accept the End-User License Agreement for MSSQL tools
-
     steps:
       - checkout:
           path: ~/JituExchange
       - attach_workspace:
           at: .
-      # - setup_remote_docker: # Required to run Docker commands within the Windows Executor
-      #     version: 20.10.7
-
       - run:
           name: Install MSSQL tools
           command: |
@@ -132,7 +116,6 @@ jobs:
       - codecov/upload:
           file: ./coverage/clover.xml
 
-# Orchestrate our job run sequence
 workflows:
   test:
     jobs:

@@ -1,3 +1,5 @@
+# DRAFT DO NOT USE
+
 FROM mcr.microsoft.com/mssql/server:2022-latest
 
 ARG DB_PASSWORD
