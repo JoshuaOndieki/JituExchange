@@ -25,7 +25,7 @@ jobs:
           path: ~/JituExchange
       - attach_workspace:
           at: .
-      - run: sudo apt install mssql-tools
+      # - run: sudo apt install mssql-tools
       - run:
           name: setup test database
           command: bash setup.sh -t
