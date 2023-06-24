@@ -18,7 +18,7 @@ jobs:
   database:
     working_directory: ~/JituExchange/database
     docker:
-      - image: mcr.microsoft.com/mssql/server:2022-latest
+      - image: mcr.microsoft.com/mssql-tools
     steps:
       - checkout:
           path: ~/JituExchange
