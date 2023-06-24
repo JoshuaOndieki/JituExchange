@@ -3,6 +3,7 @@ orbs:
   node: circleci/node@5.1.0
   codecov: codecov/codecov@3.2.4
   browser-tools: circleci/browser-tools@1.4.1
+  windows: circleci/windows@5.0.0
 
 executors:
   windows-executor:
