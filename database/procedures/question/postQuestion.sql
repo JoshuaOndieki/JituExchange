@@ -1,7 +1,7 @@
 CREATE OR ALTER PROCEDURE postQuestion(
     @id VARCHAR(255),
     @summary VARCHAR(255),
-    @details TEXT,
+    @details NVARCHAR(MAX),
     @askedBy VARCHAR(255)
 )
 AS

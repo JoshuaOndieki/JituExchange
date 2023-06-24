@@ -17,7 +17,7 @@ CREATE TABLE users (
 CREATE TABLE questions(
     id VARCHAR(255) PRIMARY KEY,
     summary VARCHAR(255) NOT NULL,
-    details TEXT NOT NULL,
+    details NVARCHAR(MAX) NOT NULL,
     askedBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
     askedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET(),
     editedDate datetimeoffset NULL,
@@ -35,7 +35,7 @@ CREATE TABLE questionComments(
 
 CREATE TABLE answers(
     id VARCHAR(255) PRIMARY KEY,
-    details NVARCHAR(255) NOT NULL,
+    details NVARCHAR(MAX) NOT NULL,
     answeredDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET(),
     editedDate datetimeoffset NULL,
     answeredBy VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id),
@@ -94,4 +94,26 @@ CREATE TABLE userBadges(
     userID VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
     badgeID VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES badges(id) ON DELETE CASCADE,
     earnedDate datetimeoffset NOT NULL DEFAULT SYSDATETIMEOFFSET()
+);
+
+CREATE TABLE welcomeEmails(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    targetUser VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
+    targetEmail VARCHAR(255) NOT NULL,
+    sentDate datetimeoffset NULL
+);
+
+CREATE TABLE passwordResetEmails(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    targetUser VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
+    targetEmail VARCHAR(255) NOT NULL,
+    sentDate datetimeoffset NULL
+);
+
+CREATE TABLE acceptedAnswerEmails(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    targetUser VARCHAR(255) NOT NULL FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE,
+    targetEmail VARCHAR(255) NOT NULL,
+    answerID VARCHAR(255) NOT NULL,
+    sentDate datetimeoffset NULL
 );

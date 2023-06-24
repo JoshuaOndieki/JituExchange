@@ -1,7 +1,7 @@
 CREATE OR ALTER PROCEDURE updateQuestion (
     @id VARCHAR(255),
     @summary VARCHAR(255),
-    @details TEXT
+    @details NVARCHAR(MAX)
 )
 AS
 BEGIN
