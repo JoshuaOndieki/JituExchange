@@ -18,15 +18,15 @@ jobs:
   database:
     working_directory: ~/JituExchange/database
     docker:
-      - image: cimg/base
+      - image: cimg/base:2023.06
       # - image: mcr.microsoft.com/mssql-tools
     steps:
       - checkout:
           path: ~/JituExchange
       - attach_workspace:
           at: .
-      - run: sudo apt update
-      - run: sudo apt install mssql-tools
+      - run: sudo apt-get update
+      - run: sudo apt-get install mssql-tools
       - run:
           name: setup test database
           command: bash setup.sh -t
