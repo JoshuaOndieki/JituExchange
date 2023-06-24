@@ -25,27 +25,29 @@ jobs:
             - .
   database:
     working_directory: ~/JituExchange/database
-    executor: windows-executor
+    executor:
+      name: windows/default
+      shell: powershell.exe
     # docker:
       # - image: cimg/base:2023.06
       # - image: mcr.microsoft.com/mssql-tools
     environment:
-      PATH: "C:\\mssql-tools\\bin;C:\\windows\\system32;C:\\windows"
+      ACCEPT_EULA: "Y" # Accept the End-User License Agreement for MSSQL tools
 
     steps:
       - checkout:
           path: ~/JituExchange
       - attach_workspace:
           at: .
-      - setup_remote_docker: # Required to run Docker commands within the Windows Executor
-          version: 20.10.7
+      # - setup_remote_docker: # Required to run Docker commands within the Windows Executor
+      #     version: 20.10.7
 
       - run:
           name: Install MSSQL tools
           command: |
-            curl -o mssql-tools.zip -L https://aka.ms/azcmagent/windows/mssql-tools.zip
-            Expand-Archive -Path mssql-tools.zip -DestinationPath C:\\mssql-tools
-            Remove-Item -Path mssql-tools.zip
+            Invoke-WebRequest -Uri "https://aka.ms/azcmagent/windows/mssql-tools.zip" -OutFile "mssql-tools.zip"
+            Expand-Archive -Path "mssql-tools.zip" -DestinationPath "C:\mssql-tools"
+            Remove-Item -Path "mssql-tools.zip"
       - run:
           name: setup test database
           command: bash setup.sh -t
