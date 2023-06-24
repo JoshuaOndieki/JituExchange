@@ -11,23 +11,40 @@ A lite Version of Stack Overflow
 ## Frontend - Angular
 
 [Link to **Jitu**Exchange Angular Frontend](https://jituexchange.vercel.app)
+
 Locally, run `npm run dev`
 
 ## Backend - Expressjs
 
 Run `npm run build && npm start`
+
 For development, `npm run dev`
 
 ## Database - MSSQL
 
-To setup database, run the script > `bash database/setup.sh`
-Use the `patch` command to only execute stored procedures e.g `bash database/setup.sh patch`
+To setup database, cd into database folder and run the script > `bash setup.sh`
+
+Use the `patch` command to only execute stored procedures e.g `bash setup.sh patch`
+
+By default this sets up the **development** database, however you can specify the database with flags or env variable `DB_NAME`
+
+Without the exported variable name:
+
+**-t** flag uses a db called testing `bash setup.sh -t`
+
+**-p** flag uses a db called production `bash setup.sh -p`
 
 ## Env
 
+Exporting these environment variables work in all microservices where needed. Alternatively, have a **.env** file in every microservice and add them.
+
 ```env
-DB_USER
-DB_PWD
-DB_NAME
-DB_SERVER
+DB_USER (required in backend, background, and db)
+DB_PWD (b, bg, db)
+DB_NAME (b, bg, db) if not provided, a db called development will be used.
+DB_SERVER (b, bg, db)
+SECRET_KEY (b)
+NG_QUESTION_LINK (bg) a workaround to send question links in email.
 ```
+
+For background services, if using privateemail as host, only add `NAMECHEAP_EMAIL` and `NAMECHEAP_PASSWORD` variables. For Gmail and the rest, please modify `background/src/utils/nodemailer.ts` by replacing namecheapConfig with the appropriate configuration.
