@@ -21,13 +21,13 @@ jobs:
       - image: mcr.microsoft.com/mssql/server:2022-latest
     steps:
       - checkout:
-        path: ~/JituExchange
+          path: ~/JituExchange
       - attach_workspace:
-        at: .
+          at: .
       - run:
-        name: setup test database
-        command: bash setup.sh -t
-        working_directory: ~/JituExchange/database
+          name: setup test database
+          command: bash setup.sh -t
+          working_directory: ~/JituExchange/database
 
   build-backend:
     working_directory: ~/JituExchange/backend
