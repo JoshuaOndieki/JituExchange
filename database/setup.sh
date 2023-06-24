@@ -35,6 +35,9 @@ while getopts ":dpt-" opt; do
     t )
       ENV="test"
       ;;
+    i )
+      INIT=true
+      ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       exit 1
@@ -63,7 +66,10 @@ if [ "$1" == "patch" ]; then
         sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -d "$DB_NAME" -i "$file"; \
     done
 else
-    # sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -i "$initFile" && \
+    if [INIT] then;
+      # in Azure creating db with current init sqls creates a database with default 'wrong' configs. only using the i flag for local mssql server.
+      sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -i "$initFile" && \
+    fi
     sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -d "$DB_NAME" -i ./tables/drop.sql && \
     for file in ./functions/*.sql; do \
         sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -d "$DB_NAME" -i "$file"; \
