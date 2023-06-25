@@ -24,7 +24,7 @@ load_env() {
 
 load_env ".env"
 
-while getopts ":dpt-" opt; do
+while getopts ":dpti" opt; do
   case $opt in
     d )
       ENV="dev"
@@ -66,9 +66,16 @@ if [ "$1" == "patch" ]; then
         sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -d "$DB_NAME" -i "$file"; \
     done
 else
-    if [INIT] then;
+    if [ "$INIT" == true ]; then
       # in Azure creating db with current init sqls creates a database with default 'wrong' configs. only using the i flag for local mssql server.
-      sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -i "$initFile" && \
+      echo "Initializing database. Please confirm (y/n): "
+      read -r confirm
+        if [ "$confirm" = "y" ]; then
+          echo "Initialization confirmed. Proceeding..."
+          sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -i "$initFile"
+        else
+          echo "Initialization canceled. proceeding with existing db, if any."
+        fi
     fi
     sqlcmd -S "$DB_SERVER" -U "$DB_USER" -P "$DB_PWD" -d "$DB_NAME" -i ./tables/drop.sql && \
     for file in ./functions/*.sql; do \
