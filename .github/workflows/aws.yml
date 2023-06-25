@@ -18,8 +18,9 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           # registry-type: public
-          role-to-assume: "${{ env.ECS_TASK_EXECUTION_ARN }}"
-          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: "${{ env.AWS_REGION }}"
 
       - name: Build and push Docker images
         id: build-and-push
