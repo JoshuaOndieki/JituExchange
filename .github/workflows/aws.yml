@@ -29,7 +29,7 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/backend:${{ github.sha }}
+          tags: public.ecr.aws/t9j7d6x4/jituexchange-backend:${{ github.sha }}
 
       - name: Build and push Background Docker image
         id: build-and-push-background
@@ -37,7 +37,7 @@ jobs:
         with:
           context: ./background
           push: true
-          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/background:${{ github.sha }}
+          tags: public.ecr.aws/t9j7d6x4/jituexchange-background-services:${{ github.sha }}
 
       - name: Build and push Frontend Docker image
         id: build-and-push-frontend
@@ -45,7 +45,7 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/frontend:${{ github.sha }}
+          tags: public.ecr.aws/t9j7d6x4/jituexchange-angular:${{ github.sha }}
 
       - name: Update AWS ECS service
         id: update-service
@@ -57,7 +57,7 @@ jobs:
               "containerDefinitions": [
                 {
                   "name": "backend",
-                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/backend:${{ github.sha }}",
+                  "image": public.ecr.aws/t9j7d6x4/jituexchange-backend:${{ github.sha }}",
                   "cpu": 256,
                   "memoryReservation": 512,
                   "portMappings": [
@@ -69,14 +69,14 @@ jobs:
                 },
                 {
                   "name": "background",
-                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/background:${{ github.sha }}",
+                  "image": public.ecr.aws/t9j7d6x4/jituexchange-background-services:${{ github.sha }}",
                   "cpu": 256,
                   "memoryReservation": 512,
                   "essential": false
                 },
                 {
                   "name": "frontend",
-                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/frontend:${{ github.sha }}",
+                  "image": public.ecr.aws/t9j7d6x4/jituexchange-angular:${{ github.sha }}",
                   "cpu": 256,
                   "memoryReservation": 512,
                   "portMappings": [
@@ -87,7 +87,7 @@ jobs:
                   ]
                 }
               ],
-              "executionRoleArn": "${{ env.ECS_TASK_EXECUTION_ARN }}"
+              "executionRoleArn": "${{ secrets.ECS_TASK_EXECUTION_ARN }}"
             }
           service: jituexchange-service-${{ github.ref }}
           cluster: jituexchange
