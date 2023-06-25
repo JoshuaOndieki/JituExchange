@@ -1,0 +1,87 @@
+name: Deploy to AWS Fargate
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push Docker images
+        id: build-and-push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/backend:${{ github.sha }}
+
+      - name: Build and push Background Docker image
+        id: build-and-push-background
+        uses: docker/build-push-action@v2
+        with:
+          context: ./background
+          push: true
+          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/background:${{ github.sha }}
+
+      - name: Build and push Frontend Docker image
+        id: build-and-push-frontend
+        uses: docker/build-push-action@v2
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/frontend:${{ github.sha }}
+
+      - name: Update AWS ECS service
+        id: update-service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: |
+            {
+              "family": "jituexchange-${{ github.ref }}",
+              "containerDefinitions": [
+                {
+                  "name": "backend",
+                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/backend:${{ github.sha }}",
+                  "cpu": 256,
+                  "memoryReservation": 512,
+                  "portMappings": [
+                    {
+                      "containerPort": 3000,
+                      "protocol": "tcp"
+                    }
+                  ]
+                },
+                {
+                  "name": "background",
+                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/background:${{ github.sha }}",
+                  "cpu": 256,
+                  "memoryReservation": 512,
+                  "essential": false
+                },
+                {
+                  "name": "frontend",
+                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/frontend:${{ github.sha }}",
+                  "cpu": 256,
+                  "memoryReservation": 512,
+                  "portMappings": [
+                    {
+                      "containerPort": 80,
+                      "protocol": "tcp"
+                    }
+                  ]
+                }
+              ],
+              "executionRoleArn": "${{ env.ECS_TASK_EXECUTION_ARN }}"
+            }
+          service: jituexchange-service-${{ github.ref }}
+          cluster: jituexchange
