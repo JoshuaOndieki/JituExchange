@@ -17,11 +17,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: eu-north-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         env:
-          AWS_REGION: ${{ env.AWS_REGION }}
+          AWS_REGION: eu-north-1
 
       - name: Build and push Docker images
         id: build-and-push
@@ -29,7 +29,7 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/backend:${{ github.sha }}
+          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/backend:${{ github.sha }}
 
       - name: Build and push Background Docker image
         id: build-and-push-background
@@ -37,7 +37,7 @@ jobs:
         with:
           context: ./background
           push: true
-          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/background:${{ github.sha }}
+          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/background:${{ github.sha }}
 
       - name: Build and push Frontend Docker image
         id: build-and-push-frontend
@@ -45,7 +45,7 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/frontend:${{ github.sha }}
+          tags: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/frontend:${{ github.sha }}
 
       - name: Update AWS ECS service
         id: update-service
@@ -57,7 +57,7 @@ jobs:
               "containerDefinitions": [
                 {
                   "name": "backend",
-                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/backend:${{ github.sha }}",
+                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/backend:${{ github.sha }}",
                   "cpu": 256,
                   "memoryReservation": 512,
                   "portMappings": [
@@ -69,14 +69,14 @@ jobs:
                 },
                 {
                   "name": "background",
-                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/background:${{ github.sha }}",
+                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/background:${{ github.sha }}",
                   "cpu": 256,
                   "memoryReservation": 512,
                   "essential": false
                 },
                 {
                   "name": "frontend",
-                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/frontend:${{ github.sha }}",
+                  "image": "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/frontend:${{ github.sha }}",
                   "cpu": 256,
                   "memoryReservation": 512,
                   "portMappings": [
