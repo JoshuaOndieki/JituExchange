@@ -56,7 +56,7 @@ jobs:
         with:
           task-definition: |
             {
-              "family": "jituexchange-${GITHUB_REF#refs/heads/}",
+              "family": "jituexchange-${{ github.head_ref || github.ref_name }}",
               "containerDefinitions": [
                 {
                   "name": "api",
@@ -92,5 +92,5 @@ jobs:
               ],
               "executionRoleArn": "${{ secrets.ECS_TASK_EXECUTION_ARN }}"
             }
-          service: jituexchange-service-${GITHUB_REF#refs/heads/}
+          service: jituexchange-service-${{ github.head_ref || github.ref_name }}
           cluster: jituexchange
