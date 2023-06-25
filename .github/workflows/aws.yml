@@ -13,8 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Login to Amazon ECR
-        id: login-ecr
+      - name: Setup AWS ECR Details
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: eu-north-1
@@ -23,6 +22,10 @@ jobs:
         env:
           AWS_REGION: eu-north-1
 
+      - name: Login to Amazon ECR
+        id: login-pf-aws-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        
       - name: Build and push Docker images
         id: build-and-push
         uses: docker/build-push-action@v2
