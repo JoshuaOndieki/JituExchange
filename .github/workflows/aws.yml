@@ -17,7 +17,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         env:
-          aws-region: ${{ env.AWS_REGION }}
+          AWS_REGION: ${{ env.AWS_REGION }}
 
       - name: Build and push Docker images
         id: build-and-push
