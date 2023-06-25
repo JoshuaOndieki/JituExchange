@@ -4,7 +4,9 @@
   "description": "",
   "main": "cronner.js",
   "scripts": {
-    "cron": "tsc && node dist/cronner",
+    "dev": "tsc && node dist/cronner",
+    "build": "tsc",
+    "start": "node dist/cronner.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
