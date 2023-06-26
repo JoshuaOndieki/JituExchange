@@ -19,6 +19,7 @@ jobs:
           aws-region: eu-north-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.ECS_ROLE_ARN }}
         env:
           AWS_REGION: eu-north-1
 
@@ -88,7 +89,7 @@ jobs:
                 ]
               }
             ],
-            "executionRoleArn": "${{ secrets.ECS_TASK_EXECUTION_ARN }}"
+            "executionRoleArn": "${{ secrets.ECS_ROLE_ARN }}"
           }
           ' >> task-definition-${{ github.sha }}.json
 
