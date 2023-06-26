@@ -101,5 +101,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: task-definition-${{ github.sha }}.json
-          service: jituexchange-service-${{ github.head_ref || github.ref_name }}
+          service: jituexchange-${{ github.head_ref || github.ref_name }}
           cluster: jituexchange
+          wait-for-service-stability: true
