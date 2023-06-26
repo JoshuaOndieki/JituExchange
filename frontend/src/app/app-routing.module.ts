@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './components/homepage/homepage.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {path:'welcome', component:HomepageComponent},
-  {path: 'signup', loadComponent:()=> import('./components/signup/signup.component').then(c => c.SignupComponent)},
-  {path: 'signin', loadComponent:()=> import('./components/signin/signin.component').then(c => c.SigninComponent)},
+  {path: 'signup', canActivate:[authGuard], loadComponent:()=> import('./components/signup/signup.component').then(c => c.SignupComponent)},
+  {path: 'signin', canActivate:[authGuard], loadComponent:()=> import('./components/signin/signin.component').then(c => c.SigninComponent)},
   {
     path: '',
+    canActivate:[authGuard],
     loadComponent:()=> import('./components/main/main.component').then(c => c.MainComponent),
     children: [
       {path: '', loadComponent:()=> import('./components/home/home.component').then(c => c.HomeComponent)},

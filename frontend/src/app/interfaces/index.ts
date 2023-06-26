@@ -70,9 +70,10 @@ export interface ItoastMessage {
 }
 
 export interface Istate {
-    user: IuserState
+    users: IuserState
 }
 
 export interface IuserState {
-    authUser: Iuser
+    authUser: Iuser | null
+    error: string | null
 }

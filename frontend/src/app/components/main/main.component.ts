@@ -15,6 +15,6 @@ export class MainComponent implements OnInit{
     constructor(private authSvc:AuthService, private router:Router) {}
 
     ngOnInit(): void {
-      this.authSvc.authUser ? '' : this.router.navigate(['welcome'])
+      // this.authSvc.authUser ? '' : this.router.navigate(['welcome'])
     }
 }

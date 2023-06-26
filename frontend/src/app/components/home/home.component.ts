@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this.authSvc.authUser ? '' : this.router.navigate(['/welcome'])
+      // this.authSvc.authUser ? '' : this.router.navigate(['/welcome'])
       this.route.queryParams.subscribe(params => {
         this.filter = params['filter'] ? params['filter'] : 'all-time'
       })
