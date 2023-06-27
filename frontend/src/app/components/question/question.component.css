@@ -26,6 +26,10 @@
     color: grey;
 }
 
+.q-meta * {
+    font-family: RobotoMono, sans-serif;
+}
+
 .q-summary, .q-asker {
     color: var(--app-blue);
     cursor: pointer;
@@ -37,6 +41,11 @@
 
 .q-asker-meta {
     color: black;
+    font-size: smaller;
+}
+
+.q-asker {
+    font-size: 1rem;
 }
 
 .q-tags {
@@ -49,6 +58,7 @@
     padding: 5px;
     color: var(--app-text-blue);
     border-radius: 5px;
+    font-size: small;
 }
 
 .delete-btn {

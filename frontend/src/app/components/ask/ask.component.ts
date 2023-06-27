@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import validTagValidator from 'src/app/validators/tag.validator';
 import { IonicModule } from '@ionic/angular';
+import { Store } from '@ngrx/store';
+import { Istate } from 'src/app/interfaces';
+import { ASK_QUESTION } from 'src/app/state/actions/question.actions';
 
 @Component({
   selector: 'app-ask',
@@ -13,8 +16,10 @@ import { IonicModule } from '@ionic/angular';
 })
 export class AskComponent implements OnInit {
   askForm!:FormGroup
+  loading:boolean = false
+  error:string | null = null
 
-  constructor(private fb:FormBuilder) {
+  constructor(private fb:FormBuilder, private store:Store<Istate>) {
 
   }
 
@@ -25,6 +30,12 @@ export class AskComponent implements OnInit {
         details: ['', [Validators.required]],
         tagInput:['', validTagValidator()],
         tags: this.fb.array([])
+      }
+    )
+
+    this.store.select('questions').subscribe(
+      questionState => {
+        this.error = questionState.errors.askQuestion
       }
     )
   }
@@ -60,7 +71,10 @@ export class AskComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.askForm);
+    if (this.askForm.valid) {
+      this.loading = true
+      this.store.dispatch(ASK_QUESTION(this.askForm.value))
+    }
     
   }
 }

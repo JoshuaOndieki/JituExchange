@@ -27,7 +27,7 @@ export const postQuestion = async (req:IreqInfo, res:Response) => {
             await db.exec('addQuestionTag', {id:questionTagID, tagName:tag, questionID})
         }
 
-        return res.status(201).json({message: "question posted successfully."})
+        return res.status(201).json({message: "question posted successfully.", id:questionID})
     } catch (error:any) {
         return serverError(error, res)
     }
@@ -61,6 +61,12 @@ export const getQuestions = async (req:IreqInfo, res:Response) => {
 
         metadata.recordsInPage = questions.length
 
+        for (let index = 0; index < questions.length; index++) {
+            const question = questions[index];
+            let qTags = (await db.exec('getQuestionTags', {questionID:question.id})).recordset
+            question.tags = qTags.map(tag => tag.tagName)
+        }
+
         if (questions.length) {
             return res.status(200).json({metadata, questions})
         }
@@ -87,7 +93,7 @@ export const getQuestion = async (req:IreqInfo, res:Response) => {
         let qComments = (await db.exec('getQuestionComments', {questionID:id})).recordset
         question.comments = qComments
         // get answers
-        let qAnswers = (await db.exec('getQuestionAnswers', {questionID:id})).recordset
+        let qAnswers = (await db.exec('getQuestionAnswers', {questionID:id, voter:req.info?.id || ''})).recordset
         question.answers = qAnswers
         // get comments for every answer
         for (let index = 0; index < qAnswers.length; index++) {

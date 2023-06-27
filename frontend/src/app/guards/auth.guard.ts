@@ -18,7 +18,8 @@ export const authGuard: CanActivateFn = (route, state) => {
       if (!usersState.asyncInitialized) {
         console.log('auth user not initialized. fetching...');
         store.dispatch(GET_AUTH_USER())
-        router.navigate(['loading'])
+        
+        router.navigate(['/loading'], { state: { previousRoute:state.url } })
         return of(false)
       }
       const canActivate = usersState.authUser ? true : false

@@ -1,19 +1,21 @@
 <div class="q-meta">
-    <div>0 votes</div>
-    <div>0 answers</div>
-    <div>0 views</div>
+    <div>{{question.upvotes - question.downvotes}} votes</div>
+    <div>{{question.answersCount}} answers</div>
+    <div>{{question.views}} views</div>
 </div>
 
 <div class="q-info">
     <div class="q-summary" [routerLink]="['/questions', 'q', question.id]">{{question.summary}}</div>
-    <div class="q-tags"><span class="q-tag">tag</span> <span class="q-tag">tag</span> <span class="q-tag">tag</span></div>
+    <div class="q-tags">
+        <span *ngFor="let tag of question.tags" class="q-tag">{{tag}}</span>
+    </div>
     <div class="q-ask-info">
-        <span class="q-asker">{{question.askedBy}} </span>
+        <span class="q-asker">{{question.username}} </span>
         <span class="q-asker-meta">420</span>
-        <span>asked {{question.askedDate}}</span>
+        <span> asked {{question.askedDate | date: 'medium'}} </span>
         <span class="actions">
-            <span *ngIf="question.askedBy === authSvc.authUser?.username" class="edit-btn"> edit </span>
-            <span *ngIf="authSvc.authUser?.role === 'admin' || question.askedBy === authSvc.authUser?.username" class="delete-btn"> delete </span>
+            <span *ngIf="question.askedBy === authUser?.id" class="edit-btn"> edit </span>
+            <span *ngIf="authUser?.role === 'admin' || question.askedBy === authUser?.id" class="delete-btn"> delete </span>
         </span>
     </div>
 </div>

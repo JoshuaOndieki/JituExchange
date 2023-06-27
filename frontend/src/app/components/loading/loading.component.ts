@@ -18,10 +18,12 @@ export class LoadingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    const previousRoute = this.router.lastSuccessfulNavigation?.extras?.state?.['previousRoute'];
     this.store.dispatch(GET_AUTH_USER())
     this.store.select('users').subscribe(
-      usersState => {
-        usersState.asyncInitialized ? this.router.navigate(['']) : ''
+      usersState => {        
+        usersState.asyncInitialized ? this.router.navigate([previousRoute == '/loading' || !previousRoute ? '' : previousRoute]) : ''
       }
     )
   }

@@ -1,12 +1,12 @@
-<ng-container *ngIf="question">
+<ng-container *ngIf="question; else Tloading">
     <header>
         <div id="q-header">
             <div id="q-summary">
                 {{question.summary}}
             </div>
             <div id="q-meta">
-                <div><span class="grey">Asked</span> 1 hour ago</div>
-                <div><span class="grey">Viewed</span> 2k times</div>
+                <div><span class="grey">Asked</span> {{question.askedDate | date: 'medium'}}</div>
+                <div><span class="grey">Viewed</span> {{question.views}} times</div>
             </div>
         </div>
         <a [routerLink]="['/questions', 'ask']" class="ask-btn">Ask Question</a>
@@ -16,25 +16,23 @@
         <div id="q-info">
             <section class="main-info">
                 <div class="voting">
-                    <ion-icon name="caret-up-circle-outline" size="large"></ion-icon>
-                    <div class="votes">69</div>
-                    <ion-icon name="caret-down-circle-outline" size="large"></ion-icon>
+                    <ion-icon (click)="vote('question', question.id, true)" class="caret-icon caret-up-icon" name="caret-up-circle-outline" size="large" [class.green]="question.userVote === true"></ion-icon>
+                    <div class="votes">{{question.upvotes - question.downvotes}}</div>
+                    <ion-icon (click)="vote('question', question.id, false)" class="caret-icon caret-down-icon" name="caret-down-circle-outline" size="large" [class.red]="question.userVote === false"></ion-icon>
                 </div>
                 <div class="more-details">
                     <div class="details">
                         <ng-container *ngFor="let line of question.details.split('\n')">{{line}}<br></ng-container>
                     </div>
                     <div class="tags">
-                        <div class="tag">angular</div>
-                        <div class="tag">mssql</div>
-                        <div class="tag">expressjs</div>
+                        <div class="tag" *ngFor="let tag of question.tags">{{tag}}</div>
                     </div>
                     <div class="ask-info">
-                        <div class="asked-date">{{question.askedDate}}</div>
+                        <div class="asked-date">asked {{question.askedDate | date: 'medium'}}</div>
                         <div class="asker">
                             <ion-icon class="avatar" name="person-circle-outline" size="large"></ion-icon>
                             <div>
-                                <div class="asker-id">{{question.askedBy}}</div>
+                                <div class="asker-id">{{question.username}}</div>
                                 <div class="badges">
                                     <div>420</div>
                                     <div class="gold-badges badge">·<span>7</span></div>
@@ -46,24 +44,19 @@
                     </div>
                     <hr>
                     <div class="comments">
-                        <div class="comment">
-                            <span class="comment-detail">I think you need to read these first: Angular Getting Started, Nodejs and Expressjs, and databases</span>
+                        <div class="comment" *ngFor="let comment of question.comments">
+                            <span class="comment-detail">{{comment.details}}</span>
                             <span> - </span>
-                            <span class="commenter">Some User </span>
-                            <span class="comment-date"> June 6, 2023 at 3:08 pm</span>
+                            <span class="commenter">{{comment.username}} </span>
+                            <span class="comment-date"> {{comment.commentedDate | date: 'medium'}}</span>
                         </div>
-                        <div class="comment">
-                            <span class="comment-detail">I think you need to read these first: Angular Getting Started, Nodejs and Expressjs, and databases</span>
-                            <span> - </span>
-                            <span class="commenter">Some User </span>
-                            <span class="comment-date"> June 6, 2023 at 3:08 pm</span>
-                        </div>
-                        <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="addComment('id here')">
+
+                        <form class="comment-form" (ngSubmit)="addComment($event, 'question', question.id)">
                             <div class="inputs">
                                 <div class="input">
-                                    <div class="input-wrapper" [class.valid]="comment.valid" [class.invalid]="comment.invalid && (comment.dirty || comment.touched)">
-                                        <input type="text" placeholder="add comment..." formControlName="comment">
-                                        <label for="">press enter to comment</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" placeholder="add a comment for this question..." name="comment">
+                                        <label for="comment">press enter to comment</label>
                                     </div>
                                 </div>
                             </div>
@@ -73,24 +66,24 @@
 
             </section>
             <hr>
-            <section>
+            <section id="answers">
                 <div class="header">Answers</div>
-                <div class="main-info">
+                <div class="answer main-info" *ngFor="let answer of question.answers">
                     <div class="voting">
-                        <ion-icon name="caret-up-circle-outline" size="large"></ion-icon>
-                        <div class="votes">69</div>
-                        <ion-icon name="caret-down-circle-outline" size="large"></ion-icon>
+                        <ion-icon (click)="vote('answer', answer.id, true)" class="caret-icon caret-up-icon" name="caret-up-circle-outline" size="large" [class.green]="answer.userVote === true" ></ion-icon>
+                        <div class="votes">{{answer.upvotes - answer.downvotes}}</div>
+                        <ion-icon (click)="vote('answer', answer.id, false)" class="caret-icon caret-down-icon" name="caret-down-circle-outline" size="large" [class.red]="answer.userVote === false"></ion-icon>
                     </div>
                     <div class="more-details">
                         <div class="details">
-                            <ng-container *ngFor="let line of question.details.split('\n')">{{line}}<br></ng-container>
+                            <ng-container *ngFor="let line of answer.details.split('\n')">{{line}}<br></ng-container>
                         </div>
                         <div class="ask-info">
-                            <div class="asked-date">{{question.askedDate}}</div>
+                            <div class="asked-date">answered {{answer.answeredDate | date: 'medium'}}</div>
                             <div class="asker">
                                 <ion-icon class="avatar" name="person-circle-outline" size="large"></ion-icon>
                                 <div>
-                                    <div class="asker-id">{{question.askedBy}}</div>
+                                    <div class="asker-id">{{answer.username}}</div>
                                     <div class="badges">
                                         <div>420</div>
                                         <div class="gold-badges badge">·<span>7</span></div>
@@ -102,23 +95,18 @@
                         </div>
                         <hr>
                         <div class="comments">
-                            <div class="comment">
-                                <span class="comment-detail">I think you need to read these first: Angular Getting Started, Nodejs and Expressjs, and databases</span>
+                            <div class="comment" *ngFor="let comment of answer.comments">
+                                <span class="comment-detail">{{comment.details}}</span>
                                 <span> - </span>
-                                <span class="commenter">Some User </span>
-                                <span class="comment-date"> June 6, 2023 at 3:08 pm</span>
+                                <span class="commenter">{{comment.username}} </span>
+                                <span class="comment-date"> {{comment.commentedDate | date: 'medium'}}</span>
                             </div>
-                            <div class="comment">
-                                <span class="comment-detail">I think you need to read these first: Angular Getting Started, Nodejs and Expressjs, and databases</span>
-                                <span> - </span>
-                                <span class="commenter">Some User </span>
-                                <span class="comment-date"> June 6, 2023 at 3:08 pm</span>
-                            </div>
-                            <form class="comment-form" [formGroup]="commentForm" (ngSubmit)="addComment('id here')">
+
+                            <form class="comment-form" (ngSubmit)="addComment($event, 'answer', answer.id)">
                                 <div class="inputs">
                                     <div class="input">
-                                        <div class="input-wrapper" [class.valid]="comment.valid" [class.invalid]="comment.invalid && (comment.dirty || comment.touched)">
-                                            <input type="text" placeholder="add comment..." formControlName="comment">
+                                        <div class="input-wrapper" >
+                                            <input type="text" placeholder="add a comment for this answer..." name="comment">
                                             <label for="">press enter to comment</label>
                                         </div>
                                     </div>
@@ -126,7 +114,6 @@
                             </form>
                         </div>
                     </div>
-    
                 </div>
             </section>
             <hr>
@@ -178,3 +165,7 @@
         </div>
     </main>
 </ng-container>
+
+<ng-template #Tloading>
+    <div class="lds-ripple"><div></div><div></div></div>
+</ng-template>
