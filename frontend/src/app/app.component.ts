@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FooterComponent } from './components/footer/footer.component';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { ToastMessageComponent } from './components/toast-message/toast-message.component';
 import { Istate, ItoastMessage } from './interfaces';
 import { CommonModule } from '@angular/common';
 import { ToastService } from './services/toast.service';
 import { Store } from '@ngrx/store';
-import * as UserActions from './state/actions/user.actions'
 
 
 @Component({
@@ -21,10 +20,13 @@ export class AppComponent implements OnInit {
   title = 'JituExchange';
   messages!:ItoastMessage[]
 
-  constructor(public toastSvc:ToastService, private store:Store<Istate>) {}
+  constructor(public toastSvc:ToastService, private store:Store<Istate>, private router:Router) {}
 
   ngOnInit(): void {
-    this.store.dispatch(UserActions.GET_AUTH_USER())
+    this.store.select('users').subscribe(
+      usersState => {        
+      }
+    )
     this.messages = this.toastSvc.getMessages()
   }
 

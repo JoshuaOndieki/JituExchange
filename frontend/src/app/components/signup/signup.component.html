@@ -1,4 +1,4 @@
-<form id="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+<form id="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()" *ngIf="!loading; else Tloading">
     <h1>Sign Up</h1>
     <div class="inputs">
         <div class="input">
@@ -48,3 +48,7 @@
     </div>
     <input type="submit" [class.valid]="signupForm.valid" value="sign up" [disabled]="signupForm.invalid">
 </form>
+
+<ng-template #Tloading>
+    <div class="lds-ripple"><div></div><div></div></div>
+</ng-template>

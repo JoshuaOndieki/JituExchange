@@ -4,8 +4,15 @@ import { IuserState } from "src/app/interfaces";
 
 
 const initialState: IuserState = {
-    error: null,
-    authUser: null
+    errors: {
+        authUser: null,
+        signin:  null,
+        signup: null,
+        users:  null,
+        signout: null
+    },
+    authUser: null,
+    asyncInitialized: false
 }
 
 // const getUserState = createFeatureSelector<IuserState>('users')
@@ -19,14 +26,54 @@ const userReducer =  createReducer(
         return {
             ...state,
             authUser,
-            error: null
+            errors:{...state.errors, authUser: null},
+            asyncInitialized: true
         }
     }),
     on(UserActions.GET_AUTH_ERROR, (state:IuserState, {error}) => {
         return {
             ...state,
-            error,
-            authUser: null
+            errors:{...state.errors, authUser: error},
+            authUser: null,
+            asyncInitialized: true
+        }
+    }),
+    on(UserActions.SIGN_UP_SUCCESS, (state:IuserState) => {
+        return {
+            ...state,
+            authUser: null,
+            errors:{...state.errors, signup: null}
+        }
+    }),
+    on(UserActions.SIGN_UP_ERROR, (state:IuserState, {error}) => {
+        return {
+            ...state,
+            errors:{...state.errors, signup: error}
+        }
+    }),
+    on(UserActions.SIGN_IN_SUCCESS, (state:IuserState) => {
+        return {
+            ...state,
+            errors:{...state.errors, signin: null}
+        }
+    }),
+    on(UserActions.SIGN_IN_ERROR, (state:IuserState, {error}) => {
+        return {
+            ...state,
+            errors:{...state.errors, signin: error}
+        }
+    }),
+    on(UserActions.SIGN_OUT_SUCCESS, (state:IuserState) => {
+        return {
+            ...state,
+            authUser: null,
+            errors:{...state.errors, signout: null}
+        }
+    }),
+    on(UserActions.SIGN_OUT_ERROR, (state:IuserState, {error}) => {
+        return {
+            ...state,
+            errors:{...state.errors, signout: error}
         }
     })
 )

@@ -75,5 +75,14 @@ export interface Istate {
 
 export interface IuserState {
     authUser: Iuser | null
-    error: string | null
+    errors: IuserStateErrors
+    asyncInitialized:boolean
+}
+
+export interface IuserStateErrors {
+    authUser:string | null
+    signin: string | null
+    signup:string | null
+    users: string | null
+    signout: string | null
 }

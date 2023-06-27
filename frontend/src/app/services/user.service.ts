@@ -3,7 +3,8 @@ import { InewUserData, Iuser } from '../interfaces';
 import dummyUsers from '../helpers/users.dummy';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { Observable } from 'rxjs';
 export class UserService {
   users:Iuser[] = []
 
-  constructor(private api:HttpClient) {
+  constructor(private api:HttpClient, private authSvc:AuthService) {
     this.users = dummyUsers
   }
 
@@ -21,6 +22,12 @@ export class UserService {
 
   signin(data:{identifier:string, password:string}):Observable<{message:string, token:string}> {
     return this.api.post<{message:string, token:string}>(environment.apiUrl + 'users/signin', data)
+  }
+
+  signout():Observable<{message:string}> {
+    // TO DO hit signout endpoint to revoke token
+    this.authSvc.signOut()
+    return of({message: 'signed out.'})
   }
 
   getSignedInUser():Observable<Iuser> {
