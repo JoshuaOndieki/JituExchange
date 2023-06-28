@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { InewUserData, Iuser } from "src/app/interfaces";
+import { InewUserData, Iqueries, Iuser, Iusers } from "src/app/interfaces";
 
 
 export const GET_AUTH_USER = createAction('[Users] - Get AUTH User')
@@ -17,3 +17,7 @@ export const SIGN_IN_ERROR = createAction('[Users] - sign in error', props<{erro
 export const SIGN_UP = createAction('[Users] - Sign up', props<InewUserData>())
 export const SIGN_UP_SUCCESS = createAction('[Users] - sign up success')
 export const SIGN_UP_ERROR = createAction('[Users] - sign up error', props<{error:string}>())
+
+export const GET_USERS = createAction('[Users] - Get users', props<Iqueries>())
+export const GET_USERS_SUCCESS = createAction('[Users] - Get users Success', props<Iusers>())
+export const GET_USERS_ERROR = createAction('[Users] - Get users Error', props<{error:string}>())

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Istate } from 'src/app/interfaces';
 import { GET_AUTH_USER } from 'src/app/state/actions/user.actions';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-loading',
@@ -19,11 +20,17 @@ export class LoadingComponent implements OnInit {
 
   ngOnInit(): void {
     
-    const previousRoute = this.router.lastSuccessfulNavigation?.extras?.state?.['previousRoute'];
+    
     this.store.dispatch(GET_AUTH_USER())
     this.store.select('users').subscribe(
-      usersState => {        
-        usersState.asyncInitialized ? this.router.navigate([previousRoute == '/loading' || !previousRoute ? '' : previousRoute]) : ''
+      usersState => {       
+        const previousRoute = this.router.lastSuccessfulNavigation?.extras?.state?.['previousRoute'];
+        console.log('previous route', previousRoute);
+        console.log(this.router.url);
+        
+         
+        usersState.asyncInitialized && usersState.authUser ? this.router.navigate([previousRoute == '/loading' || !previousRoute ? this.router.url : previousRoute]) : ''
+        usersState.asyncInitialized && !usersState.authUser ? this.router.navigate(['/welcome']) : ''
       }
     )
   }

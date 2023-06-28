@@ -94,6 +94,27 @@ class UserEffects {
             )
         }
     )
+
+    getUsers$ = createEffect(
+        ()=> {
+            return this.action$.pipe(
+                ofType(UserActions.GET_USERS),
+                mergeMap(action => {
+                    const {type, ...queries} = action
+                    return this.userSvc.getUsers(queries).pipe(
+                        map(users => {
+                            return UserActions.GET_USERS_SUCCESS(users)
+                        }),
+                        catchError(error => {
+                            console.log(error);
+                            
+                            return of(UserActions.GET_USERS_ERROR({error: error.error.message}))
+                        })
+                    )
+                })
+            )
+        }
+    )
     
 }
 

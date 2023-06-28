@@ -1,0 +1,71 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;    
+    align-items: center;
+    gap: 0.5rem;
+}
+
+:host {
+    flex-direction: column;
+    flex: 1;
+    display: flex;
+}
+
+main {
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.user-card {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: 250px;
+}
+
+.user-avatar {
+    font-size: 3rem;
+}
+
+.user-info-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-delete-btn {
+    color: salmon
+}
+
+.user-edit-btn {
+    color: var(--app-blue);
+}
+
+.user-membership {
+    font-size: small;
+}
+
+.user-display-name {
+    color: var(--app-blue);
+    font-size: large;
+    cursor: pointer;
+}
+
+.user-location {
+    display: flex;
+    align-items: center;
+    color: grey;
+}
+
+.lds-ripple {
+    margin: auto
+}

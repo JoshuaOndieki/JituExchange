@@ -12,7 +12,8 @@ const initialState: IuserState = {
         signout: null
     },
     authUser: null,
-    asyncInitialized: false
+    asyncInitialized: false,
+    users: null
 }
 
 // const getUserState = createFeatureSelector<IuserState>('users')
@@ -74,6 +75,20 @@ const userReducer =  createReducer(
         return {
             ...state,
             errors:{...state.errors, signout: error}
+        }
+    }),
+    on(UserActions.GET_USERS_SUCCESS, (state:IuserState, users) => {
+        return {
+            ...state,
+            users,
+            errors:{...state.errors, users: null}
+        }
+    }),
+    on(UserActions.GET_USERS_ERROR, (state:IuserState, {error}) => {
+        return {
+            ...state,
+            users: null,
+            errors:{...state.errors, users: error}
         }
     })
 )

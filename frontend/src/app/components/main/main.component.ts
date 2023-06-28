@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { Store } from '@ngrx/store';
-import { Istate } from 'src/app/interfaces';
+import { Istate, Iuser } from 'src/app/interfaces';
 
 @Component({
   selector: 'app-main',
@@ -14,12 +14,17 @@ import { Istate } from 'src/app/interfaces';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit{
-    constructor(private authSvc:AuthService, private router:Router, private store:Store<Istate>) {}
+  authUser: Iuser | null = null
+    constructor(private authSvc:AuthService, private router:Router, private store:Store<Istate>, private route:ActivatedRoute) {}
 
     ngOnInit(): void {
       this.store.select('users').subscribe(
-        usersState => {          
-          usersState.authUser ? '' : this.router.navigate(['/loading'])
+        usersState => {        
+          console.log(usersState.authUser);
+          this.authUser = usersState.authUser
+          usersState.authUser || usersState.asyncInitialized ? '' : this.router.navigate(['/loading'], { state: { previousRoute:this.router.url } })
+          usersState.authUser == null && usersState.asyncInitialized ? this.router.navigate(['/welcome']) : ''
+          !usersState.asyncInitialized ? this.router.navigate(['/loading'], { state: { previousRoute:this.router.url } }) : ''
         }
       )
     }

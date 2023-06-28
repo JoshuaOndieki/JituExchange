@@ -132,6 +132,7 @@ export interface IuserState {
     authUser: Iuser | null
     errors: IuserStateErrors
     asyncInitialized:boolean
+    users: Iusers | null
 }
 
 export interface IuserStateErrors {
@@ -164,13 +165,19 @@ export interface Imetadata {
 }
   
 export interface Iqueries {
-    page: number
-    limit: number
-    sortBy: string
-    order: string
+    page?: number
+    limit?: number
+    sortBy?: string
+    order?: string
+    [key: string]: string | number | undefined
   }
 
 export interface Iquestions {
     metadata: Imetadata
     questions: Iquestion[]
+}
+
+export interface Iusers {
+    metadata: Imetadata
+    users: Iuser[]
 }

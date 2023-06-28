@@ -51,6 +51,7 @@ export class QuestionInfoComponent implements OnInit{
     }
 
     form.reset()
+    form.value.newAnswer.setAttribute('rows', 7)
   }
 
   // get comment() {
