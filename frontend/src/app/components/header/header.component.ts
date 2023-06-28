@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { AuthService } from 'src/app/services/auth.service';
@@ -20,14 +20,26 @@ export class HeaderComponent implements OnInit {
     currentNavigation!: 'home' | 'questions' | 'tags' | 'users'
     authUser!: Iuser | null
 
-    constructor(public authSvc:AuthService, private store:Store<Istate>) {
+    constructor(public authSvc:AuthService, private store:Store<Istate>, private router:Router) {
           
     }
 
     ngOnInit(): void {
         this.store.select('users').subscribe(
-          usersState => {
+          usersState => {        
+            console.log(usersState.authUser)
             this.authUser = usersState.authUser
+            // console.log(this.router.url);
+            
+            // console.log(usersState.authUser, usersState.asyncInitialized);
+            
+            // (usersState.authUser || usersState.asyncInitialized) && this.router.url === '/loading' ? '' : this.router.navigate(['/loading'], { state: { previousRoute:this.router.url } })
+            if (this.authUser && this.router.url == '/loading') {
+              this.router.navigate(['..'])
+            }
+            usersState.authUser == null && usersState.asyncInitialized ? this.router.navigate(['/welcome']) : ''
+  
+            // !usersState.asyncInitialized ? this.router.navigate(['/loading']) : ''
           }
         )
     }
@@ -49,4 +61,5 @@ export class HeaderComponent implements OnInit {
     signOut() {
         this.store.dispatch(SIGN_OUT())
     }
+
 }

@@ -22,14 +22,18 @@ export class LoadingComponent implements OnInit {
     
     
     this.store.dispatch(GET_AUTH_USER())
+    const previousRoute = this.router.lastSuccessfulNavigation?.extras?.state?.['previousRoute'];
     this.store.select('users').subscribe(
       usersState => {       
-        const previousRoute = this.router.lastSuccessfulNavigation?.extras?.state?.['previousRoute'];
+        
         console.log('previous route', previousRoute);
         console.log(this.router.url);
         
          
-        usersState.asyncInitialized && usersState.authUser ? this.router.navigate([previousRoute == '/loading' || !previousRoute ? this.router.url : previousRoute]) : ''
+        // usersState.asyncInitialized && usersState.authUser ? this.router.navigate([ !previousRoute ? '..' : previousRoute ]) : ''
+
+        // usersState.asyncInitialized && usersState.authUser ? this.router.navigate(['']) : ''
+
         usersState.asyncInitialized && !usersState.authUser ? this.router.navigate(['/welcome']) : ''
       }
     )

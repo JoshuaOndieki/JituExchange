@@ -11,6 +11,10 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router)
 
   console.log(route, state);
+  console.log('state url', state.url);
+  console.log('router url', router.url);
+  
+  
   
 
   return store.select('users').pipe(
@@ -22,7 +26,7 @@ export const authGuard: CanActivateFn = (route, state) => {
         console.log('auth user not initialized. fetching...');
         store.dispatch(GET_AUTH_USER())
         
-        router.navigate(['/loading'], { state: { previousRoute:state.url } })
+        router.navigate(['/loading'], { state: { previousRoute:state.url == '/loading' ? router.url : state.url } })
         return of(false)
       }
       const canActivate = usersState.authUser ? true : false

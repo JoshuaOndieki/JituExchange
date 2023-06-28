@@ -20,11 +20,15 @@ export class MainComponent implements OnInit{
     ngOnInit(): void {
       this.store.select('users').subscribe(
         usersState => {        
-          console.log(usersState.authUser);
+          // console.log(usersState.authUser);
           this.authUser = usersState.authUser
-          usersState.authUser || usersState.asyncInitialized ? '' : this.router.navigate(['/loading'], { state: { previousRoute:this.router.url } })
-          usersState.authUser == null && usersState.asyncInitialized ? this.router.navigate(['/welcome']) : ''
-          !usersState.asyncInitialized ? this.router.navigate(['/loading'], { state: { previousRoute:this.router.url } }) : ''
+          // console.log(usersState.authUser, usersState.asyncInitialized);
+          
+          // (usersState.authUser || usersState.asyncInitialized) && this.router.url !== '/loading' ? '' : this.router.navigate(['/loading'], { state: { previousRoute:this.router.url } })
+
+          // usersState.authUser == null && usersState.asyncInitialized ? this.router.navigate(['/welcome']) : ''
+
+          // !usersState.asyncInitialized ? this.router.navigate(['/loading'], { state: { previousRoute:this.router.url } }) : ''
         }
       )
     }
