@@ -1,1 +1,26 @@
-<p>user-profile works!</p>
+<section>
+    <div *ngIf="user" class="user-card box-shadow">
+        <ion-icon class="user-avatar" name="person-circle-outline"></ion-icon>
+        <div class="user-info-actions">
+            <div class="user-display-name" [routerLink]="['/users/u', user.username]">{{user.username}} <span style="color:black; font-size: 0.8rem;">(420)</span></div>
+            <div class="user-membership">Member since {{user.joinedDate | date: 'mediumDate'}}</div>
+            <div class="user-location" *ngIf="user.location"><ion-icon name="location-outline"></ion-icon> {{user.location}}</div>
+            <div class="user-actions">
+                <div class="user-delete-btn" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username">Delete</div>
+                <div class="user-edit-btn" *ngIf="user.username === authUser?.username">Edit</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <nav class="nav-toggles">
+        <div class="nav-toggle" (click)="onToggle('questions')" [class.active]="toggle === 'questions'">Your Questions</div>
+        <div class="nav-toggle" (click)="onToggle('answers')" [class.active]="toggle === 'answers'">Your Answers</div>
+        <div class="nav-toggle" (click)="onToggle('comments')" [class.active]="toggle === 'comments'">Your Comments</div>
+    </nav>
+</section>
+
+<main>
+
+</main>

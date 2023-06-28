@@ -17,11 +17,11 @@
 
 <main>
     <ng-container *ngIf="users.length; else Tloading">
-        <div *ngFor="let user of users" class="user-card">
+        <div *ngFor="let user of users" class="user-card box-shadow">
             <ion-icon class="user-avatar" name="person-circle-outline"></ion-icon>
             <div class="user-info-actions">
                 <div class="user-display-name" [routerLink]="['/users/u', user.username]">{{user.username}} <span style="color:black; font-size: 0.8rem;">(420)</span></div>
-                <div class="user-membership">Member for 6 years, 4 months</div>
+                <div class="user-membership">Member since {{user.joinedDate | date: 'mediumDate'}}</div>
                 <div class="user-location" *ngIf="user.location"><ion-icon name="location-outline"></ion-icon> {{user.location}}</div>
                 <div class="user-actions">
                     <div class="user-delete-btn" *ngIf="authSvc.authUser?.role === 'admin' || user.username === authSvc.authUser?.username">Delete</div>

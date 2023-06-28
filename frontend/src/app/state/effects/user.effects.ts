@@ -115,6 +115,26 @@ class UserEffects {
             )
         }
     )
+
+    getUserProfile$ = createEffect(
+        ()=> {
+            return this.action$.pipe(
+                ofType(UserActions.GET_USER_PROFILE),
+                mergeMap(action => {
+                    return this.userSvc.getUserProfile({by:action.by, identifier:action.identifier}).pipe(
+                        map(user => {
+                            return UserActions.GET_USER_PROFILE_SUCCESS(user)
+                        }),
+                        catchError(error => {
+                            console.log(error);
+                            
+                            return of(UserActions.GET_USER_PROFILE_ERROR({error: error.error.message}))
+                        })
+                    )
+                })
+            )
+        }
+    )
     
 }
 

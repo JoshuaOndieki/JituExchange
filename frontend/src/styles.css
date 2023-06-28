@@ -151,7 +151,7 @@ button {
     opacity: 0.7;
 }
 
-.nav-filters {
+.nav-filters, .nav-toggles {
     border: 1px solid var(--border-grey);
     display: flex;
     flex-wrap: wrap;
@@ -159,12 +159,12 @@ button {
     align-self: flex-end;
 }
 
-.nav-filter {
+.nav-filter, .nav-toggle {
     padding: 0.5rem 1rem;
     cursor: pointer;
 }
 
-.nav-filter.active, .nav-filter:hover {
+.nav-filter.active, .nav-filter:hover, .nav-toggle.active, .nav-toggle:hover {
     background-color: var(--lighter-grey);
 }
 
@@ -393,4 +393,8 @@ app-toast-message {
 
 .caret-down-icon:hover {
     color: var(--light-red);
+}
+
+.box-shadow {
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
 }

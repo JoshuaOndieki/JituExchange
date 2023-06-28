@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { InewUserData, Iqueries, Iuser, Iusers } from '../interfaces';
+import { InewUserData, Iqueries, Iuser, Iusers, getUserUrlPath } from '../interfaces';
 import dummyUsers from '../helpers/users.dummy';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -38,5 +38,12 @@ export class UserService {
     // console.log(Object.keys(queries).map((key:string) => `${key}=${queries[key]}`).join('&'));
     const q = Object.keys(queries).length ? '?' + Object.keys(queries).map((key:string) => `${key}=${queries[key]}`).join('&') : ''
     return this.client.get<Iusers>(environment.apiUrl + 'users' + q)
+  }
+
+  getUserProfile(data:{by:'username' | 'email' | 'id',identifier:string}):Observable<Iuser> {
+    const path = getUserUrlPath[data.by]
+    const pathExt = data.by === 'email' ? '?email=' + data.identifier : data.identifier 
+    
+    return this.client.get<Iuser>(environment.apiUrl + path + pathExt)
   }
 }

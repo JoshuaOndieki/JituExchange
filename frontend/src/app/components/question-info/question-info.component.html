@@ -14,7 +14,7 @@
     <hr>
     <main>
         <div id="q-info">
-            <section class="main-info">
+            <section class="main-info box-shadow">
                 <div class="voting">
                     <ion-icon (click)="vote('question', question.id, true)" class="caret-icon caret-up-icon" name="caret-up-circle-outline" size="large" [class.green]="question.userVote === true"></ion-icon>
                     <div class="votes">{{question.upvotes - question.downvotes}}</div>
@@ -68,7 +68,7 @@
             <hr>
             <section id="answers">
                 <div class="header">Answers</div>
-                <div class="answer main-info" *ngFor="let answer of question.answers">
+                <div class="answer main-info box-shadow" *ngFor="let answer of question.answers">
                     <div class="voting">
                         <ion-icon (click)="vote('answer', answer.id, true)" class="caret-icon caret-up-icon" name="caret-up-circle-outline" size="large" [class.green]="answer.userVote === true" ></ion-icon>
                         <div class="votes">{{answer.upvotes - answer.downvotes}}</div>

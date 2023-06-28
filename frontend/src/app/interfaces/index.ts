@@ -1,3 +1,4 @@
+
 export interface Iuser {
     firstname:string
     lastname:string
@@ -133,6 +134,7 @@ export interface IuserState {
     errors: IuserStateErrors
     asyncInitialized:boolean
     users: Iusers | null
+    userProfile: Iuser | null
 }
 
 export interface IuserStateErrors {
@@ -141,6 +143,7 @@ export interface IuserStateErrors {
     signup:string | null
     users: string | null
     signout: string | null
+    userProfile: string | null
 }
 
 export interface IquestionState {
@@ -180,4 +183,11 @@ export interface Iquestions {
 export interface Iusers {
     metadata: Imetadata
     users: Iuser[]
+}
+
+
+export enum getUserUrlPath {
+    'id' = 'users/id/',
+    'email' = 'users/u/',
+    'username' = 'users/u/'
 }

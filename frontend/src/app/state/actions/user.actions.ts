@@ -21,3 +21,7 @@ export const SIGN_UP_ERROR = createAction('[Users] - sign up error', props<{erro
 export const GET_USERS = createAction('[Users] - Get users', props<Iqueries>())
 export const GET_USERS_SUCCESS = createAction('[Users] - Get users Success', props<Iusers>())
 export const GET_USERS_ERROR = createAction('[Users] - Get users Error', props<{error:string}>())
+
+export const GET_USER_PROFILE = createAction('[Users] - Get user', props<{by:'username' | 'id' | 'email', identifier:string}>())
+export const GET_USER_PROFILE_SUCCESS = createAction('[Users] - Get user Success', props<Iuser>())
+export const GET_USER_PROFILE_ERROR = createAction('[Users] - Get user Error', props<{error:string}>())

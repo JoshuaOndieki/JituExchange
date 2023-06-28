@@ -34,9 +34,9 @@ export class HeaderComponent implements OnInit {
             // console.log(usersState.authUser, usersState.asyncInitialized);
             
             // (usersState.authUser || usersState.asyncInitialized) && this.router.url === '/loading' ? '' : this.router.navigate(['/loading'], { state: { previousRoute:this.router.url } })
-            if (this.authUser && this.router.url == '/loading') {
-              this.router.navigate(['..'])
-            }
+            // if (this.authUser && this.router.url == '/loading') {
+            //   this.router.navigate(['..'])
+            // }
             usersState.authUser == null && usersState.asyncInitialized ? this.router.navigate(['/welcome']) : ''
   
             // !usersState.asyncInitialized ? this.router.navigate(['/loading']) : ''
