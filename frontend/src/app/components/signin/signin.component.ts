@@ -5,28 +5,41 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { Store } from '@ngrx/store';
+import { Istate } from 'src/app/interfaces';
+import { SIGN_IN } from 'src/app/state/actions/user.actions';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-signin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
   signinForm!:FormGroup
-  constructor(private fb:FormBuilder, private router:Router, private authSvc:AuthService, private userSvc:UserService, private toastSvc:ToastService) {
+  loading:Boolean = false
+
+  constructor(private fb:FormBuilder, private router:Router, private authSvc:AuthService, private userSvc:UserService, private toastSvc:ToastService, private store:Store<Istate>) {
   }
 
   ngOnInit(): void {
       this.signinForm = this.fb.group({
-          id: ['', [Validators.required]],
+          identifier: ['', [Validators.required]],
           password: ['', [Validators.required]]
       })
+
+      this.store.select('users').subscribe(
+        usersState => {
+          this.loading = usersState.errors.signin ? false : this.loading
+          usersState.authUser ? this.router.navigate(['']) : ''
+        }
+      )
   }
 
-  get id() {
-      return this.signinForm.controls['id']
+  get identifier() {
+      return this.signinForm.controls['identifier']
   }
 
   get password() {
@@ -39,25 +52,8 @@ export class SigninComponent {
 
   onSubmit() {
     if (this.signinForm.valid) {
-      this.userSvc.signin({identifier:this.id.value, password:this.password.value}).subscribe(
-        (res) => {
-          this.toastSvc.displayMessage({
-            message: res.message,
-            type: 'success',
-            displayed:false
-          })
-          
-          this.authSvc.signIn(res.token)
-        },
-        (error) => {
-          this.toastSvc.displayMessage({
-            message: error.error.message || 'An error occured',
-            type: 'error',
-            displayed: false
-          })
-        }
-      )
+      this.loading = true
+      this.store.dispatch(SIGN_IN({...this.signinForm.value}))
     }
-    // this.signinForm.valid ? this.router.navigate(['']) : ''
   }
 }

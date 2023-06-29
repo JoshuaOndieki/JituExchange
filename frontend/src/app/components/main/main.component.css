@@ -1,6 +1,7 @@
 :host {
     display: flex;
     width: min(95svw, 1100px);
+    /* flex: 1 */
     /* gap: 1rem; */
 }
 

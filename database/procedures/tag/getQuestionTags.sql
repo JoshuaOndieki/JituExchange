@@ -3,5 +3,5 @@ CREATE OR ALTER PROCEDURE getQuestionTags(
 )
 AS
 BEGIN
-    SELECT tagName FROM questionTags WHERE questionID=@questionID
+    SELECT tagName, id FROM questionTags WHERE questionID=@questionID
 END

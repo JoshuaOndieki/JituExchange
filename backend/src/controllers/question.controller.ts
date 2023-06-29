@@ -27,7 +27,7 @@ export const postQuestion = async (req:IreqInfo, res:Response) => {
             await db.exec('addQuestionTag', {id:questionTagID, tagName:tag, questionID})
         }
 
-        return res.status(201).json({message: "question posted successfully."})
+        return res.status(201).json({message: "question posted successfully.", id:questionID})
     } catch (error:any) {
         return serverError(error, res)
     }
@@ -40,6 +40,7 @@ export const getQuestions = async (req:IreqInfo, res:Response) => {
         let sortBy = req.query.sortBy ? req.query.sortBy as string : 'askedDate' // default to sort by askedDate
         let order = req.query.order ? req.query.order : 'DESC' // default to DESC order
         order = order === 'ASC' || order === 'DESC' ? order : 'DESC'
+        let askedBy = req.query.askedBy as string || null
 
         const questionsCount = await (await db.exec('allQuestionsCount', {})).recordset[0].recordCount
 
@@ -49,6 +50,7 @@ export const getQuestions = async (req:IreqInfo, res:Response) => {
                 limit,
                 sortBy,
                 order,
+                askedBy
             },
             recordsInPage: 0,
             recordsInDb: questionsCount,
@@ -57,9 +59,15 @@ export const getQuestions = async (req:IreqInfo, res:Response) => {
         if (questionsCount <= (page*limit)-limit) {
             return res.status(404).json({metadata, message: `Page ${page} is not available`})
         }
-        let questions = await (await db.exec('getQuestions', {offset:(page*limit)-limit, limit, sortBy, order})).recordset
+        let questions = await (await db.exec('getQuestions', {offset:(page*limit)-limit, limit, sortBy, order, askedBy})).recordset
 
         metadata.recordsInPage = questions.length
+
+        for (let index = 0; index < questions.length; index++) {
+            const question = questions[index];
+            let qTags = (await db.exec('getQuestionTags', {questionID:question.id})).recordset
+            question.tags = qTags.map(tag => tag.tagName)
+        }
 
         if (questions.length) {
             return res.status(200).json({metadata, questions})
@@ -87,7 +95,7 @@ export const getQuestion = async (req:IreqInfo, res:Response) => {
         let qComments = (await db.exec('getQuestionComments', {questionID:id})).recordset
         question.comments = qComments
         // get answers
-        let qAnswers = (await db.exec('getQuestionAnswers', {questionID:id})).recordset
+        let qAnswers = (await db.exec('getQuestionAnswers', {questionID:id, voter:req.info?.id || ''})).recordset
         question.answers = qAnswers
         // get comments for every answer
         for (let index = 0; index < qAnswers.length; index++) {
@@ -119,7 +127,7 @@ export const updateQuestion = async (req:IreqInfo, res:Response) => {
         await db.exec('updateQuestion', {id:question.id, summary, details})
 
         const qTags = (await db.exec('getQuestionTags', {questionID:id})).recordset
-
+        
         // add tags
         for (const tag of qTags) {
             if (tags.includes(tag.tagName)) {
@@ -130,7 +138,7 @@ export const updateQuestion = async (req:IreqInfo, res:Response) => {
         }
 
         for (const tag of tags) {
-            try {
+            try {                
                 let tagID = uid()
                 await db.exec('addTag', {name:tag, addedBy:req.info?.id as string, id:tagID})
             } catch (error) {}

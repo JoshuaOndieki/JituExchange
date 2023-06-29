@@ -1,0 +1,52 @@
+<section>
+    <div *ngIf="userProfile?.info as user" class="user-card box-shadow">
+        <ion-icon class="user-avatar" name="person-circle-outline"></ion-icon>
+        <div class="user-info-actions">
+            <div class="user-display-name" [routerLink]="['/users/u', user.username]"><span style="font-size: 2rem;">{{user.firstname || ''}} {{user.lastname || ''}}</span> @{{ user.username}} <span style="color:black; font-size: 0.8rem;">(420)</span></div>
+            <div class="user-membership">Member since {{user.joinedDate | date: 'mediumDate'}}</div>
+            <div class="user-location" *ngIf="user.location">
+                <ion-icon name="location-outline"></ion-icon> {{user.location}}
+            </div>
+            <div *ngIf="user.github">
+                <ion-icon name="logo-github"></ion-icon> {{user.github}}
+            </div>
+            <div *ngIf="user.website">
+                <ion-icon name="globe-outline"></ion-icon> <a target="_blank" [href]="user.website">{{user.website}}</a>
+            </div>
+            <div class="user-actions">
+                <div class="user-delete-btn hover-underline delete-btn" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username">Delete</div>
+                <div class="user-edit-btn hover-underline edit-btn" *ngIf="user.username === authUser?.username">Edit</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <nav class="nav-toggles">
+        <div class="nav-toggle" (click)="onToggle('questions')" [class.active]="toggle === 'questions'">{{userProfile?.info?.username === authUser?.username ? 'Your' : 'Their'}} Questions</div>
+        <div class="nav-toggle" (click)="onToggle('answers')" [class.active]="toggle === 'answers'">{{userProfile?.info?.username === authUser?.username ? 'Your' : 'Their'}} Answers</div>
+        <div class="nav-toggle" (click)="onToggle('comments')" [class.active]="toggle === 'comments'">{{userProfile?.info?.username === authUser?.username ? 'Your' : 'Their'}} Comments</div>
+    </nav>
+</section>
+
+<main>
+    <ng-container *ngIf="!loading || error; else Tloading">
+        <ng-container *ngIf="!error; else Terror">
+            <ng-container *ngTemplateOutlet="TQuestions"></ng-container>
+        </ng-container>
+    </ng-container>
+</main>
+
+
+<ng-template #TQuestions>
+    <app-question class="box-shadow" *ngFor="let question of userProfile?.questions" [question]="question"></app-question>
+</ng-template>
+
+<ng-template #Tloading>
+    <div class="lds-ripple"><div></div><div></div></div>
+</ng-template>
+
+
+<ng-template #Terror>
+    <p>{{error}}</p>
+</ng-template>

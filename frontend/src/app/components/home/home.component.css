@@ -21,3 +21,7 @@ main {
     flex-direction: column;
     gap: 1rem;
 }
+
+.lds-ripple {
+    margin: auto;
+}
