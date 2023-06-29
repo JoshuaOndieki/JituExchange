@@ -55,6 +55,9 @@ export interface Iquestion {
     downvotes: number
     answersCount: number
     tags: string[]
+    userVote: boolean | null
+    comments: Icomment[]
+    answers: Ianswer[]
   }
 
 export interface IquestionWithDetails {
