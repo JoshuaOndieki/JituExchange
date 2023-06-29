@@ -4,13 +4,14 @@ import * as UserActions from "../actions/user.actions";
 import { catchError, concatMap, map, mergeMap, of, tap } from "rxjs";
 import { Injectable } from "@angular/core";
 import { AuthService } from "src/app/services/auth.service";
-import { ActionsSubject } from "@ngrx/store";
+import { ActionsSubject, Store } from "@ngrx/store";
 import { Router } from "@angular/router";
 import { ToastService } from "src/app/services/toast.service";
+import { Istate } from "src/app/interfaces";
 
 @Injectable()
 class UserEffects {
-    constructor(private action$:Actions, private userSvc:UserService, private authSvc:AuthService, private actionsSubject:ActionsSubject, private router:Router, private toastSvc:ToastService) {}
+    constructor(private action$:Actions, private userSvc:UserService, private authSvc:AuthService, private actionsSubject:ActionsSubject, private router:Router, private toastSvc:ToastService, private store:Store<Istate>) {}
 
     getAuthUser$ = createEffect(
         ()=> {
@@ -65,13 +66,16 @@ class UserEffects {
                     return this.userSvc.signin({identifier:action.identifier, password:action.password}).pipe(
                         map(res => {
                             this.authSvc.signIn(res.token)
-                            UserActions.SIGN_IN_SUCCESS()
-                            return UserActions.GET_AUTH_USER()
+                            return UserActions.SIGN_IN_SUCCESS()
                         }),
                         catchError(error => {
                             return of(UserActions.SIGN_IN_ERROR({error: error.error.message}))
                         })
                     )
+                }),
+                tap(action => {
+                    window.location.reload() // reset any previous sensitive data that may be in store
+                    this.store.dispatch( UserActions.GET_AUTH_USER() )
                 })
             )
         }
@@ -90,6 +94,9 @@ class UserEffects {
                             return of(UserActions.SIGN_OUT_ERROR({error: error.error.message}))
                         })
                     )
+                }),
+                tap(action => {
+                    window.location.reload() // reset any previous sensitive data that may be in store
                 })
             )
         }

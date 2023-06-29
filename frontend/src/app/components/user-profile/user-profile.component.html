@@ -2,12 +2,20 @@
     <div *ngIf="user" class="user-card box-shadow">
         <ion-icon class="user-avatar" name="person-circle-outline"></ion-icon>
         <div class="user-info-actions">
-            <div class="user-display-name" [routerLink]="['/users/u', user.username]">{{user.username}} <span style="color:black; font-size: 0.8rem;">(420)</span></div>
+            <div class="user-display-name" [routerLink]="['/users/u', user.username]"><span style="font-size: 2rem;">{{user.firstname || ''}} {{user.lastname || ''}}</span> @{{ user.username}} <span style="color:black; font-size: 0.8rem;">(420)</span></div>
             <div class="user-membership">Member since {{user.joinedDate | date: 'mediumDate'}}</div>
-            <div class="user-location" *ngIf="user.location"><ion-icon name="location-outline"></ion-icon> {{user.location}}</div>
+            <div class="user-location" *ngIf="user.location">
+                <ion-icon name="location-outline"></ion-icon> {{user.location}}
+            </div>
+            <div *ngIf="user.github">
+                <ion-icon name="logo-github"></ion-icon> {{user.github}}
+            </div>
+            <div *ngIf="user.website">
+                <ion-icon name="globe-outline"></ion-icon> <a target="_blank" [href]="user.website">{{user.website}}</a>
+            </div>
             <div class="user-actions">
-                <div class="user-delete-btn" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username">Delete</div>
-                <div class="user-edit-btn" *ngIf="user.username === authUser?.username">Edit</div>
+                <div class="user-delete-btn hover-underline" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username">Delete</div>
+                <div class="user-edit-btn hover-underline" *ngIf="user.username === authUser?.username">Edit</div>
             </div>
         </div>
     </div>
@@ -22,5 +30,23 @@
 </section>
 
 <main>
-
+    <ng-container *ngIf="questions.length; else Tloading">
+        <ng-container *ngIf="!error; else Terror">
+            <ng-container *ngTemplateOutlet="TtopQuestions"></ng-container>
+        </ng-container>
+    </ng-container>
 </main>
+
+
+<ng-template #TtopQuestions>
+    <app-question class="box-shadow" *ngFor="let question of questions" [question]="question"></app-question>
+</ng-template>
+
+<ng-template #Tloading>
+    <div class="lds-ripple"><div></div><div></div></div>
+</ng-template>
+
+
+<ng-template #Terror>
+    <p>{{error}}</p>
+</ng-template>

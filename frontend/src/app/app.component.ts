@@ -25,6 +25,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.store.select('users').subscribe(
       usersState => {        
+        // if (!usersState.asyncInitialized) {
+        //   this.router.navigate(['/loading'], { state: { previousRoute:this.router.url }})
+        // }
       }
     )
     this.messages = this.toastSvc.getMessages()

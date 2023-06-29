@@ -8,8 +8,8 @@ const routes: Routes = [
     path: '',
     loadComponent:()=> import('./components/main/main.component').then(c => c.MainComponent),
     children: [
-      {path: '', pathMatch: 'full', redirectTo:'home'},
-      {path: 'home', canActivate:[authGuard], loadComponent:()=> import('./components/home/home.component').then(c => c.HomeComponent)},
+      {path: '', pathMatch: 'full', redirectTo:'/home'},
+      {path: 'home', canActivate:[authGuard], pathMatch: 'full', loadComponent:()=> import('./components/home/home.component').then(c => c.HomeComponent)},
       // {
       //   path: 'questions', canActivate:[authGuard],
       //   loadComponent:()=> import('./components/questions/questions.component').then(c => c.QuestionsComponent),
@@ -24,7 +24,7 @@ const routes: Routes = [
       {path: 'loading', loadComponent:()=> import('./components/loading/loading.component').then(c => c.LoadingComponent)},
 
       {path: 'questions', canActivate:[authGuard], loadComponent:()=> import('./components/questions/questions.component').then(c => c.QuestionsComponent), children: [
-        {path: '',  loadComponent:()=> import('./components/all-questions/all-questions.component').then(c => c.AllQuestionsComponent)},
+        {path: '', pathMatch: 'full', loadComponent:()=> import('./components/all-questions/all-questions.component').then(c => c.AllQuestionsComponent)},
         {path: 'ask', loadComponent:()=> import('./components/ask/ask.component').then(c => c.AskComponent)},
         {path: 'q/:id', loadComponent:()=> import('./components/question-info/question-info.component').then(c => c.QuestionInfoComponent)}
       ]},
@@ -32,7 +32,7 @@ const routes: Routes = [
         path: 'users', canActivate:[authGuard],
         loadComponent:()=> import('./components/users/users.component').then(c => c.UsersComponent),
         children: [
-          {path: '', loadComponent:()=> import('./components/all-users/all-users.component').then(c => c.AllUsersComponent)},
+          {path: '', pathMatch: 'full', loadComponent:()=> import('./components/all-users/all-users.component').then(c => c.AllUsersComponent)},
           {path: 'u/:username', loadComponent:()=> import('./components/user-profile/user-profile.component').then(c => c.UserProfileComponent)}
           
         ]

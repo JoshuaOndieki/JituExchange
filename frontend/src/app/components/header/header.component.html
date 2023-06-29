@@ -12,7 +12,7 @@
 
 <div id="auth-header">
     <ng-container *ngIf="authUser else noUser">
-        <div id="avatar-card">
+        <div id="avatar-card" [routerLink]="['users/u', authUser.username]">
             <ion-icon id="avatar" name="person-circle-outline" size="large"></ion-icon>
             <div class="gold-badges badge">·<span>7</span></div>
             <div class="silver-badges badge">·<span>7</span></div>

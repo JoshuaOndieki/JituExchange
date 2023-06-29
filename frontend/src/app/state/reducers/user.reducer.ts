@@ -70,13 +70,16 @@ const userReducer =  createReducer(
         return {
             ...state,
             authUser: null,
-            errors:{...state.errors, signout: null}
+            errors:{...state.errors, signout: null},
+            asyncInitialized: false
         }
     }),
     on(UserActions.SIGN_OUT_ERROR, (state:IuserState, {error}) => {
         return {
             ...state,
-            errors:{...state.errors, signout: error}
+            errors:{...state.errors, signout: error},
+            authUser: null,
+            asyncInitialized: false
         }
     }),
     on(UserActions.GET_USERS_SUCCESS, (state:IuserState, users) => {

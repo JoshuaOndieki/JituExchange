@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { catchError, of, switchMap } from 'rxjs';
+import { catchError, of, switchMap, take } from 'rxjs';
 import { Istate } from '../interfaces';
 import { GET_AUTH_USER } from '../state/actions/user.actions';
 
@@ -19,14 +19,17 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   return store.select('users').pipe(
     switchMap(usersState => {      
-      if (['/signin', '/signup', '/welcome'].includes(state.url) && !usersState.authUser) {
+      if (['/signin', '/signup', '/welcome'].includes(state.url) && !usersState.authUser && usersState.asyncInitialized) {
         return of(true)
       }
       if (!usersState.asyncInitialized) {
         console.log('auth user not initialized. fetching...');
         store.dispatch(GET_AUTH_USER())
+        // const previousRoute = state.url == '/loading' || ['/signin', '/signup', '/welcome'].includes(state.url) ? router.url : state.url
+        // console.log('hjadsfv ', previousRoute);
         
-        router.navigate(['/loading'], { state: { previousRoute:state.url == '/loading' ? router.url : state.url } })
+        // router.navigate(['/loading'], { state: { previousRoute: state.url }})
+        router.navigate(['/loading'], { state: { previousRoute:state.url == '/loading' || state.url == '/home'? router.url : state.url } })
         return of(false)
       }
       const canActivate = usersState.authUser ? true : false
@@ -39,6 +42,7 @@ export const authGuard: CanActivateFn = (route, state) => {
         return of(false)
       }
     }),
+    take(1),
     catchError(error => {
       router.navigate(['/welcome'])
       return of(false)

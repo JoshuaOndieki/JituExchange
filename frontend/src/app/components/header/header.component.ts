@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
     ngOnInit(): void {
         this.store.select('users').subscribe(
           usersState => {        
-            console.log(usersState.authUser)
+            // console.log(usersState.authUser)
             this.authUser = usersState.authUser
             // console.log(this.router.url);
             
@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
             // if (this.authUser && this.router.url == '/loading') {
             //   this.router.navigate(['..'])
             // }
-            usersState.authUser == null && usersState.asyncInitialized ? this.router.navigate(['/welcome']) : ''
+            usersState.authUser == null && usersState.asyncInitialized && !['/signin', '/signup'].includes(this.router.url) ? this.router.navigate(['/welcome']) : ''
   
             // !usersState.asyncInitialized ? this.router.navigate(['/loading']) : ''
           }

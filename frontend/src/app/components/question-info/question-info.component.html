@@ -32,7 +32,7 @@
                         <div class="asker">
                             <ion-icon class="avatar" name="person-circle-outline" size="large"></ion-icon>
                             <div>
-                                <div class="asker-id">{{question.username}}</div>
+                                <div class="asker-id" [routerLink]="['/users/u', question.username]">{{question.username}}</div>
                                 <div class="badges">
                                     <div>420</div>
                                     <div class="gold-badges badge">·<span>7</span></div>
