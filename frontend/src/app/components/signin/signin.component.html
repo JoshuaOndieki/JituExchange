@@ -1,9 +1,9 @@
-<form id="signin-form" [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+<form id="signin-form" [formGroup]="signinForm" (ngSubmit)="onSubmit()" *ngIf="!loading; else Tloading">
     <h1>Sign In</h1>
     <div class="inputs">
         <div class="input">
-            <div class="input-wrapper" [class.valid]="id.valid" [class.invalid]="id.invalid && (id.dirty || id.touched)">
-                <input type="text" placeholder="username or email" formControlName="id">
+            <div class="input-wrapper" [class.valid]="identifier.valid" [class.invalid]="identifier.invalid && (identifier.dirty || identifier.touched)">
+                <input type="text" placeholder="username or email" formControlName="identifier">
                 <label for="">user</label>
             </div>
         </div>
@@ -16,5 +16,9 @@
         </div>
     </div>
     <input type="submit" [class.valid]="signinForm.valid" value="sign in" [disabled]="signinForm.invalid">
-    <button (click)="signAdmin()">admin</button>
+    <!-- <button (click)="signAdmin()">admin</button> -->
 </form>
+
+<ng-template #Tloading>
+    <div class="lds-ripple"><div></div><div></div></div>
+</ng-template>

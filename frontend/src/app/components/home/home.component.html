@@ -12,5 +12,22 @@
 </nav>
 
 <main>
-    <app-question *ngFor="let question of questions" [question]="question"></app-question>
+    <ng-container *ngIf="questions.length; else Tloading">
+        <ng-container *ngIf="!error; else Terror">
+            <ng-container *ngTemplateOutlet="TtopQuestions"></ng-container>
+        </ng-container>
+    </ng-container>
 </main>
+
+<ng-template #TtopQuestions>
+    <app-question class="box-shadow" *ngFor="let question of questions" [question]="question"></app-question>
+</ng-template>
+
+<ng-template #Tloading>
+    <div class="lds-ripple"><div></div><div></div></div>
+</ng-template>
+
+
+<ng-template #Terror>
+    <p>{{error}}</p>
+</ng-template>

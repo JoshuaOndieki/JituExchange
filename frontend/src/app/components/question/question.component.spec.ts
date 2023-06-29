@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionComponent } from './question.component';
 import { ActivatedRoute } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('QuestionComponent', () => {
   let component: QuestionComponent;
@@ -10,40 +11,31 @@ describe('QuestionComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [QuestionComponent],
-      providers: [{provide: ActivatedRoute, useValue:{}}]
+      providers: [{provide: ActivatedRoute, useValue:{}}, provideMockStore({initialState:{mockValue: null}})]
     });
     fixture = TestBed.createComponent(QuestionComponent);
     component = fixture.componentInstance;
     component.question = {
-      id: 'a1b3ew',
-      summary: 'How to create a Stack Overflow clone with Angular, Expressjs, and MSSQL',
-      details: `
-      RouterLinkActive if used with queryParams needs to be an exact match, So the above solution will not work. There was a proposal to make routeLinkActiveOptions but was dropped by Angular team.
-
-      You can define your own method to identify active.
-
-      Here in the below snippet I am defining a method is link active will return true if the path url minus any query params matches the routerlink path passed from template.
-
-      import {Router} from '@angular/router';
-
-      constructor(private router: Router){
-      
-      }
-
-      isLinkActive(link) {
-        const url = this.router.url;
-        return link.id === url.substring(1, url.indexOf('?'));
-      }
-      From the template assign class="active" if the method isLinkActive returns true
-
-      <li *ngFor="let link of links" [class.active]="isLinkActive(link)">
-        <a [routerLink]="'/'+link.id" [queryParams]="{ activeOnly: false }">{{link.name}}</a>
-      </li>
-      Stackblitz : https://stackblitz.com/edit/angular-8f7jk8
-      `,
-      askedDate: '6/13/2023, 12:47:44 PM',
-      editedDate: null,
-      askedBy: 'JoshuaOndieki'
+      "id": "324b350e-8523-4d37-8ce5-18f2f7171a07",
+      "summary": "Executing code after dispatch is completed while using ngrx",
+      "details": "In my sample Angular 2 application , I am using ngrx/store and ngrx/effects for state management.\n\nBelow is one of the function in a component to add a new item.\n\naddAuthor() {\n    \n    this.store.dispatch(addAuthorAction(this.fg.value));\n    console.log('2')        \n} \nIn the above code this.store.dispatch(addAuthorAction(this.fg.value)); takes care of making an AJAX call to server and adding a new author to database, which is working fine.\n\nAnd because this.store.dispatch(addAuthorAction(this.fg.value)); is an async action , console.log(\"2\") statement gets executed even before the AJAX call is completed.\n\nMy question is , what needs to be modified so that console.log gets executed after store.dispatch is done.",
+      "askedBy": "0ff54b88-16ec-4103-a5fd-255a7f1e2f96",
+      "askedDate": "2023-06-27T22:13:10.945Z",
+      "editedDate": null,
+      "views": 3,
+      "username": "oj",
+      "upvotes": 0,
+      "downvotes": 0,
+      "userVote": null,
+      "answersCount": 0,
+      "tags": [
+        "ngrx",
+        "ngrx-effects",
+        "redux",
+        "angular"
+      ],
+      "comments": [],
+      "answers": []
     }
     fixture.detectChanges();
   });

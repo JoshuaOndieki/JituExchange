@@ -3,28 +3,43 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { Store } from '@ngrx/store';
+import { Istate } from 'src/app/interfaces';
+import { SIGN_IN } from 'src/app/state/actions/user.actions';
+import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
   selector: 'app-signin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, LoadingComponent],
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
   signinForm!:FormGroup
-  constructor(private fb:FormBuilder, private router:Router, private authSvc:AuthService) {
+  loading:Boolean = false
+
+  constructor(private fb:FormBuilder, private router:Router, private authSvc:AuthService, private userSvc:UserService, private toastSvc:ToastService, private store:Store<Istate>) {
   }
 
   ngOnInit(): void {
       this.signinForm = this.fb.group({
-          id: ['', [Validators.required]],
+          identifier: ['', [Validators.required]],
           password: ['', [Validators.required]]
       })
+
+      this.store.select('users').subscribe(
+        usersState => {
+          this.loading = usersState.errors.signin ? false : this.loading
+          usersState.authUser ? this.router.navigate(['']) : ''
+        }
+      )
   }
 
-  get id() {
-      return this.signinForm.controls['id']
+  get identifier() {
+      return this.signinForm.controls['identifier']
   }
 
   get password() {
@@ -36,39 +51,9 @@ export class SigninComponent {
   }
 
   onSubmit() {
-    this.signinForm.valid? this.authSvc.signIn(
-      {
-          firstname:"string",
-          lastname:"string",
-          id:"string",
-          email:"string",
-          username:this.id.value,
-          location:"string",
-          joinedDate:"string",
-          website: "string",
-          github:"string",
-          avatar:"string",
-          role: 'user'
-      }      ) : ''
-
-    // this.signinForm.valid ? this.router.navigate(['']) : ''
-        
-  }
-
-  signAdmin() {
-    this.authSvc.signIn(
-      {
-          firstname:"string",
-          lastname:"string",
-          id:"string",
-          email:"string",
-          username:"admin",
-          location:"string",
-          joinedDate:"string",
-          website: "string",
-          github:"string",
-          avatar:"string",
-          role: 'admin'
-      }      )
+    if (this.signinForm.valid) {
+      this.loading = true
+      this.store.dispatch(SIGN_IN({...this.signinForm.value}))
+    }
   }
 }

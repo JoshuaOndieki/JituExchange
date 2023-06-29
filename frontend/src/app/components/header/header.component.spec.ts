@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
 import { ActivatedRoute } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -10,7 +11,7 @@ describe('HeaderComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HeaderComponent],
-      providers: [{ provide: ActivatedRoute, useValue: {} }]
+      providers: [{ provide: ActivatedRoute, useValue: {} }, provideMockStore({initialState:{mockValue: null}})]
     });
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;

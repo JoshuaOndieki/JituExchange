@@ -3,8 +3,8 @@ orbs:
   node: circleci/node@5.1.0
   codecov: codecov/codecov@3.2.4
   browser-tools: circleci/browser-tools@1.4.1
+  windows: circleci/windows@5.0.0
 
-# Define the jobs we want to run for this project
 jobs:
   clone:
     docker:
@@ -15,6 +15,28 @@ jobs:
           root: .
           paths:
             - .
+  database:
+    working_directory: ~/JituExchange/database
+    executor:
+      name: windows/default
+      shell: powershell.exe
+    environment:
+      ACCEPT_EULA: "Y" # Accept the End-User License Agreement for MSSQL tools
+    steps:
+      - checkout:
+          path: ~/JituExchange
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install MSSQL tools
+          command: |
+            Invoke-WebRequest -Uri "https://aka.ms/azcmagent/windows/mssql-tools.zip" -OutFile "mssql-tools.zip"
+            Expand-Archive -Path "mssql-tools.zip" -DestinationPath "C:\mssql-tools"
+            Remove-Item -Path "mssql-tools.zip"
+      - run:
+          name: setup test database
+          command: bash setup.sh -t
+          working_directory: ~/JituExchange/database
 
   build-backend:
     working_directory: ~/JituExchange/backend
@@ -94,14 +116,16 @@ jobs:
       - codecov/upload:
           file: ./coverage/clover.xml
 
-# Orchestrate our job run sequence
 workflows:
   test:
     jobs:
       - clone
-      - test-backend:
+      - database:
           requires:
             - clone
+      - test-backend:
+          requires:
+            - database
       - test-frontend:
           requires:
             - clone

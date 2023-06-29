@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS userBadges;
+DROP TABLE IF EXISTS badges;
+DROP TABLE IF EXISTS questionTags;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS answerComments;
+DROP TABLE IF EXISTS answerVotes;
+DROP TABLE IF EXISTS answers;
+DROP TABLE IF EXISTS questionComments;
+DROP TABLE IF EXISTS questionVotes;
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS welcomeEmails;
+DROP TABLE IF EXISTS passwordResetEmails;
+DROP TABLE IF EXISTS acceptedAnswerEmails;
+DROP TABLE IF EXISTS users;

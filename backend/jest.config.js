@@ -7,6 +7,7 @@ module.exports = {
       '!src/**/*.d.ts',
       '!src/index.tsx',
       '!src/serviceWorker.ts',
-    ]
+    ],
+    testMatch: ['**/tests/**/*.spec.ts', '**/tests/**/*.test.ts'],
   };
   

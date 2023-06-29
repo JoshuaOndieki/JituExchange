@@ -6,6 +6,11 @@ import passwordStrengthValidator from 'src/app/validators/password.strength.vali
 import { PasswordStrengthErrorsKeysPipe } from 'src/app/pipes/password-strength-errors-keys.pipe';
 import noSpacesValidator from 'src/app/validators/no.spaces.validator';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { Store } from '@ngrx/store';
+import { Istate } from 'src/app/interfaces';
+import { SIGN_UP } from 'src/app/state/actions/user.actions';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +21,8 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
     signupForm!:FormGroup
-    constructor(private fb:FormBuilder, private router:Router) {
+    loading:Boolean = false
+    constructor(private fb:FormBuilder, private router:Router, private userSvc:UserService, private toastSvc:ToastService, private store:Store<Istate>) {
     }
 
     ngOnInit(): void {
@@ -26,6 +32,13 @@ export class SignupComponent implements OnInit {
             password: ['', [Validators.required, passwordStrengthValidator(6)]],
             confirmPassword: ['', [Validators.required, passwordMatchValidator(), passwordStrengthValidator(6)]]
         })
+
+        this.store.select('users').subscribe(
+            usersState => {
+              this.loading = usersState.errors.signup ? false : this.loading
+              usersState.authUser ? this.router.navigate(['']) : ''
+            }
+          )
     }
 
     get username() {
@@ -49,7 +62,10 @@ export class SignupComponent implements OnInit {
       }
 
     onSubmit() {        
-        this.signupForm.valid ? this.router.navigate(['/signin']) : ''
+        if (this.signupForm.valid) {
+            this.loading = true
+            this.store.dispatch(SIGN_UP(this.signupForm.value))
+        }
         
     }
 }

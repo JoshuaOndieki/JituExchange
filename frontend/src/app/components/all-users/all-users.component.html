@@ -1,0 +1,61 @@
+<header>
+    <h1>
+        All Users
+    </h1>
+</header>
+
+<form id="search-form" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <div class="inputs">
+        <div class="input">
+            <div class="input-wrapper" [class.valid]="query.valid" [class.invalid]="query.invalid && (query.dirty || query.touched)">
+                <input type="search" placeholder="search users" formControlName="query">
+                <label for="">search query</label>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<section class="pagination">
+    <div class="page-btns">
+        <div class="page-btn first-page-btn">1 ···</div>
+        <div class="page-btn">2</div>
+        <div class="page-btn">3</div>
+        <div class="page-btn">4</div>
+        <div class="page-btn">5</div>
+        <div class="page-btn">6</div>
+        <div class="page-btn last-page-btn">··· 50</div>
+    </div>
+    <div class="page-limits">
+        <div class="page-btn">10</div>
+        <div class="page-btn">20</div>
+        <div class="page-btn">30</div>
+        <div>per page</div>
+    </div>
+    <div class="page-order">
+        <div>ASC</div>
+        <div>DESC</div>
+    </div>
+</section>
+
+<main>
+    <ng-container *ngIf="users.length; else Tloading">
+        <div *ngFor="let user of users" class="user-card box-shadow">
+            <ion-icon class="user-avatar" name="person-circle-outline"></ion-icon>
+            <div class="user-info-actions">
+                <div class="user-display-name" [routerLink]="['/users/u', user.username]">{{user.username}} <span style="color:black; font-size: 0.8rem;">(420)</span></div>
+                <div class="user-membership">Member since {{user.joinedDate | date: 'mediumDate'}}</div>
+                <div class="user-location" *ngIf="user.location"><ion-icon name="location-outline"></ion-icon> {{user.location}}</div>
+                <div class="user-actions">
+                    <div class="delete-btn user-delete-btn hover-underline" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username">Delete</div>
+                    <div class="edit-btn user-edit-btn hover-underline" *ngIf="user.username === authUser?.username">Edit</div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</main>
+
+
+<ng-template #Tloading>
+    <div class="lds-ripple"><div></div><div></div></div>
+</ng-template>

@@ -1,7 +1,7 @@
 :host {
     display: flex;
     gap: 1rem;
-    border-top: 1px solid var(--border-grey);
+    /* border-top: 1px solid var(--border-grey); */
     padding: 0.5rem;
 }
 
@@ -26,6 +26,10 @@
     color: grey;
 }
 
+.q-meta * {
+    font-family: RobotoMono, sans-serif;
+}
+
 .q-summary, .q-asker {
     color: var(--app-blue);
     cursor: pointer;
@@ -37,11 +41,17 @@
 
 .q-asker-meta {
     color: black;
+    font-size: smaller;
+}
+
+.q-asker {
+    font-size: 1rem;
 }
 
 .q-tags {
     display: flex;
     gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .q-tag {
@@ -49,11 +59,13 @@
     padding: 5px;
     color: var(--app-text-blue);
     border-radius: 5px;
+    font-size: small;
 }
 
 .delete-btn {
     color: salmon;
     cursor: pointer;
+    text-decoration-color: salmon!important;
 }
 
 .edit-btn {
@@ -63,4 +75,7 @@
 
 .actions {
     font-size: 1rem;
+    display: inline-flex;
+    gap: 2rem;
+    padding: 0 0.5rem;
 }

@@ -7,6 +7,10 @@ header {
     padding: 1rem;
 }
 
+.lds-ripple {
+    margin: auto
+}
+
 #q-summary {
     font-size: 1.5rem;
     font-weight: bold;
@@ -105,9 +109,22 @@ main {
     align-self: flex-end;
 }
 
+#answers {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.answer {
+    margin:  1rem 0;
+    border-bottom: 1px solid var(--border-grey);
+    padding-bottom: 0.5rem;
+}
+
 .main-info {
     display: flex;
     gap: 1rem;
+    padding: 1rem;
 }
 
 .votes {
@@ -122,13 +139,15 @@ main {
 .tag {
     background-color: var(--light-blue);
     border-radius: 0.5rem;
-    padding: 0.5rem;
+    padding: 5px;
+    font-size: small;
 }
 
 .more-details {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    flex: 1
 }
 
 .ask-info {
@@ -149,12 +168,14 @@ main {
 
 .asker-id {
     color: var(--app-blue);
+    font-size: 1rem;
 }
 
 .comments {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    padding-left: 2rem;
 }
 
 .commenter {
@@ -163,4 +184,26 @@ main {
 
 .comment-date {
     color: grey;
+    font-size: small;
 }
+
+.comment-detail {
+    font-family: 'RobotoMono', sans-serif;
+}
+
+.grey {
+    color: grey
+}
+
+.green {
+    color: var(--light-green);
+}
+
+.red {
+    color: var(--light-red);
+}
+
+/* .details-line {
+    display: block;
+    overflow: scroll;
+} */

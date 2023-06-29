@@ -12,14 +12,24 @@ export class AuthService {
     this.authUser = null
   }
 
-  signIn(user:Iuser) {
-    this.authUser = user
-    this.router.navigate([''])
+  signIn(token:string) {
+    // this.authUser = user
+    localStorage.setItem('JituExchange-token', token)
+    // this.setAuthUser(user)
+    // this.router.navigate([''])
   }
 
   signOut() {
     this.authUser = null
-    this.router.navigate(['/welcome'])
+    localStorage.removeItem('JituExchange-token')
+  }
+
+  setAuthUser(user:Iuser) {
+    this.authUser = user
+  }
+
+  getAuthUser() {
+    return this.authUser
   }
   
 }

@@ -1,6 +1,6 @@
-<h1>Ask a Question</h1>
+<h1>{{editMode ? 'Update Your Question' : 'Ask a Question'}}</h1>
 
-<form [formGroup]="askForm" (ngSubmit)="onSubmit()" id="ask-form">
+<form [formGroup]="askForm" (ngSubmit)="onSubmit()" id="ask-form" *ngIf="!loading || error; else Tloading">
     <div class="inputs">
         <div class="input">
             <div class="input-wrapper" [class.valid]="summary.valid" [class.invalid]="summary.invalid && (summary.dirty || summary.touched)">
@@ -30,5 +30,9 @@
         <div id="tags-label">Tags</div>
         <div *ngFor="let tag of tags.value; index as i" class="tag"><div class="tag-name">{{tag}}</div> <ion-icon name="remove-outline" size="large" (click)="removeTag(i)"></ion-icon></div>
     </div>
-    <input type="submit" value="Post Your Question" [class.valid]="askForm.valid" [disabled]="askForm.invalid">
+    <input type="submit" [value]="editMode? 'Update Your Question' : 'Post Your Question'" [class.valid]="askForm.valid" [disabled]="askForm.invalid">
 </form>
+
+<ng-template #Tloading>
+    <div class="lds-ripple"><div></div><div></div></div>
+</ng-template>

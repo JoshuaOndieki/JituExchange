@@ -1,0 +1,106 @@
+name: Deploy to AWS Fargate
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup AWS ECR Details
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{secrets.AWS_REGION}}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.ECS_ROLE_ARN }}
+          role-session-name: GitHubDeploy
+          role-skip-session-tagging: true
+          role-duration-seconds: 1200
+        env:
+          AWS_REGION: ${{secrets.AWS_REGION}}
+
+      - name: Login to Amazon ECR
+        id: login-pf-aws-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        
+      - name: Build and push Backend Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend
+          push: true
+          tags: ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/jituexchange-api:${{ github.sha }}
+
+      - name: Build and push Background Docker image
+        id: build-and-push-background
+        uses: docker/build-push-action@v2
+        with:
+          context: ./background
+          push: true
+          tags: ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/jituexchange-background-services:${{ github.sha }}
+
+      - name: Build and push Frontend Docker image
+        id: build-and-push-frontend
+        uses: docker/build-push-action@v2
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/jituexchange-angular:${{ github.sha }}
+
+      - name: Generate task definition
+        id: generate-task-definition
+        run: |
+          echo '{
+            "family": "jituexchange-${{ github.head_ref || github.ref_name }}",
+            "containerDefinitions": [
+              {
+                "name": "api",
+                "image": "${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/jituexchange-api:${{ github.sha }}",
+                "cpu": 256,
+                "memoryReservation": 512,
+                "portMappings": [
+                  {
+                    "containerPort": 3000,
+                    "protocol": "tcp"
+                  }
+                ]
+              },
+              {
+                "name": "background",
+                "image": "${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/jituexchange-background-services:${{ github.sha }}",
+                "cpu": 256,
+                "memoryReservation": 512,
+                "essential": false
+              },
+              {
+                "name": "angular",
+                "image": "${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/jituexchange-angular:${{ github.sha }}",
+                "cpu": 256,
+                "memoryReservation": 512,
+                "portMappings": [
+                  {
+                    "containerPort": 80,
+                    "protocol": "tcp"
+                  }
+                ]
+              }
+            ],
+            "executionRoleArn": "${{ secrets.ECS_ROLE_ARN }}"
+          }
+          ' >> task-definition-${{ github.sha }}.json
+
+      - name: Update AWS ECS service
+        id: update-service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: task-definition-${{ github.sha }}.json
+          service: jituexchange-${{ github.head_ref || github.ref_name }}
+          cluster: jituexchange
+          wait-for-service-stability: true
