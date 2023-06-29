@@ -134,7 +134,14 @@ export interface IuserState {
     errors: IuserStateErrors
     asyncInitialized:boolean
     users: Iusers | null
-    userProfile: Iuser | null
+    userProfile: IuserProfile
+}
+
+export interface IuserProfile {
+    info: Iuser | null
+    questions: Iquestion[]
+    answers: Ianswer[]
+    comments: Icomment[]
 }
 
 export interface IuserStateErrors {
@@ -172,6 +179,7 @@ export interface Iqueries {
     limit?: number
     sortBy?: string
     order?: string
+    askedBy?:string
     [key: string]: string | number | undefined
   }
 

@@ -15,7 +15,12 @@ const initialState: IuserState = {
     authUser: null,
     asyncInitialized: false,
     users: null,
-    userProfile: null
+    userProfile: {
+        info: null,
+        questions: [],
+        answers: [],
+        comments: []
+    }
 }
 
 // const getUserState = createFeatureSelector<IuserState>('users')
@@ -96,18 +101,44 @@ const userReducer =  createReducer(
             errors:{...state.errors, users: error}
         }
     }),
-    on(UserActions.GET_USER_PROFILE_SUCCESS, (state:IuserState, userProfile) => {
+    on(UserActions.GET_USER_PROFILE_INFO_SUCCESS, (state:IuserState, info) => {
         return {
             ...state,
-            userProfile,
+            userProfile:{...state.userProfile, info},
             errors:{...state.errors, userProfile: null}
         }
     }),
-    on(UserActions.GET_USER_PROFILE_ERROR, (state:IuserState, {error}) => {
+    on(UserActions.GET_USER_PROFILE_INFO_ERROR, (state:IuserState, {error}) => {
         return {
             ...state,
-            userProfile: null,
+            userProfile: {...state.userProfile,info:null},
             errors:{...state.errors, userProfile: error}
+        }
+    }),
+    on(UserActions.GET_USER_PROFILE_QUESTIONS_SUCCESS, (state:IuserState, {questions}) => {
+        return {
+            ...state,
+            userProfile:{...state.userProfile, questions},
+            errors:{...state.errors, userProfile: null}
+        }
+    }),
+    on(UserActions.GET_USER_PROFILE_QUESTIONS_ERROR, (state:IuserState, {error}) => {
+        return {
+            ...state,
+            userProfile: {...state.userProfile,questions:[]},
+            errors:{...state.errors, userProfile: error}
+        }
+    }),
+    on(UserActions.CLEAR_USER_PROFILE, (state:IuserState) => {
+        return {
+            ...state,
+            userProfile:{
+                info: null,
+                questions: [],
+                answers: [],
+                comments: []
+            },
+            errors:{...state.errors, userProfile: null}
         }
     })
 )

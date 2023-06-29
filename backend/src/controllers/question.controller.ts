@@ -40,6 +40,7 @@ export const getQuestions = async (req:IreqInfo, res:Response) => {
         let sortBy = req.query.sortBy ? req.query.sortBy as string : 'askedDate' // default to sort by askedDate
         let order = req.query.order ? req.query.order : 'DESC' // default to DESC order
         order = order === 'ASC' || order === 'DESC' ? order : 'DESC'
+        let askedBy = req.query.askedBy as string || null
 
         const questionsCount = await (await db.exec('allQuestionsCount', {})).recordset[0].recordCount
 
@@ -49,6 +50,7 @@ export const getQuestions = async (req:IreqInfo, res:Response) => {
                 limit,
                 sortBy,
                 order,
+                askedBy
             },
             recordsInPage: 0,
             recordsInDb: questionsCount,
@@ -57,7 +59,7 @@ export const getQuestions = async (req:IreqInfo, res:Response) => {
         if (questionsCount <= (page*limit)-limit) {
             return res.status(404).json({metadata, message: `Page ${page} is not available`})
         }
-        let questions = await (await db.exec('getQuestions', {offset:(page*limit)-limit, limit, sortBy, order})).recordset
+        let questions = await (await db.exec('getQuestions', {offset:(page*limit)-limit, limit, sortBy, order, askedBy})).recordset
 
         metadata.recordsInPage = questions.length
 

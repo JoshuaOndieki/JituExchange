@@ -123,19 +123,19 @@ class UserEffects {
         }
     )
 
-    getUserProfile$ = createEffect(
+    getUserProfileInfo$ = createEffect(
         ()=> {
             return this.action$.pipe(
-                ofType(UserActions.GET_USER_PROFILE),
+                ofType(UserActions.GET_USER_PROFILE_INFO),
                 mergeMap(action => {
                     return this.userSvc.getUserProfile({by:action.by, identifier:action.identifier}).pipe(
                         map(user => {
-                            return UserActions.GET_USER_PROFILE_SUCCESS(user)
+                            return UserActions.GET_USER_PROFILE_INFO_SUCCESS(user)
                         }),
                         catchError(error => {
                             console.log(error);
                             
-                            return of(UserActions.GET_USER_PROFILE_ERROR({error: error.error.message}))
+                            return of(UserActions.GET_USER_PROFILE_INFO_ERROR({error: error.error.message}))
                         })
                     )
                 })

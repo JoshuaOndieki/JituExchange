@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { InewUserData, Iqueries, Iuser, Iusers } from "src/app/interfaces";
+import { InewUserData, Iqueries, Iquestion, Iquestions, Iuser, Iusers } from "src/app/interfaces";
 
 
 export const GET_AUTH_USER = createAction('[Users] - Get AUTH User')
@@ -22,6 +22,20 @@ export const GET_USERS = createAction('[Users] - Get users', props<Iqueries>())
 export const GET_USERS_SUCCESS = createAction('[Users] - Get users Success', props<Iusers>())
 export const GET_USERS_ERROR = createAction('[Users] - Get users Error', props<{error:string}>())
 
-export const GET_USER_PROFILE = createAction('[Users] - Get user', props<{by:'username' | 'id' | 'email', identifier:string}>())
-export const GET_USER_PROFILE_SUCCESS = createAction('[Users] - Get user Success', props<Iuser>())
-export const GET_USER_PROFILE_ERROR = createAction('[Users] - Get user Error', props<{error:string}>())
+export const GET_USER_PROFILE_INFO = createAction('[Users] - Get user', props<{by:'username' | 'id' | 'email', identifier:string}>())
+export const GET_USER_PROFILE_INFO_SUCCESS = createAction('[Users] - Get user Success', props<Iuser>())
+export const GET_USER_PROFILE_INFO_ERROR = createAction('[Users] - Get user Error', props<{error:string}>())
+
+export const GET_USER_PROFILE_QUESTIONS = createAction('[Users] - Get user questions', props<Iqueries>())
+export const GET_USER_PROFILE_QUESTIONS_SUCCESS = createAction('[Users] - Get user questions Success', props<Iquestions>())
+export const GET_USER_PROFILE_QUESTIONS_ERROR = createAction('[Users] - Get user questions Error', props<{error:string}>())
+
+export const GET_USER_PROFILE_ANSWERS = createAction('[Users] - Get user', props<{by:'username' | 'id' | 'email', identifier:string}>())
+export const GET_USER_PROFILE_ANSWERS_SUCCESS = createAction('[Users] - Get user Success', props<Iuser>())
+export const GET_USER_PROFILE_ANSWERS_ERROR = createAction('[Users] - Get user Error', props<{error:string}>())
+
+export const GET_USER_PROFILE_COMMENTS = createAction('[Users] - Get user', props<{by:'username' | 'id' | 'email', identifier:string}>())
+export const GET_USER_PROFILE_COMMENTS_SUCCESS = createAction('[Users] - Get user Success', props<Iuser>())
+export const GET_USER_PROFILE_COMMENTS_ERROR = createAction('[Users] - Get user Error', props<{error:string}>())
+
+export const CLEAR_USER_PROFILE = createAction('[Users] - clear user profile')

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { InewAnswerData, InewCommentData, InewQuestionData, InewVoteData, Iquestion, IquestionWithDetails, Iquestions } from '../interfaces';
+import { InewAnswerData, InewCommentData, InewQuestionData, InewVoteData, Iqueries, Iquestion, IquestionWithDetails, Iquestions } from '../interfaces';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -17,6 +17,11 @@ export class QuestionService {
 
   getTopQuestions ():Observable<Iquestions> {
     return this.client.get<Iquestions>(environment.apiUrl + 'questions')
+  }
+
+  getQuestions (queries:Iqueries):Observable<Iquestions> {
+    const q = Object.keys(queries).length ? '?' + Object.keys(queries).map((key:string) => `${key}=${queries[key]}`).join('&') : ''
+    return this.client.get<Iquestions>(environment.apiUrl + 'questions' + q)
   }
 
   getQuestion(id:string):Observable<IquestionWithDetails> {    

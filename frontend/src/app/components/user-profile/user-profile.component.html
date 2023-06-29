@@ -1,5 +1,5 @@
 <section>
-    <div *ngIf="user" class="user-card box-shadow">
+    <div *ngIf="userProfile?.info as user" class="user-card box-shadow">
         <ion-icon class="user-avatar" name="person-circle-outline"></ion-icon>
         <div class="user-info-actions">
             <div class="user-display-name" [routerLink]="['/users/u', user.username]"><span style="font-size: 2rem;">{{user.firstname || ''}} {{user.lastname || ''}}</span> @{{ user.username}} <span style="color:black; font-size: 0.8rem;">(420)</span></div>
@@ -30,16 +30,16 @@
 </section>
 
 <main>
-    <ng-container *ngIf="questions.length; else Tloading">
+    <ng-container *ngIf="userProfile?.questions?.length || error; else Tloading">
         <ng-container *ngIf="!error; else Terror">
-            <ng-container *ngTemplateOutlet="TtopQuestions"></ng-container>
+            <ng-container *ngTemplateOutlet="TQuestions"></ng-container>
         </ng-container>
     </ng-container>
 </main>
 
 
-<ng-template #TtopQuestions>
-    <app-question class="box-shadow" *ngFor="let question of questions" [question]="question"></app-question>
+<ng-template #TQuestions>
+    <app-question class="box-shadow" *ngFor="let question of userProfile?.questions" [question]="question"></app-question>
 </ng-template>
 
 <ng-template #Tloading>

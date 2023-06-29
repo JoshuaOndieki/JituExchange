@@ -8,6 +8,7 @@ import { ToastService } from "src/app/services/toast.service";
 import { QuestionService } from "src/app/services/question.service";
 import { Store } from "@ngrx/store";
 import { Istate } from "src/app/interfaces";
+import { GET_USER_PROFILE_QUESTIONS, GET_USER_PROFILE_QUESTIONS_ERROR, GET_USER_PROFILE_QUESTIONS_SUCCESS } from "../actions/user.actions";
 
 @Injectable()
 class QuestionEffects {
@@ -24,6 +25,25 @@ class QuestionEffects {
                         }),
                         catchError(error => {
                             return of(QuestionActions.GET_TOP_QUESTIONS_ERROR({error: error.error.message}))
+                        })
+                    )
+                })
+            )
+        }
+    )
+
+    getUserProfileQuestions$ = createEffect(
+        ()=> {
+            return this.action$.pipe(
+                ofType(GET_USER_PROFILE_QUESTIONS),
+                mergeMap(action => {
+                    const {type, ...queries} = action
+                    return this.questionSvc.getQuestions(queries).pipe(
+                        map(questions => {
+                            return GET_USER_PROFILE_QUESTIONS_SUCCESS(questions)
+                        }),
+                        catchError(error => {
+                            return of(GET_USER_PROFILE_QUESTIONS_ERROR({error: error.error.message}))
                         })
                     )
                 })

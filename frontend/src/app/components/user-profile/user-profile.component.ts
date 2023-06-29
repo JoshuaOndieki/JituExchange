@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Ianswer, Icomment, Iquestion, Istate, Iuser } from 'src/app/interfaces';
+import { Ianswer, Icomment, Iquestion, Istate, Iuser, IuserProfile } from 'src/app/interfaces';
 import { Store } from '@ngrx/store';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { GET_USER_PROFILE } from 'src/app/state/actions/user.actions';
+import { CLEAR_USER_PROFILE, GET_USER_PROFILE_INFO, GET_USER_PROFILE_QUESTIONS } from 'src/app/state/actions/user.actions';
 import { GET_TOP_QUESTIONS } from 'src/app/state/actions/question.actions';
 import { QuestionComponent } from '../question/question.component';
 
@@ -19,10 +19,10 @@ type Ttoggle = 'questions' | 'answers' | 'comments'
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit{
-  user:Iuser | null = null
+  userProfile:IuserProfile | null = null
   authUser: Iuser | null = null
   toggle: Ttoggle = 'questions'
-  questions:Iquestion[] = []
+  questionsFetchDispatched:boolean = false
   loading:boolean = true
   error:string | null = null
 
@@ -30,20 +30,24 @@ export class UserProfileComponent implements OnInit{
 
   ngOnInit(): void {
     const username = this.route.snapshot.params['username']
-    this.store.dispatch(GET_USER_PROFILE({by:'username', identifier:username}))
+    this.store.dispatch(CLEAR_USER_PROFILE())
+    this.store.dispatch(GET_USER_PROFILE_INFO({by:'username', identifier:username}))
+    
     this.store.select('users').subscribe(
       usersState => {
-        this.user = usersState.userProfile
+        this.userProfile = usersState.userProfile
         this.authUser = usersState.authUser
-      }
-    )
 
-    this.store.dispatch(GET_TOP_QUESTIONS())
-    this.store.select('questions').subscribe(
-      questions => {
-        this.questions = questions.topQuestions
-        this.loading = false
-        this.error = questions.errors.topQuestions
+        if (this.userProfile?.info?.id && !this.questionsFetchDispatched) {
+          this.store.dispatch(GET_USER_PROFILE_QUESTIONS({askedBy:this.userProfile.info.id}))
+          this.questionsFetchDispatched = true
+        }
+
+        if (this.userProfile.questions) {
+          this.loading = false
+        }
+
+        this.error = usersState.errors.userProfile
       }
     )
   }
