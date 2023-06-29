@@ -32,6 +32,10 @@ export class QuestionInfoComponent implements OnInit{
       this.store.select('questions').subscribe(
         questionState => {
           this.question = questionState.question
+          if (this.question?.details) {
+            this.question.details = this.question?.details.replace(/\r\n/g, '\n')
+          }
+          
         }
       )
     })

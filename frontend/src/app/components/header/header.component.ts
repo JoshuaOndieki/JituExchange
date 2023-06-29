@@ -37,6 +37,8 @@ export class HeaderComponent implements OnInit {
             // if (this.authUser && this.router.url == '/loading') {
             //   this.router.navigate(['..'])
             // }
+            console.log(this.router.url);
+            
             usersState.authUser == null && usersState.asyncInitialized && !['/signin', '/signup'].includes(this.router.url) ? this.router.navigate(['/welcome']) : ''
   
             // !usersState.asyncInitialized ? this.router.navigate(['/loading']) : ''
@@ -60,6 +62,7 @@ export class HeaderComponent implements OnInit {
 
     signOut() {
         this.store.dispatch(SIGN_OUT())
+        this.router.navigate(['/loading'])
     }
 
 }

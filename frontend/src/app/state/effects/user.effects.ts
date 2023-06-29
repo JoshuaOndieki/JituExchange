@@ -66,6 +66,7 @@ class UserEffects {
                     return this.userSvc.signin({identifier:action.identifier, password:action.password}).pipe(
                         map(res => {
                             this.authSvc.signIn(res.token)
+                            window.location.reload() // reset any previous sensitive data that may be in store
                             return UserActions.SIGN_IN_SUCCESS()
                         }),
                         catchError(error => {
@@ -74,7 +75,7 @@ class UserEffects {
                     )
                 }),
                 tap(action => {
-                    window.location.reload() // reset any previous sensitive data that may be in store
+                    
                     this.store.dispatch( UserActions.GET_AUTH_USER() )
                 })
             )

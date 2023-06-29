@@ -14,8 +14,8 @@
                 <ion-icon name="globe-outline"></ion-icon> <a target="_blank" [href]="user.website">{{user.website}}</a>
             </div>
             <div class="user-actions">
-                <div class="user-delete-btn hover-underline" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username">Delete</div>
-                <div class="user-edit-btn hover-underline" *ngIf="user.username === authUser?.username">Edit</div>
+                <div class="user-delete-btn hover-underline delete-btn" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username">Delete</div>
+                <div class="user-edit-btn hover-underline edit-btn" *ngIf="user.username === authUser?.username">Edit</div>
             </div>
         </div>
     </div>
@@ -23,14 +23,14 @@
 
 <section>
     <nav class="nav-toggles">
-        <div class="nav-toggle" (click)="onToggle('questions')" [class.active]="toggle === 'questions'">Your Questions</div>
-        <div class="nav-toggle" (click)="onToggle('answers')" [class.active]="toggle === 'answers'">Your Answers</div>
-        <div class="nav-toggle" (click)="onToggle('comments')" [class.active]="toggle === 'comments'">Your Comments</div>
+        <div class="nav-toggle" (click)="onToggle('questions')" [class.active]="toggle === 'questions'">{{userProfile?.info?.username === authUser?.username ? 'Your' : 'Their'}} Questions</div>
+        <div class="nav-toggle" (click)="onToggle('answers')" [class.active]="toggle === 'answers'">{{userProfile?.info?.username === authUser?.username ? 'Your' : 'Their'}} Answers</div>
+        <div class="nav-toggle" (click)="onToggle('comments')" [class.active]="toggle === 'comments'">{{userProfile?.info?.username === authUser?.username ? 'Your' : 'Their'}} Comments</div>
     </nav>
 </section>
 
 <main>
-    <ng-container *ngIf="userProfile?.questions?.length || error; else Tloading">
+    <ng-container *ngIf="!loading || error; else Tloading">
         <ng-container *ngIf="!error; else Terror">
             <ng-container *ngTemplateOutlet="TQuestions"></ng-container>
         </ng-container>

@@ -10,6 +10,8 @@ header {
     flex-direction: column;
     flex: 1;
     display: flex;
+    padding: 1rem;
+    gap: 1rem
 }
 
 main {
@@ -43,7 +45,9 @@ main {
 }
 
 .user-delete-btn {
-    color: salmon
+    color: salmon;
+    text-decoration-color: salmon!important;
+    
 }
 
 .user-edit-btn {

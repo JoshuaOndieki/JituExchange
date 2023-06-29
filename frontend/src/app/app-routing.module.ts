@@ -18,7 +18,8 @@ const routes: Routes = [
       {path: 'questions', canActivate:[authGuard], loadComponent:()=> import('./components/questions/questions.component').then(c => c.QuestionsComponent), children: [
         {path: '', pathMatch: 'full', loadComponent:()=> import('./components/all-questions/all-questions.component').then(c => c.AllQuestionsComponent)},
         {path: 'ask', loadComponent:()=> import('./components/ask/ask.component').then(c => c.AskComponent)},
-        {path: 'q/:id', loadComponent:()=> import('./components/question-info/question-info.component').then(c => c.QuestionInfoComponent)}
+        {path: 'q/:id', loadComponent:()=> import('./components/question-info/question-info.component').then(c => c.QuestionInfoComponent)},
+        {path: 'update/:id', loadComponent:()=> import('./components/ask/ask.component').then(c => c.AskComponent)}
       ]},
       {
         path: 'users', canActivate:[authGuard],

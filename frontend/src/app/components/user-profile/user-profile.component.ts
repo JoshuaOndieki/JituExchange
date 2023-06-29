@@ -25,29 +25,42 @@ export class UserProfileComponent implements OnInit{
   questionsFetchDispatched:boolean = false
   loading:boolean = true
   error:string | null = null
+  username!:string
 
   constructor(private store:Store<Istate>, private route:ActivatedRoute) {}
 
   ngOnInit(): void {
-    const username = this.route.snapshot.params['username']
-    this.store.dispatch(CLEAR_USER_PROFILE())
-    this.store.dispatch(GET_USER_PROFILE_INFO({by:'username', identifier:username}))
+    this.route.params.subscribe(
+      params => {
+        this.userProfile = null
+        this.questionsFetchDispatched = false
+        this.username = params['username']
+        this.store.dispatch(CLEAR_USER_PROFILE())
+        this.store.dispatch(GET_USER_PROFILE_INFO({by:'username', identifier:this.username}))
+        
+        this.store.select('users').subscribe(
+          usersState => {
+            
+            this.authUser = usersState.authUser
+            // console.log(this.userProfile?.info?.id);
+            console.log(this.username, params['username']);
+            if (usersState.userProfile?.info?.id && !this.questionsFetchDispatched) {
+              console.log(this.username);
+              
+              this.store.dispatch(GET_USER_PROFILE_QUESTIONS({askedBy:usersState.userProfile.info?.id}))
+              this.questionsFetchDispatched = true
+            }
+            // console.log(usersState.userProfile.questions);
+            
+            if (usersState.userProfile.questions) {
+              this.loading = false
+            }
     
-    this.store.select('users').subscribe(
-      usersState => {
-        this.userProfile = usersState.userProfile
-        this.authUser = usersState.authUser
-
-        if (this.userProfile?.info?.id && !this.questionsFetchDispatched) {
-          this.store.dispatch(GET_USER_PROFILE_QUESTIONS({askedBy:this.userProfile.info.id}))
-          this.questionsFetchDispatched = true
-        }
-
-        if (this.userProfile.questions) {
-          this.loading = false
-        }
-
-        this.error = usersState.errors.userProfile
+            this.error = usersState.errors.userProfile
+            this.userProfile = usersState.userProfile
+          }
+          
+        )
       }
     )
   }
@@ -56,4 +69,7 @@ export class UserProfileComponent implements OnInit{
 
   }
 
+  deleteQuestion(id:string) {
+
+  }
 }

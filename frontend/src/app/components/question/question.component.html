@@ -10,12 +10,12 @@
         <span *ngFor="let tag of question.tags" class="q-tag">{{tag}}</span>
     </div>
     <div class="q-ask-info">
-        <span class="q-asker">{{question.username}} </span>
+        <span class="q-asker">@{{question.username}} </span>
         <span class="q-asker-meta">420</span>
         <span> asked {{question.askedDate | date: 'medium'}} </span>
         <span class="actions">
-            <span *ngIf="question.askedBy === authUser?.id" class="edit-btn"> edit </span>
-            <span *ngIf="authUser?.role === 'admin' || question.askedBy === authUser?.id" class="delete-btn"> delete </span>
+            <div *ngIf="question.askedBy === authUser?.id" class="edit-btn hover-underline" [routerLink]="['/questions/update', question.id]"> edit </div>
+            <div *ngIf="authUser?.role === 'admin' || question.askedBy === authUser?.id" class="delete-btn hover-underline" (click)="deleteQuestion()"> delete </div>
         </span>
     </div>
 </div>

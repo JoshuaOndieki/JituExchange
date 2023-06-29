@@ -4,6 +4,7 @@ import { Iquestion, Istate, Iuser } from 'src/app/interfaces';
 import { RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Store } from '@ngrx/store';
+import { DELETE_QUESTION } from 'src/app/state/actions/question.actions';
 
 @Component({
   selector: 'app-question',
@@ -24,5 +25,9 @@ export class QuestionComponent implements OnInit{
         this.authUser = usersState.authUser
       }
     )
+  }
+
+  deleteQuestion() {
+    this.store.dispatch(DELETE_QUESTION({id:this.question.id}))
   }
 }

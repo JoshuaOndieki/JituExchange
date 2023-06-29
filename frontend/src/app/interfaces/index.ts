@@ -166,6 +166,7 @@ export interface IquestionStateErrors {
     askQuestion: string | null
     addComment: string | null
     voting: string | null
+    updateQuestion: string | null
 }
 
 export interface Imetadata {

@@ -14,9 +14,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   const store:Store<Istate> = inject(Store)
   const router = inject(Router)
 
-  console.log(route, state);
-  console.log('state url', state.url);
-  console.log('router url', router.url);
+  // console.log(route, state);
+  // console.log('state url', state.url);
+  // console.log('router url', router.url);
   
   
   
@@ -36,7 +36,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
         let previousRoute = state.url == '/loading' ? router.url : state.url 
         previousRoute = state.url == '/home' || ['/signin', '/signup', '/welcome'].includes(state.url) ? router.url : previousRoute
-        console.log('going to fvsdhjk ', previousRoute);
+        // console.log('going to fvsdhjk ', previousRoute);
         
         router.navigate(['/loading'], { state: { previousRoute } })
         return of(false)

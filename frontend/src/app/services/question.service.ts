@@ -36,11 +36,19 @@ export class QuestionService {
     return this.client.post<{message:string, id:string}>(environment.apiUrl + 'questions', data)
   }
 
+  updateQuestion(id:string,data:InewQuestionData):Observable<{message:string}> {
+    return this.client.put<{message:string}>(environment.apiUrl + 'questions/q/' +id, data)
+  }
+
   addComment(data:InewCommentData):Observable<{message:string}> {
     return this.client.post<{message:string}>(environment.apiUrl + 'comments', data)
   }
 
   vote(data:InewVoteData):Observable<{message:string}> {
     return this.client.post<{message:string}>(environment.apiUrl + 'votes', data)
+  }
+
+  deleteQuestion(id:string):Observable<{message:string}> {
+    return this.client.delete<{message:string}>(environment.apiUrl + 'questions/q/' + id)
   }
 }

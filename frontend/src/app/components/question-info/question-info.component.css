@@ -202,3 +202,8 @@ main {
 .red {
     color: var(--light-red);
 }
+
+/* .details-line {
+    display: block;
+    overflow: scroll;
+} */

@@ -127,7 +127,8 @@ export const updateQuestion = async (req:IreqInfo, res:Response) => {
         await db.exec('updateQuestion', {id:question.id, summary, details})
 
         const qTags = (await db.exec('getQuestionTags', {questionID:id})).recordset
-
+        console.log(qTags, tags);
+        
         // add tags
         for (const tag of qTags) {
             if (tags.includes(tag.tagName)) {
@@ -139,6 +140,8 @@ export const updateQuestion = async (req:IreqInfo, res:Response) => {
 
         for (const tag of tags) {
             try {
+                console.log(tag);
+                
                 let tagID = uid()
                 await db.exec('addTag', {name:tag, addedBy:req.info?.id as string, id:tagID})
             } catch (error) {}

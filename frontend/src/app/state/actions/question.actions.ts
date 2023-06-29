@@ -19,6 +19,11 @@ export const ASK_QUESTION = createAction('[Questions] - ask question', props<Ine
 export const ASK_QUESTION_SUCCESS = createAction('[Questions] - ask question success')
 export const ASK_QUESTION_ERROR = createAction('[Questions] - ask question error', props<{error:string}>())
 
+export const UPDATE_QUESTION = createAction('[Questions] - UPDATE question', props<{id:string, data:InewQuestionData}>())
+export const UPDATE_QUESTION_SUCCESS = createAction('[Questions] - UPDATE question success')
+export const UPDATE_QUESTION_ERROR = createAction('[Questions] - UPDATE question error', props<{error:string}>())
+
+
 export const ADD_COMMENT = createAction('[Questions] - add comment', props<InewCommentData>())
 export const ADD_COMMENT_SUCCESS = createAction('[Questions] - add comment success')
 export const ADD_COMMENT_ERROR = createAction('[Questions] - add comment error', props<{error:string}>())
@@ -26,3 +31,7 @@ export const ADD_COMMENT_ERROR = createAction('[Questions] - add comment error',
 export const VOTE = createAction('[Questions] - vote', props<InewVoteData>())
 export const VOTE_SUCCESS = createAction('[Questions] - vote success')
 export const VOTE_ERROR = createAction('[Questions] - vote error', props<{error:string}>())
+
+export const DELETE_QUESTION = createAction('[Questions] - DELETE_QUESTION', props<{id:string}>())
+export const DELETE_QUESTION_SUCCESS = createAction('[Questions] - DELETE QUESTION success')
+export const DELETE_QUESTION_ERROR = createAction('[Questions] - DELETE QUESTION error', props<{error:string}>())

@@ -15,6 +15,29 @@
     </div>
 </form>
 
+
+<section class="pagination">
+    <div class="page-btns">
+        <div class="page-btn first-page-btn">1 ···</div>
+        <div class="page-btn">2</div>
+        <div class="page-btn">3</div>
+        <div class="page-btn">4</div>
+        <div class="page-btn">5</div>
+        <div class="page-btn">6</div>
+        <div class="page-btn last-page-btn">··· 50</div>
+    </div>
+    <div class="page-limits">
+        <div class="page-btn">10</div>
+        <div class="page-btn">20</div>
+        <div class="page-btn">30</div>
+        <div>per page</div>
+    </div>
+    <div class="page-order">
+        <div>ASC</div>
+        <div>DESC</div>
+    </div>
+</section>
+
 <main>
     <ng-container *ngIf="users.length; else Tloading">
         <div *ngFor="let user of users" class="user-card box-shadow">
@@ -24,8 +47,8 @@
                 <div class="user-membership">Member since {{user.joinedDate | date: 'mediumDate'}}</div>
                 <div class="user-location" *ngIf="user.location"><ion-icon name="location-outline"></ion-icon> {{user.location}}</div>
                 <div class="user-actions">
-                    <div class="user-delete-btn" *ngIf="authSvc.authUser?.role === 'admin' || user.username === authSvc.authUser?.username">Delete</div>
-                    <div class="user-edit-btn" *ngIf="user.username === authSvc.authUser?.username">Edit</div>
+                    <div class="delete-btn user-delete-btn hover-underline" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username">Delete</div>
+                    <div class="edit-btn user-edit-btn hover-underline" *ngIf="user.username === authUser?.username">Edit</div>
                 </div>
             </div>
         </div>

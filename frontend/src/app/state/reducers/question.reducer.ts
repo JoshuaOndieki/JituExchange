@@ -9,15 +9,12 @@ const initialState: IquestionState = {
         postAnswer: null,
         askQuestion: null,
         addComment: null,
-        voting: null
+        voting: null,
+        updateQuestion: null
     },
     question: null,
     topQuestions: []
 }
-
-// const getUserState = createFeatureSelector<IuserState>('users')
-// export const getUsers = createSelector(getUserState, state => state.users)
-
 
 const questionReducer =  createReducer(
     initialState
@@ -79,6 +76,18 @@ const questionReducer =  createReducer(
         return {
             ...state,
             errors:{...state.errors, askQuestion: error}
+        }
+    }),
+    on(QuestionActions.UPDATE_QUESTION_SUCCESS, (state:IquestionState) => {
+        return {
+            ...state,
+            errors:{...state.errors, updateQuestion: null}
+        }
+    }),
+    on(QuestionActions.UPDATE_QUESTION_ERROR, (state:IquestionState, {error}) => {
+        return {
+            ...state,
+            errors:{...state.errors, UPDATEQuestion: error}
         }
     }),
     on(QuestionActions.ADD_COMMENT_SUCCESS, (state:IquestionState) => {

@@ -16,6 +16,57 @@
     </div>
 </form>
 
+<nav class="nav-filters pg-filters">
+    <div class="filters-head">Sort by:</div>
+    <div class="nav-filter pg-filter" (click)="onFilter('newest')" [class.active]="sortBy === 'newest'">Newest</div>
+    <div class="nav-filter pg-filter" (click)="onFilter('oldest')" [class.active]="sortBy === 'oldest'">Oldest</div>
+</nav>
+
+<section class="pagination">
+    <div class="page-btns">
+        <div class="page-btn first-page-btn">1 ···</div>
+        <div class="page-btn">2</div>
+        <div class="page-btn">3</div>
+        <div class="page-btn pg-active">4</div>
+        <div class="page-btn">5</div>
+        <div class="page-btn">6</div>
+        <div class="page-btn last-page-btn">··· 50</div>
+    </div>
+    <div class="page-limits">
+        <div class="page-btn">10</div>
+        <div class="page-btn pg-active">20</div>
+        <div class="page-btn">30</div>
+        <div>per page</div>
+    </div>
+</section>
+
+<section>
+    <div>3,243,753 questions asked on this platform.</div>
+    <br>
+    <div>4,534 questions match your filters</div>
+</section>
+
 <main>
-    <app-question *ngFor="let question of questions" [question]="question"></app-question>
+
+    <ng-container *ngIf="questions.length; else Tloading">
+        <ng-container *ngIf="!error; else Terror">
+            <ng-container *ngTemplateOutlet="TAllQuestions"></ng-container>
+        </ng-container>
+    </ng-container>
+
 </main>
+
+    
+
+<ng-template #TAllQuestions>
+    <app-question class="box-shadow" *ngFor="let question of questions" [question]="question"></app-question>
+</ng-template>
+
+<ng-template #Tloading>
+    <div class="lds-ripple"><div></div><div></div></div>
+</ng-template>
+
+
+<ng-template #Terror>
+    <p>{{error}}</p>
+</ng-template>

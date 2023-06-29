@@ -19,6 +19,7 @@ import { GET_USERS } from 'src/app/state/actions/user.actions';
 export class AllUsersComponent {
   users:Iuser[] = []
   searchForm!:FormGroup
+  authUser:Iuser | null = null
 
   constructor(private userSvc:UserService, private fb:FormBuilder, private router:Router, public authSvc:AuthService, private store:Store<Istate>) {
   }
@@ -32,6 +33,7 @@ export class AllUsersComponent {
     this.store.select('users').subscribe(
       usersState => {
         this.users = usersState.users ? usersState.users.users : []
+        this.authUser = usersState.authUser
       }
     )
   }

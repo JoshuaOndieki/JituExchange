@@ -65,6 +65,7 @@
 .delete-btn {
     color: salmon;
     cursor: pointer;
+    text-decoration-color: salmon!important;
 }
 
 .edit-btn {
@@ -74,4 +75,7 @@
 
 .actions {
     font-size: 1rem;
+    display: inline-flex;
+    gap: 2rem;
+    padding: 0 0.5rem;
 }

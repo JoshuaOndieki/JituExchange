@@ -7,12 +7,12 @@ import { Router } from "@angular/router";
 import { ToastService } from "src/app/services/toast.service";
 import { QuestionService } from "src/app/services/question.service";
 import { Store } from "@ngrx/store";
-import { Istate } from "src/app/interfaces";
+import { Istate, ItoastMessage } from "src/app/interfaces";
 import { GET_USER_PROFILE_QUESTIONS, GET_USER_PROFILE_QUESTIONS_ERROR, GET_USER_PROFILE_QUESTIONS_SUCCESS } from "../actions/user.actions";
 
 @Injectable()
 class QuestionEffects {
-    constructor(private action$:Actions, private questionSvc:QuestionService, private store:Store<Istate>, private router:Router) {}
+    constructor(private action$:Actions, private questionSvc:QuestionService, private store:Store<Istate>, private router:Router, private toast:ToastService) {}
 
     getTopQuestions$ = createEffect(
         ()=> {
@@ -115,6 +115,29 @@ class QuestionEffects {
         }
     )
 
+    updateQuestion$ = createEffect(
+        ()=> {
+            let questionID = ''
+            return this.action$.pipe(
+                ofType(QuestionActions.UPDATE_QUESTION),
+                mergeMap(action => {  
+                    questionID = action.id     
+                    return this.questionSvc.updateQuestion(action.id, {details:action.data.details,summary:action.data.summary, tags:action.data.tags}).pipe(
+                        map(res => {
+                            return QuestionActions.UPDATE_QUESTION_SUCCESS()
+                        }),
+                        catchError(error => {
+                            return of(QuestionActions.UPDATE_QUESTION_ERROR({error: error.error.message}))
+                        })
+                    )
+                }),
+                tap(action => {
+                    this.router.navigate(['/questions/q', questionID])
+                })
+            )
+        }
+    )
+
     addComment$ = createEffect(
         ()=> {
             return this.action$.pipe(
@@ -164,6 +187,33 @@ class QuestionEffects {
                             this.store.dispatch(QuestionActions.GET_QUESTION({id:questionID}))
                         }
                     )
+                })
+            )
+        }
+    )
+
+    deleteQuestion$ = createEffect(
+        ()=> {
+            let message:ItoastMessage
+            return this.action$.pipe(
+                ofType(QuestionActions.DELETE_QUESTION),
+                mergeMap(action => {
+                    QuestionActions.CLEAR_QUESTION()         
+                    return this.questionSvc.deleteQuestion(action.id).pipe(
+                        map(res => {
+                            message = {message:res.message, type: 'success', displayed: false}
+                            return QuestionActions.DELETE_QUESTION_SUCCESS()
+                        }),
+                        catchError(error => {
+                            message = {message:error.error.message, type: 'error', displayed: false}
+                            return of(QuestionActions.DELETE_QUESTION_ERROR({error: error.error.message}))
+                        })
+                    )
+                }),
+                tap(action => {
+                    console.log(this.router.url);
+                    this.toast.displayMessage(message)
+                    this.store.dispatch(QuestionActions.GET_TOP_QUESTIONS())
                 })
             )
         }
