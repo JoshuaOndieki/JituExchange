@@ -29,7 +29,10 @@ export const authGuard: CanActivateFn = (route, state) => {
         // console.log('hjadsfv ', previousRoute);
         
         // router.navigate(['/loading'], { state: { previousRoute: state.url }})
-        router.navigate(['/loading'], { state: { previousRoute:state.url == '/loading' || state.url == '/home'? router.url : state.url } })
+
+        let previousRoute = state.url == '/loading' ? router.url : state.url 
+        previousRoute = state.url == '/home' ? router.url : previousRoute
+        router.navigate(['/loading'], { state: { previousRoute } })
         return of(false)
       }
       const canActivate = usersState.authUser ? true : false

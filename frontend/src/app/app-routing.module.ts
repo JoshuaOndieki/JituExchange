@@ -10,14 +10,6 @@ const routes: Routes = [
     children: [
       {path: '', pathMatch: 'full', redirectTo:'/home'},
       {path: 'home', canActivate:[authGuard], pathMatch: 'full', loadComponent:()=> import('./components/home/home.component').then(c => c.HomeComponent)},
-      // {
-      //   path: 'questions', canActivate:[authGuard],
-      //   loadComponent:()=> import('./components/questions/questions.component').then(c => c.QuestionsComponent),
-      //   children: [
-
-      //   ]
-      // },
-      
       {path:'welcome', canActivate:[authGuard], component:HomepageComponent},
       {path: 'signup', canActivate:[authGuard], loadComponent:()=> import('./components/signup/signup.component').then(c => c.SignupComponent)},
       {path: 'signin', canActivate:[authGuard], loadComponent:()=> import('./components/signin/signin.component').then(c => c.SigninComponent)},
