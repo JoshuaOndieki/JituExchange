@@ -46,4 +46,8 @@ export class UserService {
     
     return this.client.get<Iuser>(environment.apiUrl + path + pathExt)
   }
+
+  deleteUser(id:string):Observable<{message:string}> {
+    return this.client.delete<{message:string}>(environment.apiUrl + 'users/delete/' + id)
+  }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { QuestionService } from 'src/app/services/question.service';
-import { Iquestion, IquestionWithDetails, Istate } from 'src/app/interfaces';
+import { Iquestion, IquestionWithDetails, Istate, Iuser } from 'src/app/interfaces';
 import { FormBuilder, FormGroup, ReactiveFormsModule, NgForm, FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Store } from '@ngrx/store';
@@ -16,26 +16,33 @@ import * as QuestionActions from '../../state/actions/question.actions'
   styleUrls: ['./question-info.component.css']
 })
 export class QuestionInfoComponent implements OnInit{
-  question!:IquestionWithDetails | null
+  question:IquestionWithDetails | null = null
   // @ViewChild('newAnswerForm') newAnswerForm!: NgForm
   newAnswerData = {
     newAnswer: ''
   }
 
-  // commentForm!:FormGroup
+  authUser: Iuser | null = null
 
   constructor(private route:ActivatedRoute, private questionSvc:QuestionService, private fb:FormBuilder, private store:Store<Istate>) {}
 
   ngOnInit(): void {
+    this.question = null
     this.route.params.subscribe(params => {
+      this.question = null
+      this.store.dispatch(QuestionActions.CLEAR_QUESTION())
       this.store.dispatch(QuestionActions.GET_QUESTION({id:params['id']}))
       this.store.select('questions').subscribe(
         questionState => {
           this.question = questionState.question
-          if (this.question?.details) {
-            this.question.details = this.question?.details.replace(/\r\n/g, '\n')
-          }
+          console.log(typeof this.question?.details);
           
+        }
+      )
+
+      this.store.select('users').subscribe(
+        usersState => {
+          this.authUser = usersState.authUser          
         }
       )
     })
@@ -55,7 +62,6 @@ export class QuestionInfoComponent implements OnInit{
     }
 
     form.reset()
-    form.value.newAnswer.setAttribute('rows', 7)
   }
 
   // get comment() {
@@ -72,6 +78,10 @@ export class QuestionInfoComponent implements OnInit{
   vote(target: 'question' | 'answer', voteFor:string, positive:boolean) {
     this.store.dispatch(QuestionActions.VOTE({target, voteFor, positive}))
     
+  }
+
+  acceptAnswer(answerID:string) {
+    this.store.dispatch(QuestionActions.ACCEPT_ANSWER({answerID}))
   }
   
 }

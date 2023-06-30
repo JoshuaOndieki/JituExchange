@@ -35,3 +35,8 @@ export const VOTE_ERROR = createAction('[Questions] - vote error', props<{error:
 export const DELETE_QUESTION = createAction('[Questions] - DELETE_QUESTION', props<{id:string}>())
 export const DELETE_QUESTION_SUCCESS = createAction('[Questions] - DELETE QUESTION success')
 export const DELETE_QUESTION_ERROR = createAction('[Questions] - DELETE QUESTION error', props<{error:string}>())
+
+
+export const ACCEPT_ANSWER = createAction('[Questions] - ACCEPT_ANSWER', props<{answerID:string}>())
+export const ACCEPT_ANSWER_SUCCESS = createAction('[Questions] - ACCEPT QUESTION success')
+export const ACCEPT_ANSWER_ERROR = createAction('[Questions] - ACCEPT QUESTION error', props<{error:string}>())

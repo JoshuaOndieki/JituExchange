@@ -14,8 +14,8 @@
                 <ion-icon name="globe-outline"></ion-icon> <a target="_blank" [href]="user.website">{{user.website}}</a>
             </div>
             <div class="user-actions">
-                <div class="user-delete-btn hover-underline delete-btn" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username">Delete</div>
-                <div class="user-edit-btn hover-underline edit-btn" *ngIf="user.username === authUser?.username">Edit</div>
+                <div class="user-delete-btn hover-underline delete-btn" *ngIf="(authUser?.role === 'admin' || user.username === authUser?.username) && user.role !== 'admin'">Delete</div>
+                <!-- <div class="user-edit-btn hover-underline edit-btn" *ngIf="user.username === authUser?.username">Edit</div> -->
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
 </section>
 
 <main>
-    <ng-container *ngIf="!loading || error; else Tloading">
+    <ng-container *ngIf="userProfile?.questions?.length || error; else Tloading">
         <ng-container *ngIf="!error; else Terror">
             <ng-container *ngTemplateOutlet="TQuestions"></ng-container>
         </ng-container>

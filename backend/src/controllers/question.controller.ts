@@ -82,7 +82,7 @@ export const getQuestion = async (req:IreqInfo, res:Response) => {
     try {
         const id = req.params.id as string
         // get question
-        let question = (await db.exec('getQuestion', {id})).recordset[0]
+        let question = (await db.exec('getQuestion', {id, authID:req.info?.id as string})).recordset[0]
         if (!question) {
             return res.status(404).json({message: `question not found. ID ${id}`})
         }
@@ -115,7 +115,7 @@ export const updateQuestion = async (req:IreqInfo, res:Response) => {
         const id = req.params.id as string
         const { summary, details, tags} = req.body
 
-        let question = (await db.exec('getQuestion', {id})).recordset[0]
+        let question = (await db.exec('getQuestion', {id, authID:req.info?.id as string})).recordset[0]
         if (!question) {
             return res.status(404).json({message: `question not found. ID ${id}`})
         }
@@ -158,7 +158,7 @@ export const deleteQuestion = async (req:IreqInfo, res:Response) => {
     try {
         const id = req.params.id as string
 
-        let question = (await db.exec('getQuestion', {id})).recordset[0]
+        let question = (await db.exec('getQuestion', {id, authID:req.info?.id as string})).recordset[0]
         if (!question) {
             return res.status(404).json({message: `question not found. ID ${id}`})
         }

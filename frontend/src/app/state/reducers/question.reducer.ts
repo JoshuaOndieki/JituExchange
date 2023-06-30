@@ -10,7 +10,8 @@ const initialState: IquestionState = {
         askQuestion: null,
         addComment: null,
         voting: null,
-        updateQuestion: null
+        updateQuestion: null,
+        acceptAnswer: null
     },
     question: null,
     topQuestions: []
@@ -112,6 +113,18 @@ const questionReducer =  createReducer(
         return {
             ...state,
             errors:{...state.errors, voting: error}
+        }
+    }),
+    on(QuestionActions.ACCEPT_ANSWER_SUCCESS, (state:IquestionState) => {
+        return {
+            ...state,
+            errors:{...state.errors, acceptAnswer: null}
+        }
+    }),
+    on(QuestionActions.ACCEPT_ANSWER_ERROR, (state:IquestionState, {error}) => {
+        return {
+            ...state,
+            errors:{...state.errors, acceptAnswer: error}
         }
     })
 )

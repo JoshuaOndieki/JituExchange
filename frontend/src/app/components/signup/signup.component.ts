@@ -22,6 +22,7 @@ import { SIGN_UP } from 'src/app/state/actions/user.actions';
 export class SignupComponent implements OnInit {
     signupForm!:FormGroup
     loading:Boolean = false
+    error: string | null = null
     constructor(private fb:FormBuilder, private router:Router, private userSvc:UserService, private toastSvc:ToastService, private store:Store<Istate>) {
     }
 
@@ -37,6 +38,7 @@ export class SignupComponent implements OnInit {
             usersState => {
               this.loading = usersState.errors.signup ? false : this.loading
               usersState.authUser ? this.router.navigate(['']) : ''
+              this.error = usersState.errors.signup
             }
           )
     }

@@ -154,6 +154,7 @@ export interface IuserStateErrors {
     users: string | null
     signout: string | null
     userProfile: string | null
+    deleteUser: string | null
 }
 
 export interface IquestionState {
@@ -170,6 +171,7 @@ export interface IquestionStateErrors {
     addComment: string | null
     voting: string | null
     updateQuestion: string | null
+    acceptAnswer: string | null
 }
 
 export interface Imetadata {
