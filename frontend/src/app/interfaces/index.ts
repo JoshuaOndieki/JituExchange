@@ -160,12 +160,14 @@ export interface IuserStateErrors {
 export interface IquestionState {
     question: IquestionWithDetails | null
     topQuestions: Iquestion[]
+    allQuestions: Iquestions | null
     errors: IquestionStateErrors
 }
 
 export interface IquestionStateErrors {
     question: string | null
     topQuestions: string | null
+    allQuestions: string | null
     postAnswer: string | null
     askQuestion: string | null
     addComment: string | null
@@ -186,6 +188,7 @@ export interface Iqueries {
     sortBy?: string
     order?: string
     askedBy?:string
+    searchQuery?:string
     [key: string]: string | number | undefined
   }
 

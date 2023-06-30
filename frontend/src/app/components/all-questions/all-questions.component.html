@@ -24,26 +24,26 @@
 
 <section class="pagination">
     <div class="page-btns">
-        <div class="page-btn first-page-btn pg-active">1 ···</div>
-        <div class="page-btn">2</div>
-        <div class="page-btn">3</div>
-        <div class="page-btn">4</div>
-        <div class="page-btn">5</div>
-        <div class="page-btn">6</div>
-        <div class="page-btn last-page-btn">··· 50</div>
+        <div class="page-btn first-page-btn" (click)="changePage(1)"  [ngClass]="{'pg-active': queries.page === 1}">1 ···</div>
+        <div class="page-btn" (click)="changePage(2)" [ngClass]="{'pg-active': queries.page === 2}">2</div>
+        <div class="page-btn" (click)="changePage(3)" [ngClass]="{'pg-active': queries.page === 3}">3</div>
+        <div class="page-btn" (click)="changePage(4)" [ngClass]="{'pg-active': queries.page === 4}">4</div>
+        <div class="page-btn" (click)="changePage(5)" [ngClass]="{'pg-active': queries.page === 5}">5</div>
+        <div class="page-btn" (click)="changePage(6)" [ngClass]="{'pg-active': queries.page === 6}">6</div>
+        <div class="page-btn last-page-btn" (click)="changePage(50)" [ngClass]="{'pg-active': queries.page === 50}">··· 50</div>
     </div>
     <div class="page-limits">
-        <div class="page-btn">10</div>
-        <div class="page-btn pg-active">20</div>
-        <div class="page-btn">30</div>
+        <div class="page-btn" (click)="changeLimit(5)" [ngClass]="{'pg-active': queries.limit === 5}">5</div>
+        <div class="page-btn pg-active" (click)="changeLimit(10)" [ngClass]="{'pg-active': queries.limit === 10}">10</div>
+        <div class="page-btn" (click)="changeLimit(20)" [ngClass]="{'pg-active': queries.limit === 20}">20</div>
         <div>per page</div>
     </div>
 </section>
 
 <section>
-    <div>3,243,753 questions asked on this platform.</div>
-    <br>
-    <div>4,534 questions match your filters</div>
+    <div>{{recordsInDB}} questions asked on this platform.</div>
+    <!-- <br> -->
+    <div *ngIf="queries.searchQuery">filtered with query {{queries.searchQuery}}</div>
 </section>
 
 <main>

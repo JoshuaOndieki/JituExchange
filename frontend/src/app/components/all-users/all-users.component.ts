@@ -45,7 +45,7 @@ export class AllUsersComponent {
         this.users = usersState.users ? usersState.users.users : []
         this.authUser = usersState.authUser
         this.error = usersState.errors.users
-        this.queries = usersState.users!.metadata.queries
+        this.queries = usersState.users ? usersState.users.metadata.queries : {}
       }
     )
   }
