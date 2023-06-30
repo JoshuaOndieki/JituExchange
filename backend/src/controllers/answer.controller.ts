@@ -75,7 +75,8 @@ export const acceptAnswer = async (req:IreqInfo, res:Response) => {
             return res.status(403).json({message: "Forbidden"})
         }
         console.log({id, questionID:question.id});
-        
+
+        await db.exec('resetAcceptedAnswer', {questionID:question.id})
         await db.exec('acceptAnswer', {id, questionID:question.id})
         
         return res.status(200).json({message: "Answer accepted"})

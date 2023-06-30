@@ -1,5 +1,6 @@
 <form id="signin-form" [formGroup]="signinForm" (ngSubmit)="onSubmit()" *ngIf="!loading; else Tloading">
     <h1>Sign In</h1>
+    <P style="color:salmon" *ngIf="error">{{error}}</P>
     <div class="inputs">
         <div class="input">
             <div class="input-wrapper" [class.valid]="identifier.valid" [class.invalid]="identifier.invalid && (identifier.dirty || identifier.touched)">

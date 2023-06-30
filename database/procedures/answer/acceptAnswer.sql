@@ -4,6 +4,5 @@ CREATE OR ALTER PROCEDURE acceptAnswer(
 )
 AS
 BEGIN
-    -- UPDATE answers SET accepted=0 WHERE answerFor=@questionID;
     UPDATE answers SET accepted=1 WHERE id=@id;
 END

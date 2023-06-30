@@ -20,6 +20,7 @@ import { LoadingComponent } from '../loading/loading.component';
 export class SigninComponent {
   signinForm!:FormGroup
   loading:Boolean = false
+  error:string | null = null
 
   constructor(private fb:FormBuilder, private router:Router, private authSvc:AuthService, private userSvc:UserService, private toastSvc:ToastService, private store:Store<Istate>) {
   }
@@ -34,6 +35,7 @@ export class SigninComponent {
         usersState => {
           this.loading = usersState.errors.signin ? false : this.loading
           usersState.authUser ? this.router.navigate(['']) : ''
+          this.error = usersState.errors.signin
         }
       )
   }

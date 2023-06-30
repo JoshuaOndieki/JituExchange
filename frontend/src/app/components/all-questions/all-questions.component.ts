@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuestionComponent } from '../question/question.component';
 import { QuestionService } from 'src/app/services/question.service';
-import { Iquestion, Istate } from 'src/app/interfaces';
+import { Iqueries, Iquestion, Istate } from 'src/app/interfaces';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -21,15 +21,16 @@ export class AllQuestionsComponent implements OnInit {
   sortBy = 'newest'
   loading:boolean = true
   error:string | null = null
+  queries!:Iqueries
 
   constructor(private questionSvc:QuestionService, private fb:FormBuilder, private router:Router, private route:ActivatedRoute, private store:Store<Istate>) {
   }
 
 
   ngOnInit(): void {
-    this.questions = this.questionSvc.allQuestions
-    // this.questions = new Array(10).fill(question)
-
+    this.queries = {
+      limit: 10
+    }
     this.searchForm = this.fb.group({
       query: [''],
     })
@@ -59,4 +60,5 @@ export class AllQuestionsComponent implements OnInit {
   onFilter(filter:string) {
     this.router.navigate(['/questions'], {queryParams:{filter}})
   }
+  
 }
