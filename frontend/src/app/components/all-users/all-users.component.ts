@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { Iuser, Istate } from 'src/app/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
-import { GET_USERS } from 'src/app/state/actions/user.actions';
+import { DELETE_USER, GET_USERS } from 'src/app/state/actions/user.actions';
 
 @Component({
   selector: 'app-all-users',
@@ -45,6 +45,10 @@ export class AllUsersComponent {
   onSearch() {
     console.log(this.searchForm);
     
+  }
+
+  deleteUser(id:string) {
+    this.store.dispatch(DELETE_USER({id}))
   }
 
 }

@@ -57,6 +57,6 @@ export class AllQuestionsComponent implements OnInit {
   }
 
   onFilter(filter:string) {
-    this.router.navigate([''], {queryParams:{filter}})
+    this.router.navigate(['/questions'], {queryParams:{filter}})
   }
 }

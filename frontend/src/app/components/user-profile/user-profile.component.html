@@ -30,7 +30,7 @@
 </section>
 
 <main>
-    <ng-container *ngIf="!loading || error; else Tloading">
+    <ng-container *ngIf="userProfile?.questions?.length || error; else Tloading">
         <ng-container *ngIf="!error; else Terror">
             <ng-container *ngTemplateOutlet="TQuestions"></ng-container>
         </ng-container>

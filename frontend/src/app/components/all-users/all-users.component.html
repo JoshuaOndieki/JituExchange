@@ -47,7 +47,7 @@
                 <div class="user-membership">Member since {{user.joinedDate | date: 'mediumDate'}}</div>
                 <div class="user-location" *ngIf="user.location"><ion-icon name="location-outline"></ion-icon> {{user.location}}</div>
                 <div class="user-actions">
-                    <div class="delete-btn user-delete-btn hover-underline" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username">Delete</div>
+                    <div class="delete-btn user-delete-btn hover-underline" *ngIf="authUser?.role === 'admin' || user.username === authUser?.username" (click)="deleteUser(user.id)">Delete</div>
                     <div class="edit-btn user-edit-btn hover-underline" *ngIf="user.username === authUser?.username">Edit</div>
                 </div>
             </div>

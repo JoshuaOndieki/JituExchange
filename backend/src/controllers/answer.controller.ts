@@ -13,7 +13,7 @@ export const postAnswer = async (req:IreqInfo, res:Response) => {
         if (!details) {
             return res.status(400).json({message: "details missing in body"})
         }
-        let question = (await db.exec('getQuestion', {id:questionID})).recordset[0]
+        let question = (await db.exec('getQuestion', {id:questionID, authID: req.info?.id as string})).recordset[0]
         if (!question) {
             return res.status(404).json({message: `question not found. ID ${questionID}`})
         }
@@ -70,11 +70,14 @@ export const acceptAnswer = async (req:IreqInfo, res:Response) => {
         if (!answer) {
             return res.status(404).json({message: `answer not found. ID ${id}`})
         }
-        const question = await (await db.exec('getQuestion', {id:answer.answerFor})).recordset[0]
+        const question = await (await db.exec('getQuestion', {id:answer.answerFor, authID: req.info?.id as string})).recordset[0]
         if (req.info?.id !== question.askedBy) {
             return res.status(403).json({message: "Forbidden"})
         }
+        console.log({id, questionID:question.id});
+        
         await db.exec('acceptAnswer', {id, questionID:question.id})
+        
         return res.status(200).json({message: "Answer accepted"})
     } catch (error:any) {
         return serverError(error, res)

@@ -12,7 +12,7 @@
 </nav>
 
 <main>
-    <ng-container *ngIf="questions.length; else Tloading">
+    <ng-container *ngIf="questions.length || error; else Tloading">
         <ng-container *ngIf="!error; else Terror">
             <ng-container *ngTemplateOutlet="TtopQuestions"></ng-container>
         </ng-container>

@@ -75,6 +75,8 @@
                         <ion-icon (click)="vote('answer', answer.id, true)" class="caret-icon caret-up-icon" name="caret-up-circle-outline" size="large" [class.green]="answer.userVote === true" ></ion-icon>
                         <div class="votes">{{answer.upvotes - answer.downvotes}}</div>
                         <ion-icon (click)="vote('answer', answer.id, false)" class="caret-icon caret-down-icon" name="caret-down-circle-outline" size="large" [class.red]="answer.userVote === false"></ion-icon>
+
+                        <ion-icon (click)="acceptAnswer(answer.id)" size="large" name="checkmark-done-outline" class="accept-answer-icon" [class.displayed]="question.askedBy === authUser?.id" [class.accepted]="answer.accepted"></ion-icon>
                     </div>
                     <div class="more-details">
                         <div class="details">

@@ -51,4 +51,8 @@ export class QuestionService {
   deleteQuestion(id:string):Observable<{message:string}> {
     return this.client.delete<{message:string}>(environment.apiUrl + 'questions/q/' + id)
   }
+
+  acceptAnswer(answerID:string):Observable<{message:string}> {
+    return this.client.patch<{message:string}>(environment.apiUrl + 'answers/accept/' + answerID, {})
+  }
 }

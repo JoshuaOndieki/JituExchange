@@ -56,7 +56,6 @@ class QuestionEffects {
             return this.action$.pipe(
                 ofType(QuestionActions.GET_QUESTION),
                 mergeMap(action => {
-                    QuestionActions.CLEAR_QUESTION()         
                     return this.questionSvc.getQuestion(action.id).pipe(
                         map(question => {
                             return QuestionActions.GET_QUESTION_SUCCESS({question})
@@ -73,20 +72,27 @@ class QuestionEffects {
     postAnswer$ = createEffect(
         ()=> {
             let questionID = ''
+            let posting = true
             return this.action$.pipe(
                 ofType(QuestionActions.POST_ANSWER),
                 mergeMap(action => {       
                     questionID = action.questionID             
                     return this.questionSvc.postAnswer({details:action.details, questionID:action.questionID}).pipe(
                         map(res => {
+                            posting = false
                             return QuestionActions.POST_ANSWER_SUCCESS()
                         }),
                         catchError(error => {
+                            posting = false
                             return of(QuestionActions.POST_ANSWER_ERROR({error: error.error.message}))
                         })
                     )
                 }),
-                tap(action => this.store.dispatch(QuestionActions.GET_QUESTION({id:questionID})))
+                tap(action => {
+                    while (posting) {
+                    }
+                    this.store.dispatch(QuestionActions.GET_QUESTION({id:questionID}))
+                })
             )
         }
     )
@@ -177,6 +183,32 @@ class QuestionEffects {
                         }),
                         catchError(error => {
                             return of(QuestionActions.VOTE_ERROR({error: error.error.message}))
+                        })
+                    )
+                }),
+                tap(action => {
+                    this.store.select('questions').pipe(take(1)).subscribe(
+                        questionState => {
+                            const questionID = questionState.question?.id || ''
+                            this.store.dispatch(QuestionActions.GET_QUESTION({id:questionID}))
+                        }
+                    )
+                })
+            )
+        }
+    )
+
+    acceptAnswer$ = createEffect(
+        ()=> {
+            return this.action$.pipe(
+                ofType(QuestionActions.ACCEPT_ANSWER),
+                mergeMap(action => {   
+                    return this.questionSvc.acceptAnswer(action.answerID).pipe(
+                        map(res => {
+                            return QuestionActions.ACCEPT_ANSWER_SUCCESS()
+                        }),
+                        catchError(error => {
+                            return of(QuestionActions.ACCEPT_ANSWER_ERROR({error: error.error.message}))
                         })
                     )
                 }),
