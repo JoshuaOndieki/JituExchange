@@ -32,28 +32,30 @@ export class AskComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(
       params => {
-        this.questionID = params['id']
-        this.editMode = params['id'] ? true : false
-        this.loading = this.editMode ? true : false
-        this.questionSvc.getQuestion(params['id']).subscribe(
-          res => {
-            this.store.select('users').pipe(take(1)).subscribe(
-              usersState => {
-                if (res.askedBy !== usersState.authUser?.id) {
-                  this.router.navigate(['/'])
+        if (params['id']) {
+          this.questionID = params['id']
+          this.editMode = params['id'] ? true : false
+          this.loading = this.editMode ? true : false
+          this.questionSvc.getQuestion(params['id']).subscribe(
+            res => {
+              this.store.select('users').pipe(take(1)).subscribe(
+                usersState => {
+                  if (res.askedBy !== usersState.authUser?.id) {
+                    this.router.navigate(['/'])
+                  }
                 }
+              )
+              this.askForm.reset()
+              this.askForm.patchValue({
+                summary: res.summary,
+                details: res.details
+              })
+              for (const tag of res.tags) {
+                this.tags.push(this.fb.control(tag))
               }
-            )
-            this.askForm.reset()
-            this.askForm.patchValue({
-              summary: res.summary,
-              details: res.details
+              this.loading = false
             })
-            for (const tag of res.tags) {
-              this.tags.push(this.fb.control(tag))
-            }
-            this.loading = false
-          })
+        }
 
           }
         )
