@@ -21,7 +21,7 @@ describe('Perform CRUD operations on questions', ()=> {
             })
         token = res_1.body.token
         return
-    })
+    }, 20000)
 
     it('should add a question', async ()=> {
         const res = await request(app).post('/questions')
