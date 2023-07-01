@@ -6,29 +6,25 @@ describe('Perform CRUD operations on questions', ()=> {
     let token = ''
     let swaliID = ''
 
-    beforeAll(()=>{
+    beforeAll(async ()=>{
         // sign up and in user to access question endpoints
-        return request(app).post('/users')
+        const res = await request(app).post('/users')
             .send({
                 "username": "testerquestions",
                 "email": "testerquestions@example.com",
                 "password": "44e#rR"
             })
-            .then(res => {
-                return request(app).post('/users/signin')
-                    .send({
-                        "identifier": "testerquestions",
-                        "password": "44e#rR"
-                    })
-                    .then(res => {
-                        token = res.body.token
-                        return
-                    })
+        const res_1 = await request(app).post('/users/signin')
+            .send({
+                "identifier": "testerquestions",
+                "password": "44e#rR"
             })
+        token = res_1.body.token
+        return
     })
 
-    it('should add a question', ()=> {
-        return request(app).post('/questions')
+    it('should add a question', async ()=> {
+        const res = await request(app).post('/questions')
             .send({
                 "summary": "swali",
                 "details": "ni swali tu",
@@ -37,38 +33,32 @@ describe('Perform CRUD operations on questions', ()=> {
             .set('token', token)
             .set('token', token)
             .expect(201)
-            .then(res => {
-                expect(res.body.id)
-                expect(res.body.message).toBe('question posted successfully.')
-                swaliID = res.body.id
-                return
-            })
+        expect(res.body.id)
+        expect(res.body.message).toBe('question posted successfully.')
+        swaliID = res.body.id
+        return
     })
 
-    it('should fetch an existing question by id', ()=> {
-        return request(app).get('/questions/q/' + swaliID)
+    it('should fetch an existing question by id', async ()=> {
+        const res = await request(app).get('/questions/q/' + swaliID)
             .set('token', token)
             .expect(200)
-            .then(res => {
-                expect(res.body.id).toBe(swaliID)
-                expect(res.body.summary).toBe('swali')
-                expect(res.body.details).toBe('ni swali tu')
-                return
-            })
+        expect(res.body.id).toBe(swaliID)
+        expect(res.body.summary).toBe('swali')
+        expect(res.body.details).toBe('ni swali tu')
+        return
     })
 
-    it('should return 404 for non existent question ID', ()=> {
-        return request(app).get('/questions/q/net-nonexistent-question-404id')
+    it('should return 404 for non existent question ID', async ()=> {
+        const res = await request(app).get('/questions/q/net-nonexistent-question-404id')
             .set('token', token)
             .expect(404)
-            .then(res => {
-                expect(res.body).toEqual({message: 'question not found. ID net-nonexistent-question-404id'})
-                return
-            })
+        expect(res.body).toEqual({ message: 'question not found. ID net-nonexistent-question-404id' })
+        return
     })
 
-    it('should update a question', ()=> {
-        return request(app).put('/questions/q/' + swaliID)
+    it('should update a question', async ()=> {
+        const res = await request(app).put('/questions/q/' + swaliID)
             .send({
                 "summary": "swali updated",
                 "details": "sio swali tu",
@@ -76,17 +66,13 @@ describe('Perform CRUD operations on questions', ()=> {
             })
             .set('token', token)
             .expect(200)
-            .then(res => {
-                expect(res.body.message).toBe('question updated successfully.')
-                return request(app).get('/questions/q/' + swaliID)
-                    .set('token', token)
-                    .expect(200)
-                    .then(res => {
-                        expect(res.body.id).toBe(swaliID)
-                        expect(res.body.summary).toBe('swali updated')
-                        return
-                    })
-            })
+        expect(res.body.message).toBe('question updated successfully.')
+        const res_1 = await request(app).get('/questions/q/' + swaliID)
+            .set('token', token)
+            .expect(200)
+        expect(res_1.body.id).toBe(swaliID)
+        expect(res_1.body.summary).toBe('swali updated')
+        return
     })
 
     it('should add an answer to an existing question', ()=> {
@@ -100,8 +86,8 @@ describe('Perform CRUD operations on questions', ()=> {
             .expect(201)
     })
 
-    it('should upvote a question', ()=> {
-        return request(app).post('/votes')
+    it('should upvote a question', async ()=> {
+        const res = await request(app).post('/votes')
             .send({
                 "target": "question",
                 "voteFor": swaliID,
@@ -109,13 +95,11 @@ describe('Perform CRUD operations on questions', ()=> {
             })
             .set('token', token)
             .expect(201)
-            .then(res => {
-                expect(res.body).toEqual({message: `question upvoted`})
-            })
+        expect(res.body).toEqual({ message: `question upvoted` })
     })
 
-    it('should downvote a question', ()=> {
-        return request(app).post('/votes')
+    it('should downvote a question', async ()=> {
+        const res = await request(app).post('/votes')
             .send({
                 "target": "question",
                 "voteFor": swaliID,
@@ -123,9 +107,7 @@ describe('Perform CRUD operations on questions', ()=> {
             })
             .set('token', token)
             .expect(201)
-            .then(res => {
-                expect(res.body).toEqual({message: `question downvoted`})
-            })
+        expect(res.body).toEqual({ message: `question downvoted` })
     })
 
     it('should add a comment to a question', ()=> {
@@ -139,14 +121,12 @@ describe('Perform CRUD operations on questions', ()=> {
             .expect(201)
     })
 
-    it('should delete a question', ()=> {
-        return request(app).delete('/questions/q/' + swaliID)
+    it('should delete a question', async ()=> {
+        const res = await request(app).delete('/questions/q/' + swaliID)
             .set('token', token)
             .expect(200)
-            .then(res => {
-                return request(app).get('/questions/q/' + swaliID)
-                    .set('token', token)
-                    .expect(404)
-            })
+        return await request(app).get('/questions/q/' + swaliID)
+            .set('token', token)
+            .expect(404)
     })
 })
