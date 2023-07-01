@@ -4,7 +4,8 @@ CREATE OR ALTER PROCEDURE getQuestions
     @limit INT,
     @sortBy VARCHAR(100),
     @order VARCHAR(50),
-    @askedBy VARCHAR(255) = null
+    @askedBy VARCHAR(255) = null,
+    @searchQuery VARCHAR(2000) = null
 )
 AS
 BEGIN
@@ -17,12 +18,12 @@ BEGIN
             (SELECT COUNT(*) FROM answers WHERE answerFor = q.id) AS answersCount
         FROM questions q
         LEFT JOIN users u ON q.askedBy = u.id
-        WHERE q.askedBy = ISNULL(@askedBy, q.askedBy)
+        WHERE q.askedBy = ISNULL(@askedBy, q.askedBy) AND dbo.customSearch(CONCAT(q.summary, q.details), ISNULL(@searchQuery, CONCAT(q.summary, q.details))) = 1
         ORDER BY ' + QUOTENAME(@sortBy) + ' ' + @order + '
         OFFSET @offset ROWS
         FETCH NEXT @limit ROWS ONLY;
     ';
 
-    EXEC sp_executesql @sql, N'@offset INT, @limit INT, @askedBy VARCHAR(255)', @offset, @limit, @askedBy;
+    EXEC sp_executesql @sql, N'@offset INT, @limit INT, @askedBy VARCHAR(255), @searchQuery VARCHAR(2000)', @offset, @limit, @askedBy, @searchQuery;
 END
 

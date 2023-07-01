@@ -41,6 +41,7 @@ export const getQuestions = async (req:IreqInfo, res:Response) => {
         let order = req.query.order ? req.query.order : 'DESC' // default to DESC order
         order = order === 'ASC' || order === 'DESC' ? order : 'DESC'
         let askedBy = req.query.askedBy as string || null
+        let searchQuery = req.query.searchQuery as string || null
 
         const questionsCount = await (await db.exec('allQuestionsCount', {})).recordset[0].recordCount
 
@@ -59,7 +60,7 @@ export const getQuestions = async (req:IreqInfo, res:Response) => {
         if (questionsCount <= (page*limit)-limit) {
             return res.status(404).json({metadata, message: `Page ${page} is not available`})
         }
-        let questions = await (await db.exec('getQuestions', {offset:(page*limit)-limit, limit, sortBy, order, askedBy})).recordset
+        let questions = await (await db.exec('getQuestions', {offset:(page*limit)-limit, limit, sortBy, order, askedBy, searchQuery})).recordset
 
         metadata.recordsInPage = questions.length
 
@@ -74,7 +75,8 @@ export const getQuestions = async (req:IreqInfo, res:Response) => {
         }
         return res.status(404).json({message: 'No questions found'})
     } catch (error:any) {
-        return serverError(error, res)
+        // return serverError(error, res)
+        return res.status(500).json(error)
     }
 }
 

@@ -32,6 +32,25 @@ class QuestionEffects {
         }
     )
 
+    getAllQuestions$ = createEffect(
+        ()=> {
+            return this.action$.pipe(
+                ofType(QuestionActions.GET_QUESTIONS),
+                mergeMap(action => {
+                    const {type, ...queries} = action
+                    return this.questionSvc.getQuestions(queries).pipe(
+                        map(allQuestions => {
+                            return QuestionActions.GET_QUESTIONS_SUCCESS({allQuestions})
+                        }),
+                        catchError(error => {
+                            return of(QuestionActions.GET_QUESTIONS_ERROR({error: error.error.message}))
+                        })
+                    )
+                })
+            )
+        }
+    )
+
     getUserProfileQuestions$ = createEffect(
         ()=> {
             return this.action$.pipe(
