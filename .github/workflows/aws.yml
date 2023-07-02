@@ -56,7 +56,7 @@ jobs:
       
       - name: Build Angular dist
         working-directory: ./frontend
-        run: npm run build
+        run: npm install && npm run build
       
       - name: Deploy Angular using S3 Bucket
         run: aws s3 sync ./frontend/dist/jitu-exchange/. s3://jituexchange
