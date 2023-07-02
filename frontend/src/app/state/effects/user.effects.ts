@@ -1,7 +1,7 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { UserService } from "src/app/services/user.service";
 import * as UserActions from "../actions/user.actions";
-import { catchError, concatMap, map, mergeMap, of, tap } from "rxjs";
+import { catchError, map, mergeMap, of, tap } from "rxjs";
 import { Injectable } from "@angular/core";
 import { AuthService } from "src/app/services/auth.service";
 import { ActionsSubject, Store } from "@ngrx/store";
@@ -113,9 +113,7 @@ class UserEffects {
                         map(users => {
                             return UserActions.GET_USERS_SUCCESS(users)
                         }),
-                        catchError(error => {
-                            console.log(error);
-                            
+                        catchError(error => {                            
                             return of(UserActions.GET_USERS_ERROR({error: error.error.message}))
                         })
                     )
@@ -133,13 +131,44 @@ class UserEffects {
                         map(user => {
                             return UserActions.GET_USER_PROFILE_INFO_SUCCESS(user)
                         }),
-                        catchError(error => {
-                            console.log(error);
-                            
+                        catchError(error => {                            
                             return of(UserActions.GET_USER_PROFILE_INFO_ERROR({error: error.error.message}))
                         })
                     )
                 })
+            )
+        }
+    )
+
+    deleteUser$ = createEffect(
+        ()=> {
+            return this.action$.pipe(
+                ofType(UserActions.DELETE_USER),
+                mergeMap(action => {
+                    return this.userSvc.deleteUser(action.id).pipe(
+                        map(res => {
+                            this.store.dispatch(UserActions.GET_USERS({}))
+                            this.toastSvc.displayMessage(
+                                {
+                                    message: res.message,
+                                    type: "success",
+                                    displayed: false
+                                }
+                            )
+                            return UserActions.DELETE_USER_SUCCESS()
+                        }),
+                        catchError(error => {    
+                            this.toastSvc.displayMessage(
+                                {
+                                    message: error.error.message,
+                                    type: "error",
+                                    displayed: false
+                                }
+                            )                        
+                            return of(UserActions.DELETE_USER_ERROR({error: error.error.message}))
+                        })
+                    )
+                }),
             )
         }
     )

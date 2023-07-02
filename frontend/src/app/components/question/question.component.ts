@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Iquestion, Istate, Iuser } from 'src/app/interfaces';
 import { RouterModule } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
 import { Store } from '@ngrx/store';
 import { DELETE_QUESTION } from 'src/app/state/actions/question.actions';
 

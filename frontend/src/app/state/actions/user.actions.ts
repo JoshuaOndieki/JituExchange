@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { InewUserData, Iqueries, Iquestion, Iquestions, Iuser, Iusers } from "src/app/interfaces";
+import { InewUserData, Iqueries, Iquestions, Iuser, Iusers } from "src/app/interfaces";
 
 
 export const GET_AUTH_USER = createAction('[Users] - Get AUTH User')
@@ -39,3 +39,7 @@ export const GET_USER_PROFILE_COMMENTS_SUCCESS = createAction('[Users] - Get use
 export const GET_USER_PROFILE_COMMENTS_ERROR = createAction('[Users] - Get user Error', props<{error:string}>())
 
 export const CLEAR_USER_PROFILE = createAction('[Users] - clear user profile')
+
+export const DELETE_USER = createAction('[Users] - delete user', props<{id:string}>())
+export const DELETE_USER_SUCCESS = createAction('[Users] - delete user success')
+export const DELETE_USER_ERROR = createAction('[Users] - delete user error', props<{error:string}>())

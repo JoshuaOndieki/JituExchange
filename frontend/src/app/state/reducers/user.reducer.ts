@@ -1,4 +1,4 @@
-import {createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
 import * as UserActions from '../actions/user.actions'
 import { IuserState } from "src/app/interfaces";
 
@@ -10,7 +10,8 @@ const initialState: IuserState = {
         signup: null,
         users:  null,
         signout: null,
-        userProfile: null
+        userProfile: null,
+        deleteUser: null
     },
     authUser: null,
     asyncInitialized: false,
@@ -22,10 +23,6 @@ const initialState: IuserState = {
         comments: []
     }
 }
-
-// const getUserState = createFeatureSelector<IuserState>('users')
-// export const getUsers = createSelector(getUserState, state => state.users)
-
 
 const userReducer =  createReducer(
     initialState
@@ -140,7 +137,19 @@ const userReducer =  createReducer(
             },
             errors:{...state.errors, userProfile: null}
         }
-    })
+    }),
+    on(UserActions.DELETE_USER_SUCCESS, (state:IuserState) => {
+        return {
+            ...state,
+            errors:{...state.errors, deleteUser: null}
+        }
+    }),
+    on(UserActions.DELETE_USER_ERROR, (state:IuserState, {error}) => {
+        return {
+            ...state,
+            errors:{...state.errors, deleteUser: error}
+        }
+    }),
 )
 
 export default userReducer

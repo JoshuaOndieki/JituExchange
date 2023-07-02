@@ -1,4 +1,4 @@
-import {createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
 import { IquestionState } from "src/app/interfaces";
 import * as QuestionActions from '../actions/question.actions'
 
@@ -10,10 +10,13 @@ const initialState: IquestionState = {
         askQuestion: null,
         addComment: null,
         voting: null,
-        updateQuestion: null
+        updateQuestion: null,
+        acceptAnswer: null,
+        allQuestions: null
     },
     question: null,
-    topQuestions: []
+    topQuestions: [],
+    allQuestions: null
 }
 
 const questionReducer =  createReducer(
@@ -31,6 +34,20 @@ const questionReducer =  createReducer(
             ...state,
             errors:{...state.errors, topQuestions: error},
             topQuestions: []
+        }
+    }),
+    on(QuestionActions.GET_QUESTIONS_SUCCESS, (state:IquestionState, {allQuestions}) => {
+        return {
+            ...state,
+            allQuestions,
+            errors:{...state.errors, allQuestions: null}
+        }
+    }),
+    on(QuestionActions.GET_QUESTIONS_ERROR, (state:IquestionState, {error}) => {
+        return {
+            ...state,
+            errors:{...state.errors, allQuestions: error},
+            allQuestions: null
         }
     }),
     on(QuestionActions.GET_QUESTION_SUCCESS, (state:IquestionState, {question}) => {
@@ -112,6 +129,18 @@ const questionReducer =  createReducer(
         return {
             ...state,
             errors:{...state.errors, voting: error}
+        }
+    }),
+    on(QuestionActions.ACCEPT_ANSWER_SUCCESS, (state:IquestionState) => {
+        return {
+            ...state,
+            errors:{...state.errors, acceptAnswer: null}
+        }
+    }),
+    on(QuestionActions.ACCEPT_ANSWER_ERROR, (state:IquestionState, {error}) => {
+        return {
+            ...state,
+            errors:{...state.errors, acceptAnswer: error}
         }
     })
 )

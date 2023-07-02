@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Store } from '@ngrx/store';
-import { Iuser, Istate } from 'src/app/interfaces';
+import { Iuser, Istate, Iqueries } from 'src/app/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
-import { GET_USERS } from 'src/app/state/actions/user.actions';
+import { DELETE_USER, GET_USERS } from 'src/app/state/actions/user.actions';
 
 @Component({
   selector: 'app-all-users',
@@ -20,8 +19,10 @@ export class AllUsersComponent {
   users:Iuser[] = []
   searchForm!:FormGroup
   authUser:Iuser | null = null
+  queries!:Iqueries
+  error: string | null = null
 
-  constructor(private userSvc:UserService, private fb:FormBuilder, private router:Router, public authSvc:AuthService, private store:Store<Istate>) {
+  constructor(private fb:FormBuilder, public authSvc:AuthService, private store:Store<Istate>) {
   }
 
   ngOnInit(): void {
@@ -29,11 +30,17 @@ export class AllUsersComponent {
       query: [''],
     })
 
-    this.store.dispatch(GET_USERS({}))
+    this.queries = {
+      limit: 10
+    }
+
+    this.store.dispatch(GET_USERS(this.queries))
     this.store.select('users').subscribe(
       usersState => {
         this.users = usersState.users ? usersState.users.users : []
         this.authUser = usersState.authUser
+        this.error = usersState.errors.users
+        this.queries = usersState.users ? usersState.users.metadata.queries : {}
       }
     )
   }
@@ -45,6 +52,20 @@ export class AllUsersComponent {
   onSearch() {
     console.log(this.searchForm);
     
+  }
+
+  deleteUser(id:string) {
+    this.store.dispatch(DELETE_USER({id}))
+  }
+
+  changePage(number:number) {
+    this.queries = {...this.queries, page:number}
+    this.store.dispatch(GET_USERS(this.queries))
+  }
+
+  changeLimit(number:number) {
+    this.queries = {...this.queries, limit:number}
+    this.store.dispatch(GET_USERS(this.queries))
   }
 
 }

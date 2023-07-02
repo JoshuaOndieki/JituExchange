@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { QuestionComponent } from '../question/question.component';
-import { QuestionService } from 'src/app/services/question.service';
 import { Iquestion, Istate } from 'src/app/interfaces';
-import { AuthService } from 'src/app/services/auth.service';
 import { Store } from '@ngrx/store';
 import * as QuestionActions from '../../state/actions/question.actions'
 
@@ -22,7 +20,7 @@ export class HomeComponent implements OnInit{
   questions:Iquestion[] = []
   loading:boolean = true
   error:string | null = null
-  constructor(private router:Router, public route:ActivatedRoute, private questionSvc:QuestionService, private authSvc:AuthService, private store:Store<Istate>) {
+  constructor(private router:Router, public route:ActivatedRoute, private store:Store<Istate>) {
     
   }
 

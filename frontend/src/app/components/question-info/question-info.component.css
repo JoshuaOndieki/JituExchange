@@ -207,3 +207,24 @@ main {
     display: block;
     overflow: scroll;
 } */
+
+.accept-answer-icon {
+    display: none;
+    font-weight: 900;
+    margin-top: 1rem;
+}
+
+.accept-answer-icon.displayed:hover {
+    color: var(--light-green);
+}
+
+
+.accept-answer-icon.accepted {
+    color: var(--light-green);
+    display: block;
+}
+
+.accept-answer-icon.displayed {
+    display: block;
+    cursor: pointer;
+}

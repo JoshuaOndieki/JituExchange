@@ -8,21 +8,23 @@ A lite Version of Stack Overflow
 
 [Link to **Jitu**Exchange Figma designs](https://www.figma.com/file/q9AedsAJNIKBq2WE1FV1G9/JituExchange?type=design&t=qZMzWbc3PWJVdNlX-1)
 
-## Frontend - Angular
+## Frontend - Angular - AWS S3
 
-[Link to **Jitu**Exchange Angular Frontend](https://jituexchange.vercel.app)
+[Link to **Jitu**Exchange Angular Frontend](http://jituexchange.s3-website-us-east-1.amazonaws.com)
 
 Locally, run `npm run dev`
 
-## Backend - Expressjs
+## Backend - Expressjs - AWS Fargate
 
 Run `npm run build && npm start`
 
 For development, `npm run dev`
 
-## Database - MSSQL
+## Database - MSSQL - Azure
 
 To setup database, cd into database folder and run the script > `bash setup.sh`
+
+Use the **-i** flag to create or recreate the database
 
 Use the `patch` command to only execute stored procedures e.g `bash setup.sh patch`
 
@@ -47,4 +49,11 @@ SECRET_KEY (b)
 NG_QUESTION_LINK (bg) a workaround to send question links in email.
 ```
 
+## Background Services - AWS Fargate
+
 For background services, if using privateemail as host, only add `NAMECHEAP_EMAIL` and `NAMECHEAP_PASSWORD` variables. For Gmail and the rest, please modify `background/src/utils/nodemailer.ts` by replacing namecheapConfig with the appropriate configuration.
+
+## ACKNOWLEDGMENT
+
+- Trainer - [Jonathan Ndambuki](https://github.com/joe6276)
+- [THE Jitu](https://thejitu.com)

@@ -26,3 +26,16 @@ export interface Iuser {
     password:string
     isDeleted:Boolean
 }
+
+export interface Imetadata {
+    queries: {
+        page: number
+        limit: number
+        sortBy: string
+        order: string
+        askedBy?: string | null
+        searchQuery?: string | null
+    }
+    recordsInPage: number
+    recordsInDb: number
+}
