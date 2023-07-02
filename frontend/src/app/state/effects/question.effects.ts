@@ -1,8 +1,7 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import * as QuestionActions from "../actions/question.actions";
-import { catchError, concatMap, map, mergeMap, of, take, tap } from "rxjs";
+import { catchError, map, mergeMap, of, take, tap } from "rxjs";
 import { Injectable } from "@angular/core";
-import { AuthService } from "src/app/services/auth.service";
 import { Router } from "@angular/router";
 import { ToastService } from "src/app/services/toast.service";
 import { QuestionService } from "src/app/services/question.service";

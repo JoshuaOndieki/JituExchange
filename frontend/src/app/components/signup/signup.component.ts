@@ -6,8 +6,6 @@ import passwordStrengthValidator from 'src/app/validators/password.strength.vali
 import { PasswordStrengthErrorsKeysPipe } from 'src/app/pipes/password-strength-errors-keys.pipe';
 import noSpacesValidator from 'src/app/validators/no.spaces.validator';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
-import { ToastService } from 'src/app/services/toast.service';
 import { Store } from '@ngrx/store';
 import { Istate } from 'src/app/interfaces';
 import { SIGN_UP } from 'src/app/state/actions/user.actions';
@@ -23,7 +21,7 @@ export class SignupComponent implements OnInit {
     signupForm!:FormGroup
     loading:Boolean = false
     error: string | null = null
-    constructor(private fb:FormBuilder, private router:Router, private userSvc:UserService, private toastSvc:ToastService, private store:Store<Istate>) {
+    constructor(private fb:FormBuilder, private router:Router, private store:Store<Istate>) {
     }
 
     ngOnInit(): void {

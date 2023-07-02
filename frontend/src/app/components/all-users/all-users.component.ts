@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Iuser, Istate, Iqueries } from 'src/app/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
 import { DELETE_USER, GET_USERS } from 'src/app/state/actions/user.actions';
 
 @Component({
@@ -23,17 +22,13 @@ export class AllUsersComponent {
   queries!:Iqueries
   error: string | null = null
 
-  constructor(private userSvc:UserService, private fb:FormBuilder, private router:Router, public authSvc:AuthService, private store:Store<Istate>, private route:ActivatedRoute) {
+  constructor(private fb:FormBuilder, public authSvc:AuthService, private store:Store<Istate>) {
   }
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
       query: [''],
     })
-
-    // this.route.queryParams.subscribe(queries => {
-    //   this.queries = queries
-    // })
 
     this.queries = {
       limit: 10

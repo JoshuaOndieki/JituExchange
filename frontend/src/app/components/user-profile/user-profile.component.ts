@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Ianswer, Icomment, Iquestion, Istate, Iuser, IuserProfile } from 'src/app/interfaces';
+import { Istate, Iuser, IuserProfile } from 'src/app/interfaces';
 import { Store } from '@ngrx/store';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CLEAR_USER_PROFILE, GET_USER_PROFILE_INFO, GET_USER_PROFILE_QUESTIONS } from 'src/app/state/actions/user.actions';
-import { GET_TOP_QUESTIONS } from 'src/app/state/actions/question.actions';
 import { QuestionComponent } from '../question/question.component';
 
 
@@ -42,16 +41,11 @@ export class UserProfileComponent implements OnInit{
           usersState => {
             
             this.authUser = usersState.authUser
-            // console.log(this.userProfile?.info?.id);
             console.log(this.username, params['username']);
-            if (usersState.userProfile?.info?.id && !this.questionsFetchDispatched) {
-              console.log(this.username);
-              
+            if (usersState.userProfile?.info?.id && !this.questionsFetchDispatched) {              
               this.store.dispatch(GET_USER_PROFILE_QUESTIONS({askedBy:usersState.userProfile.info?.id}))
               this.questionsFetchDispatched = true
-            }
-            // console.log(usersState.userProfile.questions);
-            
+            }            
             if (usersState.userProfile.questions) {
               this.loading = false
             }

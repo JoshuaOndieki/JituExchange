@@ -1,4 +1,4 @@
-import {createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
 import * as UserActions from '../actions/user.actions'
 import { IuserState } from "src/app/interfaces";
 
@@ -23,10 +23,6 @@ const initialState: IuserState = {
         comments: []
     }
 }
-
-// const getUserState = createFeatureSelector<IuserState>('users')
-// export const getUsers = createSelector(getUserState, state => state.users)
-
 
 const userReducer =  createReducer(
     initialState

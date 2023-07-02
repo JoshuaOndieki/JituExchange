@@ -1,4 +1,4 @@
-import { ActionReducerMap, combineReducers } from "@ngrx/store";
+import { ActionReducerMap } from "@ngrx/store";
 import userReducer from "./reducers/user.reducer";
 import { Istate } from "../interfaces";
 import questionReducer from "./reducers/question.reducer";

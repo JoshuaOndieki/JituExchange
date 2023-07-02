@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuestionComponent } from '../question/question.component';
 import { QuestionService } from 'src/app/services/question.service';
-import { Imetadata, Iqueries, Iquestion, Istate } from 'src/app/interfaces';
+import { Iqueries, Iquestion, Istate } from 'src/app/interfaces';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -24,7 +24,7 @@ export class AllQuestionsComponent implements OnInit {
   queries!:Iqueries
   recordsInDB!:number
 
-  constructor(private questionSvc:QuestionService, private fb:FormBuilder, private router:Router, private route:ActivatedRoute, private store:Store<Istate>) {
+  constructor(private fb:FormBuilder, private router:Router, private route:ActivatedRoute, private store:Store<Istate>) {
   }
 
 
@@ -58,11 +58,6 @@ export class AllQuestionsComponent implements OnInit {
   get query() {
       return this.searchForm.controls['query']
   }
-
-  // onSearch() {
-  //   console.log(this.searchForm);
-    
-  // }
 
   onFilter(filter:string) {
     this.router.navigate(['/questions'], {queryParams:{filter}})

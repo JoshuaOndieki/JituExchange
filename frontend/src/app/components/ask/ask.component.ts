@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import validTagValidator from 'src/app/validators/tag.validator';
 import { IonicModule } from '@ionic/angular';
-import { Store, UPDATE } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Istate, Iuser } from 'src/app/interfaces';
 import { ASK_QUESTION, UPDATE_QUESTION } from 'src/app/state/actions/question.actions';
 import { ActivatedRoute, Router } from '@angular/router';

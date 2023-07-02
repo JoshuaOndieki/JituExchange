@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { QuestionService } from 'src/app/services/question.service';
-import { Iquestion, IquestionWithDetails, Istate, Iuser } from 'src/app/interfaces';
-import { FormBuilder, FormGroup, ReactiveFormsModule, NgForm, FormsModule } from '@angular/forms';
+import { IquestionWithDetails, Istate, Iuser } from 'src/app/interfaces';
+import { ReactiveFormsModule, NgForm, FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import * as QuestionActions from '../../state/actions/question.actions'
@@ -17,14 +16,13 @@ import * as QuestionActions from '../../state/actions/question.actions'
 })
 export class QuestionInfoComponent implements OnInit{
   question:IquestionWithDetails | null = null
-  // @ViewChild('newAnswerForm') newAnswerForm!: NgForm
   newAnswerData = {
     newAnswer: ''
   }
 
   authUser: Iuser | null = null
 
-  constructor(private route:ActivatedRoute, private questionSvc:QuestionService, private fb:FormBuilder, private store:Store<Istate>) {}
+  constructor(private route:ActivatedRoute, private store:Store<Istate>) {}
 
   ngOnInit(): void {
     this.question = null
@@ -34,9 +32,7 @@ export class QuestionInfoComponent implements OnInit{
       this.store.dispatch(QuestionActions.GET_QUESTION({id:params['id']}))
       this.store.select('questions').subscribe(
         questionState => {
-          this.question = questionState.question
-          console.log(typeof this.question?.details);
-          
+          this.question = questionState.question          
         }
       )
 
@@ -47,14 +43,7 @@ export class QuestionInfoComponent implements OnInit{
       )
     })
 
-    // this.commentForm = this.fb.group({
-    //   comment: [''],
-    // })
   }
-
-  // get newAnswer() {
-  //   return this.newAnswerForm.controls['newAnswer']
-  // }
 
   postAnswer(form:any) {
     if (form.valid) {
@@ -63,10 +52,6 @@ export class QuestionInfoComponent implements OnInit{
 
     form.reset()
   }
-
-  // get comment() {
-  //   return this.commentForm.controls['comment']
-  // }
 
   addComment(event:any, target: 'question' | 'answer', commentFor:string) {
     if (event.target.comment.value) {

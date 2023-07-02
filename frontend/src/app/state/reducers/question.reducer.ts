@@ -1,4 +1,4 @@
-import {createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
 import { IquestionState } from "src/app/interfaces";
 import * as QuestionActions from '../actions/question.actions'
 

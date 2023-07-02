@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { InewUserData, Iqueries, Iquestion, Iquestions, Iuser, Iusers } from "src/app/interfaces";
+import { InewUserData, Iqueries, Iquestions, Iuser, Iusers } from "src/app/interfaces";
 
 
 export const GET_AUTH_USER = createAction('[Users] - Get AUTH User')
